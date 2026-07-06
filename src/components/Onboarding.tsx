@@ -189,18 +189,29 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
                 {city.shortName}
               </button>
               {showCityPicker && (
-                <div className={`absolute right-0 top-8 w-40 rounded-xl border shadow-lg z-50 ${
-                  isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100'
+                <div className={`absolute right-0 top-8 w-44 rounded-2xl border-2 z-50 overflow-hidden ${
+                  isWireframe ? 'bg-white border-gray-400' : 'bg-white border-emerald-100/80'
                 }`}>
-                  {CITIES.map((c: any) => (
-                    <button
-                      key={c.id}
+                  <div className={`px-3.5 py-2.5 border-b text-[9px] font-bold uppercase tracking-wider ${
+                    isWireframe ? 'text-gray-500 border-gray-200' : 'text-gray-400 border-gray-100'
+                  }`}>
+                    Pilih Kota
+                  </div>
+                  {CITIES.map((c: any, i: number) => (
+                    <button key={c.id}
                       onClick={() => { onCityChange(c.id); setShowCityPicker(false); }}
-                      className={`w-full text-left px-3 py-2 text-[10px] font-bold hover:bg-gray-50 flex items-center gap-2 ${
-                        c.id === city.id ? 'text-emerald-600' : 'text-gray-700'
-                      }`}
-                    >
-                      {c.appName}
+                      className={`w-full text-left px-3.5 py-2.5 text-[10px] font-bold flex items-center gap-2.5 transition-all cursor-pointer ${
+                        c.id === city.id
+                          ? isWireframe ? 'bg-gray-100 text-gray-900' : 'bg-emerald-50 text-emerald-700'
+                          : 'text-gray-600 hover:bg-gray-50'
+                      } ${i < CITIES.length - 1 ? 'border-b border-gray-50' : ''}`}>
+                      <div className={`w-2 h-2 rounded-full ${
+                        c.id === city.id ? isWireframe ? 'bg-gray-900' : 'bg-emerald-500' : 'bg-gray-300'
+                      }`} />
+                      <span>{c.shortName}</span>
+                      <span className={`ml-auto text-[8px] ${c.id === city.id ? 'text-emerald-500' : 'text-gray-400'}`}>
+                        {c.id === city.id ? 'Aktif' : 'Pilih'}
+                      </span>
                     </button>
                   ))}
                 </div>

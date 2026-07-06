@@ -87,61 +87,64 @@ export default function App() {
   const screenRoutes = (
     <>
       {showNotifications && (
-        <div className="absolute inset-x-0 top-0 bottom-0 bg-black/50 z-40 flex flex-col justify-start">
-          <div className={`p-4 bg-white rounded-b-3xl border-b-2 max-h-[75%] overflow-y-auto phone-scroll space-y-3.5 animate-in slide-in-from-top duration-300 ${
+        <div className="absolute inset-x-0 top-0 bottom-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent z-40 flex flex-col justify-start">
+          <div className={`p-5 bg-white rounded-b-3xl border-b-2 max-h-[75%] overflow-y-auto phone-scroll space-y-4 animate-in slide-in-from-top duration-200 ${
             isWireframe ? 'border-black' : 'border-emerald-500'
           }`}>
-            <div className="flex justify-between items-center">
-              <h4 className="text-xs font-black font-display text-gray-800 flex items-center gap-1.5">
-                <Bell className="w-4 h-4 text-emerald-500" />
-                Kotak Masuk Notifikasi ({mockNotifications.length})
-              </h4>
-              <button
-                onClick={() => setShowNotifications(false)}
-                className="text-gray-400 hover:text-gray-600 font-bold text-xs p-1"
-              >
-                Tutup <X className="w-3 h-3" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className={`p-1.5 rounded-lg ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50'}`}>
+                  <Bell className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`} />
+                </div>
+                <div>
+                  <h4 className="text-xs font-extrabold font-display text-gray-800 leading-none">Notifikasi</h4>
+                  <span className="text-[9px] text-gray-400">{mockNotifications.length} pesan baru</span>
+                </div>
+              </div>
+              <button onClick={() => setShowNotifications(false)}
+                className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                  isWireframe ? 'hover:bg-gray-100 text-gray-500' : 'hover:bg-gray-100 text-gray-400'
+                }`}>
+                <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="space-y-2.5">
-              {mockNotifications.map((n) => (
-                <div
-                  key={n.id}
-                  className={`p-3 rounded-xl border text-[10.5px] space-y-1 ${
-                    isWireframe ? 'border-gray-300 bg-white' : 'bg-gray-50 border-gray-100'
-                  }`}
-                >
-                  <div className="flex justify-between items-center">
-                    <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded ${
-                      isWireframe
-                        ? 'bg-gray-200'
-                        : n.category === 'Jadwal'
-                        ? 'bg-emerald-100 text-emerald-800'
-                        : n.category === 'Laporan'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-amber-100 text-amber-800'
+              {mockNotifications.map((n) => {
+                const catColors: Record<string, string> = {
+                  Jadwal: 'border-l-emerald-400 bg-emerald-50/30',
+                  Laporan: 'border-l-blue-400 bg-blue-50/30',
+                  Edukasi: 'border-l-amber-400 bg-amber-50/30',
+                };
+                const catDot: Record<string, string> = {
+                  Jadwal: 'bg-emerald-500',
+                  Laporan: 'bg-blue-500',
+                  Edukasi: 'bg-amber-500',
+                };
+                return (
+                  <div key={n.id}
+                    className={`p-3.5 rounded-xl border text-[10.5px] space-y-1.5 border-l-4 transition-all hover:translate-x-0.5 ${
+                      isWireframe ? 'border-gray-300 bg-white border-l-gray-500' : `${catColors[n.category] || 'bg-gray-50 border-gray-100 border-l-gray-300'}`
                     }`}>
-                      {n.category}
-                    </span>
-                    <span className="text-[8px] text-gray-400">{n.time}</span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <span className={`w-1.5 h-1.5 rounded-full ${isWireframe ? 'bg-gray-500' : catDot[n.category] || 'bg-gray-400'}`} />
+                        <span className={`text-[8px] font-bold ${isWireframe ? 'text-gray-600' : 'text-gray-500'}`}>{n.category}</span>
+                      </div>
+                      <span className="text-[8px] text-gray-400">{n.time}</span>
+                    </div>
+                    <h5 className="font-extrabold text-gray-800 font-display text-[11px]">{n.title}</h5>
+                    <p className="text-[9.5px] text-gray-500 leading-relaxed">{n.desc}</p>
                   </div>
-                  <h5 className="font-bold text-gray-800 font-display">{n.title}</h5>
-                  <p className="text-[9.5px] text-gray-500 leading-normal">{n.desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            <button
-              onClick={() => {
-                setShowNotifications(false);
-                setCurrentScreen('schedule');
-              }}
-              className={`w-full py-2.5 text-[10px] font-bold text-white rounded-lg transition-all text-center block ${
-                isWireframe ? 'bg-gray-900 border border-black' : 'bg-emerald-500 hover:bg-emerald-600'
-              }`}
-            >
-              Buka Rencana Pengangkutan
+            <button onClick={() => { setShowNotifications(false); setCurrentScreen('schedule'); }}
+              className={`w-full py-3 text-[10px] font-extrabold text-white rounded-xl transition-all text-center block cursor-pointer ${
+                isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98]'
+              }`}>
+              Lihat Jadwal Pengangkutan
             </button>
           </div>
         </div>

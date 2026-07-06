@@ -156,51 +156,71 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
 
       {/* Edit Profile Modal */}
       {editOpen && (
-        <div className="absolute inset-0 bg-black/60 flex items-end z-50 p-4">
-          <div className={`w-full bg-white rounded-t-3xl p-5 space-y-4 border-t-2 ${
-            isWireframe ? 'border-black' : 'border-emerald-500'
-          }`}>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end z-50" onClick={() => setEditOpen(false)}>
+          <div className={`w-full bg-white rounded-t-3xl p-5 pt-3 space-y-5 ${
+            isWireframe ? '' : ''
+          }`} onClick={e => e.stopPropagation()}>
+            {/* Drag Handle */}
+            <div className="flex justify-center">
+              <div className={`w-8 h-1 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-gray-300'}`} />
+            </div>
+
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-extrabold text-gray-800 font-display">Edit Profil</h3>
-              <button onClick={() => setEditOpen(false)} className="text-gray-400 hover:text-gray-600 cursor-pointer">
+              <button onClick={() => setEditOpen(false)}
+                className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                  isWireframe ? 'hover:bg-gray-100 text-gray-500' : 'hover:bg-gray-100 text-gray-400'
+                }`}>
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="space-y-3">
-              <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Nama Lengkap</label>
-                <input value={editForm.name} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))}
-                  className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
-                    isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 bg-white'
-                  }`} />
+            <div className="space-y-3.5">
+              <div className="flex items-center gap-3">
+                <User className={`w-4 h-4 shrink-0 ${isWireframe ? 'text-gray-500' : 'text-gray-400'}`} />
+                <div className="flex-1">
+                  <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1">Nama Lengkap</label>
+                  <input value={editForm.name} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))}
+                    className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none transition-all ${
+                      isWireframe ? 'border-gray-400 focus:ring-2 focus:ring-gray-800' : 'border-gray-200 focus:ring-2 focus:ring-emerald-500/20 bg-gray-50 focus:bg-white'
+                    }`} />
+                </div>
               </div>
-              <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Email</label>
-                <input value={editForm.email} onChange={e => setEditForm(f => ({ ...f, email: e.target.value }))}
-                  className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
-                    isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 bg-white'
-                  }`} />
+              <div className="flex items-center gap-3">
+                <Mail className={`w-4 h-4 shrink-0 ${isWireframe ? 'text-gray-500' : 'text-gray-400'}`} />
+                <div className="flex-1">
+                  <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1">Email</label>
+                  <input value={editForm.email} onChange={e => setEditForm(f => ({ ...f, email: e.target.value }))}
+                    className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none transition-all ${
+                      isWireframe ? 'border-gray-400 focus:ring-2 focus:ring-gray-800' : 'border-gray-200 focus:ring-2 focus:ring-emerald-500/20 bg-gray-50 focus:bg-white'
+                    }`} />
+                </div>
               </div>
-              <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">No HP</label>
-                <input value={editForm.phone} onChange={e => setEditForm(f => ({ ...f, phone: e.target.value }))}
-                  className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
-                    isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 bg-white'
-                  }`} />
+              <div className="flex items-center gap-3">
+                <Phone className={`w-4 h-4 shrink-0 ${isWireframe ? 'text-gray-500' : 'text-gray-400'}`} />
+                <div className="flex-1">
+                  <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1">No HP</label>
+                  <input value={editForm.phone} onChange={e => setEditForm(f => ({ ...f, phone: e.target.value }))}
+                    className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none transition-all ${
+                      isWireframe ? 'border-gray-400 focus:ring-2 focus:ring-gray-800' : 'border-gray-200 focus:ring-2 focus:ring-emerald-500/20 bg-gray-50 focus:bg-white'
+                    }`} />
+                </div>
               </div>
-              <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Alamat</label>
-                <textarea value={editForm.address} onChange={e => setEditForm(f => ({ ...f, address: e.target.value }))} rows={2}
-                  className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none focus:ring-2 resize-none ${
-                    isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 bg-white'
-                  }`} />
+              <div className="flex items-start gap-3">
+                <MapPin className={`w-4 h-4 shrink-0 mt-2.5 ${isWireframe ? 'text-gray-500' : 'text-gray-400'}`} />
+                <div className="flex-1">
+                  <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1">Alamat</label>
+                  <textarea value={editForm.address} onChange={e => setEditForm(f => ({ ...f, address: e.target.value }))} rows={2}
+                    className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none transition-all resize-none ${
+                      isWireframe ? 'border-gray-400 focus:ring-2 focus:ring-gray-800' : 'border-gray-200 focus:ring-2 focus:ring-emerald-500/20 bg-gray-50 focus:bg-white'
+                    }`} />
+                </div>
               </div>
             </div>
 
             <button onClick={handleEditSave}
-              className={`w-full py-3 text-xs font-extrabold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer ${
-                isWireframe ? 'bg-gray-900' : 'bg-emerald-600 hover:bg-emerald-700'
+              className={`w-full py-3 text-xs font-extrabold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer transition-all active:scale-[0.98] ${
+                isWireframe ? 'bg-gray-900 hover:bg-gray-800' : 'bg-emerald-600 hover:bg-emerald-700'
               }`}>
               <Save className="w-4 h-4" /> Simpan Perubahan
             </button>

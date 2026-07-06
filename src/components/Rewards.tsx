@@ -215,105 +215,121 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
 
       {/* Redemptions Modal Overlay (Simulated popup) */}
       {selectedReward && (
-        <div className="absolute inset-0 bg-black/60 flex items-end z-50 p-4">
-          <div className={`w-full bg-white rounded-t-3xl p-5 space-y-4 animate-in slide-in-from-bottom border-t-2 ${
-            isWireframe ? 'border-black' : 'border-emerald-500'
-          }`}>
-            <div className="flex justify-between items-start">
-              <div>
-                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">DETAIL PENUKARAN</span>
-                <h3 className="text-xs font-bold font-display text-gray-800 leading-tight mt-0.5">
-                  {selectedReward.title}
-                </h3>
-              </div>
-              <button
-                onClick={handleCloseModal}
-                className="text-gray-400 hover:text-gray-600 p-1 font-bold text-sm"
-              >
-                <X className="w-4 h-4" />
-              </button>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end z-50" onClick={handleCloseModal}>
+          <div className={`w-full bg-white rounded-t-3xl p-5 pt-3 space-y-5 max-h-[85%] overflow-y-auto`} onClick={e => e.stopPropagation()}>
+            {/* Drag Handle */}
+            <div className="flex justify-center">
+              <div className={`w-8 h-1 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-gray-300'}`} />
             </div>
 
             {successRedeem ? (
               /* Success screen inside the popup */
-              <div className="py-4 text-center space-y-3">
-                <div className={`w-12 h-12 rounded-full mx-auto flex items-center justify-center text-white ${
-                  isWireframe ? 'bg-black' : 'bg-emerald-500'
+              <div className="py-2 text-center space-y-5">
+                <div className={`w-14 h-14 rounded-2xl mx-auto flex items-center justify-center text-white rotate-12 ${
+                  isWireframe ? 'bg-gray-900' : 'bg-emerald-500'
                 }`}>
-                  <Check className="w-6 h-6" />
+                  <Check className="w-7 h-7 -rotate-12" />
                 </div>
-                <div className="space-y-1">
-                  <h4 className="text-xs font-bold text-gray-800 font-display">Penukaran Poin Berhasil!</h4>
-                  <p className="text-[9px] text-gray-500 leading-relaxed max-w-xs mx-auto">
-                    Poin dipotong sebesar {selectedReward.pointsCost} pts. Berikut voucher barcode Anda untuk digunakan:
+                <div className="space-y-1.5">
+                  <h4 className="text-sm font-extrabold text-gray-800 font-display">Penukaran Berhasil!</h4>
+                  <p className="text-[10px] text-gray-500 leading-relaxed max-w-xs mx-auto">
+                    Selamat! Kamu telah menukarkan {selectedReward.title} sebesar {selectedReward.pointsCost} pts.
                   </p>
                 </div>
 
-                {/* Simulated barcode for Solo Batik Trans or Gopay */}
-                <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 max-w-xs mx-auto space-y-2">
-                  <div className="h-10 w-full flex justify-center items-center font-mono text-[9px] text-gray-400 border-2 border-dashed border-gray-300 bg-white">
-                    {/* Simulated vertical stripes of barcode */}
-                    <div className="flex gap-0.5 items-stretch h-8 w-44">
-                      <span className="w-1 bg-black"></span>
-                      <span className="w-1.5 bg-black"></span>
-                      <span className="w-0.5 bg-black"></span>
-                      <span className="w-2 bg-black"></span>
-                      <span className="w-0.5 bg-black"></span>
-                      <span className="w-1 bg-black"></span>
-                      <span className="w-2.5 bg-black"></span>
-                      <span className="w-0.5 bg-black"></span>
-                      <span className="w-1 bg-black"></span>
-                      <span className="w-1.5 bg-black"></span>
-                      <span className="w-0.5 bg-black"></span>
-                      <span className="w-2 bg-black"></span>
-                    </div>
+                {/* Simulated barcode */}
+                <div className={`p-4 rounded-2xl space-y-3 ${
+                  isWireframe ? 'bg-gray-50 border border-gray-300' : 'bg-gray-50 border border-gray-100'
+                }`}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[8px] font-bold text-gray-400 uppercase tracking-wider">Kode Voucher</span>
+                    <span className={`text-[8px] font-bold px-2 py-0.5 rounded-full ${
+                      isWireframe ? 'bg-gray-200 text-gray-700' : 'bg-emerald-100 text-emerald-700'
+                    }`}>Aktif</span>
                   </div>
-                  <p className="text-[10px] font-mono font-bold tracking-widest text-gray-600">
-                    EC-{city.id.toUpperCase().slice(0, 3)}-9812A
-                  </p>
+                  <div className="h-12 w-full flex justify-center items-center gap-1 bg-white rounded-xl">
+                    {Array.from({ length: 20 }).map((_, i) => (
+                      <span key={i}
+                        className="bg-black"
+                        style={{ width: `${[1,2,0.5,3,1,2.5,0.5,1.5,3,0.5,2,1,2.5,0.5,1,2,3,0.5,1.5,2][i]}px`, height: `${24 + Math.random() * 16}px` }}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] font-mono font-bold tracking-widest text-gray-600">
+                      EC-{city.id.toUpperCase().slice(0, 3)}-9812A
+                    </span>
+                    <Smartphone className="w-4 h-4 text-gray-400" />
+                  </div>
                 </div>
 
-                <button
-                  onClick={handleCloseModal}
-                  className={`w-full py-2.5 text-xs font-bold text-white rounded-xl cursor-pointer ${
-                    isWireframe ? 'bg-gray-900 border-2 border-black' : 'bg-emerald-500 hover:bg-emerald-600'
-                  }`}
-                >
-                  Simpan Voucher Ke Profil
+                <button onClick={handleCloseModal}
+                  className={`w-full py-3 text-xs font-extrabold text-white rounded-xl cursor-pointer transition-all active:scale-[0.98] ${
+                    isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600'
+                  }`}>
+                  <Check className="w-4 h-4 inline mr-1.5" />
+                  Simpan ke Profil
                 </button>
               </div>
             ) : (
               /* Confirmation Screen before deduction */
-              <div className="space-y-3 text-xs text-gray-600">
-                <p className="leading-relaxed text-[10px]">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className={`text-[8px] font-bold uppercase tracking-widest block ${isWireframe ? 'text-gray-500' : 'text-gray-400'}`}>Konfirmasi Penukaran</span>
+                    <h3 className="text-sm font-extrabold font-display text-gray-800 leading-tight mt-0.5">{selectedReward.title}</h3>
+                  </div>
+                  <button onClick={handleCloseModal}
+                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                      isWireframe ? 'hover:bg-gray-100 text-gray-500' : 'hover:bg-gray-100 text-gray-400'
+                    }`}>
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {selectedReward.imageUrl && !isWireframe && (
+                  <img src={selectedReward.imageUrl} alt={selectedReward.title}
+                    className="w-full h-28 rounded-xl object-cover" />
+                )}
+
+                <p className="text-[10px] text-gray-500 leading-relaxed">
                   {selectedReward.description}
                 </p>
 
-                <div className="bg-gray-50 p-3 rounded-xl flex justify-between items-center text-[10px] border border-gray-100">
+                <div className={`p-3.5 rounded-2xl flex items-center justify-between text-[10px] ${
+                  isWireframe ? 'bg-gray-50 border border-gray-300' : 'bg-gray-50 border border-gray-100'
+                }`}>
                   <div className="space-y-0.5">
-                    <span className="text-gray-400 font-medium">EcoPoint Anda:</span>
-                    <p className="font-bold text-gray-800">{profile.points.toLocaleString()} pts</p>
+                    <span className="text-gray-400 font-medium text-[9px]">EcoPoint Saat Ini</span>
+                    <p className="text-sm font-extrabold text-gray-800 font-display">{profile.points.toLocaleString()} pts</p>
                   </div>
+                  <ArrowRight className={`w-5 h-5 ${isWireframe ? 'text-gray-400' : 'text-gray-300'}`} />
                   <div className="space-y-0.5 text-right">
-                    <span className="text-gray-400 font-medium">Poin Dibutuhkan:</span>
-                    <p className="font-bold text-red-600">-{selectedReward.pointsCost} pts</p>
+                    <span className="text-gray-400 font-medium text-[9px]">Setelah Ditukar</span>
+                    <p className="text-sm font-extrabold text-emerald-600 font-display">{(profile.points - selectedReward.pointsCost).toLocaleString()} pts</p>
                   </div>
                 </div>
 
-                <div className="flex gap-2 pt-2">
-                  <button
-                    onClick={handleCloseModal}
-                    className="flex-1 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-600 text-xs font-bold rounded-xl"
-                  >
+                <div className={`p-3 rounded-xl flex items-center gap-2.5 text-[10px] ${
+                  isWireframe ? 'bg-red-50 border border-red-200 text-red-700' : 'bg-red-50 border border-red-100 text-red-600'
+                }`}>
+                  <Award className="w-4 h-4 shrink-0" />
+                  <span className="font-bold">Potongan <span className="font-mono">{selectedReward.pointsCost.toLocaleString()} pts</span> akan langsung dikurangi dari saldo.</span>
+                </div>
+
+                <div className="flex gap-2.5 pt-1">
+                  <button onClick={handleCloseModal}
+                    className={`flex-1 py-3 border rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isWireframe ? 'border-gray-400 hover:bg-gray-100 text-gray-700' : 'border-gray-200 hover:bg-gray-50 text-gray-600'
+                    }`}>
                     Batal
                   </button>
-                  <button
-                    onClick={() => handleRedeem(selectedReward)}
-                    className={`flex-1 py-2.5 text-xs font-bold text-white rounded-xl cursor-pointer ${
-                      isWireframe ? 'bg-gray-900 border-2 border-black' : 'bg-emerald-500 hover:bg-emerald-600'
-                    }`}
-                  >
-                    Konfirmasi Tukar
+                  <button onClick={() => handleRedeem(selectedReward)}
+                    className={`flex-1 py-3 text-xs font-extrabold text-white rounded-xl cursor-pointer transition-all active:scale-[0.98] ${
+                      isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600'
+                    }`}>
+                    <ShoppingBag className="w-4 h-4 inline mr-1.5" />
+                    Tukar Sekarang
                   </button>
                 </div>
               </div>
