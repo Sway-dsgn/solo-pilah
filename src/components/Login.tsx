@@ -44,9 +44,9 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
   ];
 
   return (
-    <div className={`flex-1 flex flex-col p-6 overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-white'}`}>
+    <div className={`flex-1 grid grid-rows-[auto_auto_1fr_auto] p-6 overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-white'}`}>
       {/* Branding */}
-      <div className="text-center my-6">
+      <div className="text-center py-4">
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-emerald-50 mb-3 border border-emerald-100">
           <img src={logo} alt="Solo Pilah" className="w-10 h-10 object-contain" />
         </div>
@@ -55,7 +55,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
       </div>
 
       {/* Role Selector */}
-      <div className="mb-6">
+      <div className="mb-4">
         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
           Pilih Peran Simulasi Anda:
         </label>
@@ -88,7 +88,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-4 flex-1">
+      <form onSubmit={handleSubmit} className="space-y-4 flex flex-col justify-center min-h-0">
         {isSignUp && (
           <div className="space-y-1.5">
             <label className="block text-[10px] font-bold text-gray-500 uppercase">Nama Lengkap</label>
@@ -155,7 +155,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
         {/* Submit */}
         <button
           type="submit"
-          className={`w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer mt-2 ${
+          className={`w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer ${
             isWireframe
               ? 'bg-gray-900 text-white hover:bg-gray-800 border-2 border-black'
               : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-100/50'
@@ -167,7 +167,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
       </form>
 
       {/* Switch Sign In / Sign Up */}
-      <div className="mt-6 pt-4 border-t border-gray-100 text-center">
+      <div className="pt-4 pb-2 border-t border-gray-100 text-center">
         <button
           onClick={() => setIsSignUp(!isSignUp)}
           className={`text-[11px] font-bold transition-all ${
