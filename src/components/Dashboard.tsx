@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Bell,
   Award,
@@ -49,6 +49,11 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
   const nextEduSlide = () => {
     setEduIndex((prev) => (prev + 1) % EDU_SLIDES.length);
   };
+
+  useEffect(() => {
+    const timer = setInterval(nextEduSlide, 4000);
+    return () => clearInterval(timer);
+  }, [EDU_SLIDES.length]);
 
   // Get nearest waste bank locations
   const nearestBanks = [...city.bankSampah]
