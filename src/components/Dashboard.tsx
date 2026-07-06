@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Bell,
   Award,
   TrendingUp,
   MapPin,
-  Calendar,
-  Camera,
   BookOpen,
   ArrowRight,
   Flame,
-  CheckCircle2,
   Leaf,
-  Layers,
   ChevronRight,
   TrendingDown,
-  Info,
   QrCode,
   TreePine,
   Sparkles,
@@ -35,22 +30,7 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ profile, setProfile, isWireframe, onNavigate, onOpenNotifications, city }: DashboardProps) {
-  const [eduIndex, setEduIndex] = useState(0);
   const [checkedIn, setCheckedIn] = useState(false);
-
-  const EDU_SLIDES = city.eduSlides.map((s: any, i: number) => ({
-    id: `slide-${i}`,
-    tag: s.tag,
-    title: s.title,
-    desc: s.desc,
-    bg: s.bg === 'bg-emerald-500' ? 'from-emerald-500 to-teal-600' : s.bg === 'bg-blue-500' ? 'from-amber-500 to-orange-600' : s.bg === 'bg-purple-500' ? 'from-blue-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
-    textColor: 'text-white',
-    img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=300'
-  }));
-
-  const nextEduSlide = () => {
-    setEduIndex((prev) => (prev + 1) % EDU_SLIDES.length);
-  };
 
   const handleCheckin = () => {
     const today = new Date().toISOString().split('T')[0];
@@ -68,11 +48,6 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
     }));
     setCheckedIn(true);
   };
-
-  useEffect(() => {
-    const timer = setInterval(nextEduSlide, 4000);
-    return () => clearInterval(timer);
-  }, [EDU_SLIDES.length]);
 
   // Get nearest waste bank locations
   const nearestBanks = [...city.bankSampah]
@@ -118,66 +93,27 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
       <div className="p-4 space-y-4 flex-1">
         
-        {/* 2. Banner Edukasi (Interactive Carousel) */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between items-center px-1">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1">
-              <BookOpen className="w-3.5 h-3.5" /> Banner Edukasi
-            </h4>
-            <button 
-              onClick={nextEduSlide}
-              className="text-[9.5px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-0.5"
-            >
-              Slide Berikutnya <ChevronRight className="w-3 h-3" />
-            </button>
+        {/* 2. Edukasi Link Card */}
+        <div onClick={() => onNavigate('edukasi')}
+          className={`p-3.5 rounded-2xl border flex items-center gap-3 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] group ${
+            isWireframe
+              ? 'border-2 border-gray-800 bg-white text-gray-800'
+              : 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white border-transparent'
+          }`}>
+          <div className={`p-2.5 rounded-xl shrink-0 transition-transform group-hover:scale-110 ${
+            isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-white/20'
+          }`}>
+            <BookOpen className="w-5 h-5" />
           </div>
-
-          <div 
-            onClick={nextEduSlide}
-            className={`p-3.5 rounded-2xl relative overflow-hidden cursor-pointer transition-all active:scale-[0.99] border ${
-              isWireframe
-                ? 'border-2 border-gray-800 bg-white text-gray-800'
-                : `bg-gradient-to-br ${EDU_SLIDES[eduIndex].bg} text-white border-transparent`
-            }`}
-          >
-            {/* Background image fade decoration */}
-            {!isWireframe && (
-              <div 
-                className="absolute right-0 bottom-0 top-0 w-1/3 opacity-25 bg-cover bg-center mix-blend-overlay rounded-r-2xl"
-                style={{ backgroundImage: `url(${EDU_SLIDES[eduIndex].img})` }}
-              ></div>
-            )}
-
-            <div className="relative z-10 space-y-1 max-w-[85%]">
-              <span className={`text-[8px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                isWireframe ? 'bg-gray-200 text-gray-800' : 'bg-white/25 text-white'
-              }`}>
-                {EDU_SLIDES[eduIndex].tag}
-              </span>
-              <h5 className="text-[12px] font-black font-display tracking-tight leading-tight pt-1">
-                {EDU_SLIDES[eduIndex].title}
-              </h5>
-              <p className={`text-[9.5px] leading-relaxed line-clamp-2 ${
-                isWireframe ? 'text-gray-500' : EDU_SLIDES[eduIndex].textColor
-              }`}>
-                {EDU_SLIDES[eduIndex].desc}
-              </p>
-            </div>
-            
-            {/* Indicator Dots */}
-            <div className="absolute right-3.5 top-3.5 flex gap-1">
-              {EDU_SLIDES.map((_, idx) => (
-                <span 
-                  key={idx}
-                  className={`w-1.5 h-1.5 rounded-full transition-all ${
-                    idx === eduIndex 
-                      ? isWireframe ? 'bg-black' : 'bg-white w-3' 
-                      : isWireframe ? 'bg-gray-300' : 'bg-white/40'
-                  }`}
-                />
-              ))}
-            </div>
+          <div className="flex-1 min-w-0">
+            <h5 className="text-[11px] font-extrabold font-display">Edukasi Lingkungan</h5>
+            <p className={`text-[9px] leading-snug mt-0.5 line-clamp-1 ${
+              isWireframe ? 'text-gray-500' : 'text-white/80'
+            }`}>
+              Pelajari cara pilah sampah, daur ulang, dan dampak lingkungan
+            </p>
           </div>
+          <ChevronRight className="w-4 h-4 shrink-0 group-hover:translate-x-0.5 transition-transform" />
         </div>
 
         {/* 3. Poin Section (Saldo CempoPoints) */}

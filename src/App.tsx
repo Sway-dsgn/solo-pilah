@@ -11,6 +11,7 @@ import Guide from './components/Guide';
 import Report from './components/Report';
 import Rewards from './components/Rewards';
 import Profile from './components/Profile';
+import Edukasi from './components/Edukasi';
 
 import {
   Home,
@@ -230,6 +231,14 @@ export default function App() {
           onLogout={handleLogout}
           onNavigate={setCurrentScreen}
           city={city}
+        />
+      )}
+
+      {currentScreen === 'edukasi' && (
+        <Edukasi
+          isWireframe={isWireframe}
+          city={city}
+          onClose={() => setCurrentScreen('dashboard')}
         />
       )}
     </>

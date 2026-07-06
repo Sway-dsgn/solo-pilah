@@ -11,7 +11,8 @@ export type ScreenType =
   | 'report'
   | 'history'
   | 'rewards'
-  | 'profile';
+  | 'profile'
+  | 'edukasi';
 
 export interface UserProfile {
   name: string;
