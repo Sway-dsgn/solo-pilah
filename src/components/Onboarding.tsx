@@ -164,9 +164,9 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
     const currentSlide = slides[step];
 
     return (
-      <div className={`h-full flex flex-col p-6 ${isWireframe ? 'bg-white text-gray-800' : 'bg-white'}`}>
+      <div className={`flex-1 flex flex-col justify-between p-6 overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-white'}`}>
         {/* Skip button */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center shrink-0">
           <div className="flex items-center gap-1.5">
             <img src={logo} alt="Solo Pilah" className="w-5 h-5 object-contain" />
             <span className={`text-sm font-extrabold font-display ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`}>Solo Pilah</span>
@@ -184,7 +184,7 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
         </div>
 
         {/* Content */}
-        <div className="flex-1 flex flex-col justify-center space-y-5 py-4">
+        <div className="flex flex-col justify-center space-y-5 py-4">
           {currentSlide.illustration}
 
           <div className="space-y-2">
@@ -198,7 +198,7 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
         </div>
 
         {/* Action Controls */}
-        <div className="space-y-4 mt-auto">
+        <div className="space-y-4 shrink-0 pt-3">
           {/* Dot Indicators */}
           <div className="flex justify-center gap-2">
             {slides.map((_, i) => (

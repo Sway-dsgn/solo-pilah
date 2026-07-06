@@ -44,7 +44,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
   ];
 
   return (
-    <div className={`h-full flex flex-col p-6 phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-white'}`}>
+    <div className={`flex-1 flex flex-col p-6 overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-white'}`}>
       {/* Branding */}
       <div className="text-center my-6">
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-emerald-50 mb-3 border border-emerald-100">
