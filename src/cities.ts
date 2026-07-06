@@ -543,7 +543,7 @@ export function generateProfiles(city: CityData): { Masyarakat: UserProfile; Pet
       address: city.defaultProfiles.Masyarakat.address || '',
       ecoRank: city.defaultProfiles.Masyarakat.ecoRank || '',
       role: 'Masyarakat', points: 2450, avatar: city.defaultProfiles.Masyarakat.avatar || '', phone: '0812-3456-7890',
-      totalWasteSubmitted: 42.5,
+      totalWasteSubmitted: 42.5, streak: 5, lastActiveDate: new Date().toISOString().split('T')[0],
     },
     Petugas: {
       name: city.defaultProfiles.Petugas.name || '',
@@ -551,7 +551,7 @@ export function generateProfiles(city: CityData): { Masyarakat: UserProfile; Pet
       address: city.defaultProfiles.Petugas.address || '',
       ecoRank: city.defaultProfiles.Petugas.ecoRank || '',
       role: 'Petugas', points: 1200, avatar: city.defaultProfiles.Petugas.avatar || '', phone: '0823-4567-8912',
-      totalWasteSubmitted: 1450,
+      totalWasteSubmitted: 1450, streak: 12, lastActiveDate: new Date().toISOString().split('T')[0],
     },
     BankSampah: {
       name: city.defaultProfiles.BankSampah.name || '',
@@ -559,7 +559,7 @@ export function generateProfiles(city: CityData): { Masyarakat: UserProfile; Pet
       address: city.defaultProfiles.BankSampah.address || '',
       ecoRank: city.defaultProfiles.BankSampah.ecoRank || '',
       role: 'BankSampah', points: 850, avatar: city.defaultProfiles.BankSampah.avatar || '', phone: '0856-7890-1234',
-      totalWasteSubmitted: 3240,
+      totalWasteSubmitted: 3240, streak: 3, lastActiveDate: new Date().toISOString().split('T')[0],
     },
   };
 }

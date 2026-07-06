@@ -27,14 +27,16 @@ import { UserProfile, ScreenType } from '../types';
 
 interface DashboardProps {
   profile: UserProfile;
+  setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   isWireframe: boolean;
   onNavigate: (screen: ScreenType) => void;
   onOpenNotifications: () => void;
   city: any;
 }
 
-export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNotifications, city }: DashboardProps) {
+export default function Dashboard({ profile, setProfile, isWireframe, onNavigate, onOpenNotifications, city }: DashboardProps) {
   const [eduIndex, setEduIndex] = useState(0);
+  const [checkedIn, setCheckedIn] = useState(false);
 
   const EDU_SLIDES = city.eduSlides.map((s: any, i: number) => ({
     id: `slide-${i}`,
@@ -48,6 +50,23 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
 
   const nextEduSlide = () => {
     setEduIndex((prev) => (prev + 1) % EDU_SLIDES.length);
+  };
+
+  const handleCheckin = () => {
+    const today = new Date().toISOString().split('T')[0];
+    if (profile.lastActiveDate === today) {
+      alert("Anda sudah check-in hari ini!");
+      return;
+    }
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    const newStreak = profile.lastActiveDate === yesterday ? profile.streak + 1 : 1;
+    setProfile(prev => ({
+      ...prev,
+      streak: newStreak,
+      lastActiveDate: today,
+      points: prev.points + 25,
+    }));
+    setCheckedIn(true);
   };
 
   useEffect(() => {
@@ -203,7 +222,66 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
           </div>
         </div>
 
-        {/* 4. Scan Cepat (Instant Camera Trigger) */}
+        {/* 4. Streak Harian (Gamifikasi) */}
+        <div className="space-y-1.5">
+          <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
+            <Flame className="w-3.5 h-3.5 text-orange-500" /> Streak Aktif
+          </h4>
+          <div className={`p-3.5 rounded-2xl border ${
+            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
+          }`}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className={`p-2 rounded-xl ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-orange-50 border border-orange-100'}`}>
+                  <Flame className={`w-5 h-5 ${isWireframe ? 'text-gray-800' : 'text-orange-500'}`} />
+                </div>
+                <div>
+                  <span className={`text-lg font-black font-display ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>
+                    {profile.streak}
+                  </span>
+                  <span className="text-[9px] text-gray-500 font-bold ml-1">hari</span>
+                  <p className="text-[8px] text-gray-400">berturut-turut aktif</p>
+                </div>
+              </div>
+              <button onClick={handleCheckin}
+                className={`px-2.5 py-1 rounded-xl text-[9px] font-bold cursor-pointer ${
+                  checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0]
+                    ? isWireframe ? 'bg-gray-300 text-gray-500 cursor-default' : 'bg-gray-200 text-gray-500 cursor-default'
+                    : isWireframe ? 'bg-gray-800 text-white' : 'bg-orange-500 text-white hover:bg-orange-600'
+                }`}>
+                {checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0] ? '✔ Check-in' : '+25 Check-in'}
+              </button>
+            </div>
+
+            {/* 7-day mini calendar */}
+            <div className="flex gap-1.5 justify-center mb-3">
+              {['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map((day, i) => {
+                const isActive = i < profile.streak % 7 || (profile.streak > 0 && i === 0 && profile.streak >= 7);
+                const isToday = i === new Date().getDay() - 1 || (new Date().getDay() === 0 && i === 6);
+                return (
+                  <div key={day} className="flex flex-col items-center gap-1">
+                    <span className="text-[7px] font-bold text-gray-400 uppercase">{day}</span>
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-bold ${
+                      isActive
+                        ? isWireframe ? 'bg-gray-800 text-white' : 'bg-orange-500 text-white'
+                        : isToday
+                        ? isWireframe ? 'border border-gray-400' : 'border border-orange-200 bg-orange-50 text-orange-500'
+                        : 'bg-gray-100 text-gray-400'
+                    }`}>
+                      {i + 1}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="text-[8px] text-gray-400 text-center leading-snug">
+              Scan atau lapor setiap hari untuk menjaga streak dan dapatkan bonus poin!
+            </p>
+          </div>
+        </div>
+
+        {/* 5. Scan Cepat (Instant Camera Trigger) */}
         <div className="space-y-1.5">
           <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
             <Zap className="w-3.5 h-3.5" /> Scan Cepat
@@ -236,7 +314,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
           </div>
         </div>
 
-        {/* 5. Bank Sampah Terdekat (Nearest Depots) */}
+        {/* 6. Bank Sampah Terdekat (Nearest Depots) */}
         <div className="space-y-1.5">
           <div className="flex justify-between items-center px-1">
             <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1">
@@ -290,7 +368,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
           </div>
         </div>
 
-        {/* 6. Dashboard Dampak (Impact Statistics) */}
+        {/* 7. Dashboard Dampak (Impact Statistics) */}
         <div className="space-y-1.5">
           <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
             <BarChart3 className="w-3.5 h-3.5" /> Dashboard Dampak Lingkungan

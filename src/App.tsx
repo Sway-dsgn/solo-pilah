@@ -170,6 +170,7 @@ export default function App() {
       {currentScreen === 'dashboard' && (
         <Dashboard
           profile={profile}
+          setProfile={setProfile}
           isWireframe={isWireframe}
           onNavigate={setCurrentScreen}
           onOpenNotifications={() => setShowNotifications(true)}

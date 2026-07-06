@@ -23,6 +23,8 @@ export interface UserProfile {
   address: string;
   ecoRank: string;
   totalWasteSubmitted: number; // in kg
+  streak: number;
+  lastActiveDate: string;
 }
 
 export interface WasteCategory {
@@ -82,7 +84,7 @@ export interface RewardItem {
   id: string;
   title: string;
   pointsCost: number;
-  category: 'Transportasi' | 'Voucher' | 'Kebutuhan' | 'Merchandise';
+  category: 'Transportasi' | 'Voucher' | 'Voucher UMKM' | 'Kebutuhan' | 'Merchandise';
   description: string;
   imageUrl: string;
   partner: string;
