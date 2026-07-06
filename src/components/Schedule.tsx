@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { PICKUP_SCHEDULES } from '../data';
+
 import { Calendar, Clock, MapPin, Truck, Bell, AlertCircle, ChevronDown, CheckCircle } from 'lucide-react';
 
 interface ScheduleProps {
   isWireframe: boolean;
+  city: any;
 }
 
-export default function Schedule({ isWireframe }: ScheduleProps) {
-  const [selectedKecamatan, setSelectedKecamatan] = useState<string>('Jebres');
-  const [reminders, setReminders] = useState<{ [key: string]: boolean }>({ 'sch-2': true });
+export default function Schedule({ isWireframe, city }: ScheduleProps) {
+  const [selectedKecamatan, setSelectedKecamatan] = useState<string>(city.districts[0]);
+  const [reminders, setReminders] = useState<{ [key: string]: boolean }>({});
 
-  const kecamatanList = ['Jebres', 'Banjarsari', 'Laweyan', 'Serengan', 'Pasar Kliwon'];
+  const kecamatanList = city.districts;
 
-  const filteredSchedules = PICKUP_SCHEDULES.filter(
-    (s) => s.kecamatan.toLowerCase() === selectedKecamatan.toLowerCase()
+  const filteredSchedules = city.schedules.filter(
+    (s: any) => s.kecamatan.toLowerCase() === selectedKecamatan.toLowerCase()
   );
 
   const toggleReminder = (id: string) => {
@@ -28,7 +29,7 @@ export default function Schedule({ isWireframe }: ScheduleProps) {
           <Calendar className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Jadwal Pengangkutan Sampah
         </h2>
-        <p className="text-[10px] text-gray-400 mt-0.5">Pilih wilayah kelurahan/kecamatan Anda di Solo</p>
+        <p className="text-[10px] text-gray-400 mt-0.5">Pilih wilayah kelurahan/kecamatan Anda di {city.shortName}</p>
       </div>
 
       {/* Kecamatan Selector Dropdown */}
@@ -70,9 +71,9 @@ export default function Schedule({ isWireframe }: ScheduleProps) {
               }`}>
                 Truk Terdekat Aktif
               </span>
-              <h4 className="text-xs font-bold text-gray-800 font-display">Truk Organik Masuk Jebres</h4>
+              <h4 className="text-xs font-bold text-gray-800 font-display">Truk Organik Masuk {selectedKecamatan}</h4>
               <p className="text-[10px] text-gray-500 leading-normal">
-                Posisi: Jl. Ir. Sutami (Sekitar UNS Jebres) menuju perumahan Anda.
+                Posisi: Jl. Raya {selectedKecamatan} menuju perumahan Anda.
               </p>
               {/* ETA countdown */}
               <div className="flex items-center gap-1 mt-2">

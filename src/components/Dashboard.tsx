@@ -23,56 +23,36 @@ import {
   Zap
 } from 'lucide-react';
 import { UserProfile, ScreenType } from '../types';
-import { BANK_SAMPAH_LOCATIONS } from '../data';
+
 
 interface DashboardProps {
   profile: UserProfile;
   isWireframe: boolean;
   onNavigate: (screen: ScreenType) => void;
   onOpenNotifications: () => void;
+  city: any;
 }
 
-export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNotifications }: DashboardProps) {
+export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNotifications, city }: DashboardProps) {
   const [eduIndex, setEduIndex] = useState(0);
 
-  // 3 educational banner contents for Surakarta waste management
-  const EDU_SLIDES = [
-    {
-      id: 'slide-1',
-      tag: 'PLTSa Putri Cempo',
-      title: 'Pembangkit Listrik Tenaga Sampah',
-      desc: 'Sampah plastik kering warga Solo kini dikonversi menjadi energi listrik bersih di Solo Utara via proses gasifikasi ramah lingkungan.',
-      bg: 'from-emerald-500 to-teal-600',
-      textColor: 'text-emerald-100',
-      img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=300'
-    },
-    {
-      id: 'slide-2',
-      tag: 'Pilah Dari Rumah',
-      title: 'Solusi Atasi Overload TPA',
-      desc: 'Pemisahan sampah organik & plastik dari dapur Anda menekan pembentukan gas metana pemicu kebakaran gunungan sampah di Mojosongo.',
-      bg: 'from-amber-500 to-orange-600',
-      textColor: 'text-amber-100',
-      img: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=300'
-    },
-    {
-      id: 'slide-3',
-      tag: 'Batik Solo Trans (BST)',
-      title: 'Voucher BST Menanti Anda!',
-      desc: 'Kumpulkan CempoPoints Anda untuk ditukarkan dengan tiket transportasi umum BST gratis atau voucher belanja sembako murah.',
-      bg: 'from-blue-500 to-indigo-600',
-      textColor: 'text-blue-100',
-      img: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&q=80&w=300'
-    }
-  ];
+  const EDU_SLIDES = city.eduSlides.map((s: any, i: number) => ({
+    id: `slide-${i}`,
+    tag: s.tag,
+    title: s.title,
+    desc: s.desc,
+    bg: s.bg === 'bg-emerald-500' ? 'from-emerald-500 to-teal-600' : s.bg === 'bg-blue-500' ? 'from-amber-500 to-orange-600' : s.bg === 'bg-purple-500' ? 'from-blue-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
+    textColor: 'text-white',
+    img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=300'
+  }));
 
   const nextEduSlide = () => {
     setEduIndex((prev) => (prev + 1) % EDU_SLIDES.length);
   };
 
   // Get nearest waste bank locations
-  const nearestBanks = [...BANK_SAMPAH_LOCATIONS]
-    .filter(b => b.type !== 'TPA')
+  const nearestBanks = [...city.bankSampah]
+    .filter((b: any) => b.type !== 'TPA')
     .slice(0, 2);
 
   return (
@@ -255,7 +235,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
         <div className="space-y-1.5">
           <div className="flex justify-between items-center px-1">
             <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5" /> Bank Sampah Terdekat (Solo)
+              <MapPin className="w-3.5 h-3.5" /> Bank Sampah Terdekat ({city.shortName})
             </h4>
             <button 
               onClick={() => onNavigate('map')}
@@ -339,14 +319,13 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
               </div>
             </div>
 
-            {/* Putri Cempo Landfill Load Status */}
             <div className={`p-2.5 rounded-xl border ${
               isWireframe ? 'border-gray-300' : 'border-amber-200/50 bg-amber-50/40'
             }`}>
               <div className="flex justify-between items-center mb-1.5">
                 <span className="text-[9px] font-bold text-gray-700 flex items-center gap-1">
                   <Flame className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
-                  Kapasitas TPA Putri Cempo
+                  Kapasitas {city.tpaName}
                 </span>
                 <span className="text-[9px] font-black text-red-600">78% Beban</span>
               </div>
@@ -358,7 +337,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
                 />
               </div>
               <p className="text-[8px] text-gray-500 mt-1 leading-snug">
-                Kontribusi pemilahan Anda mencegah overload & bahaya kebakaran gas metana sampah di Mojosongo.
+                Kontribusi pemilahan Anda mencegah overload & bahaya kebakaran gas metana di {city.shortName}.
               </p>
             </div>
           </div>

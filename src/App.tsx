@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DEFAULT_PROFILES } from './data';
+import { getCity, generateProfiles, CITIES } from './cities';
 import { UserRole, ScreenType, WasteReport, UserProfile } from './types';
 import Onboarding from './components/Onboarding';
 import Login from './components/Login';
@@ -11,8 +11,6 @@ import Guide from './components/Guide';
 import Report from './components/Report';
 import Rewards from './components/Rewards';
 import Profile from './components/Profile';
-import DesignSystem from './components/DesignSystem';
-import { INITIAL_REPORTS } from './data';
 
 import {
   Home,
@@ -21,26 +19,34 @@ import {
   Bell,
   Award,
   Scan as ScanIcon,
-  X
+  X,
+  MapPin
 } from 'lucide-react';
 
 export default function App() {
   const [isWireframe, setIsWireframe] = useState<boolean>(false);
   const [currentScreen, setCurrentScreen] = useState<ScreenType>('onboarding');
   const [selectedRole, setSelectedRole] = useState<UserRole>('Masyarakat');
-  const [profile, setProfile] = useState<UserProfile>(DEFAULT_PROFILES['Masyarakat']);
-  const [reports, setReports] = useState<WasteReport[]>(INITIAL_REPORTS);
+  const [selectedCityId, setSelectedCityId] = useState<string>('surakarta');
+
+  const city = getCity(selectedCityId);
+  const profiles = generateProfiles(city);
+  const [profile, setProfile] = useState<UserProfile>(profiles['Masyarakat']);
+  const [reports, setReports] = useState<WasteReport[]>(city.initialReports);
   const [showNotifications, setShowNotifications] = useState<boolean>(false);
 
-  // Synchronize profile state when role changes from desktop sidebar or login role selection
   useEffect(() => {
-    setProfile(DEFAULT_PROFILES[selectedRole]);
-  }, [selectedRole]);
+    const p = generateProfiles(getCity(selectedCityId));
+    setProfile(p[selectedRole]);
+  }, [selectedRole, selectedCityId]);
 
-  // Restart the prototype flow
+  useEffect(() => {
+    setReports(getCity(selectedCityId).initialReports);
+  }, [selectedCityId]);
+
   const handleRestart = () => {
     setCurrentScreen('onboarding');
-    setReports(INITIAL_REPORTS);
+    setReports(getCity(selectedCityId).initialReports);
     setShowNotifications(false);
   };
 
@@ -53,26 +59,25 @@ export default function App() {
     setCurrentScreen('login');
   };
 
-  // Mock notifications to display in sheet
   const mockNotifications = [
     {
       id: 1,
-      title: "Truk Organik Segera Tiba",
-      desc: "Truk pengangkut sampah organik meluncur menuju Jebres Utara. Persiapkan sampah terpilah Anda!",
+      title: `Truk Organik Tiba di ${city.districts[0]}`,
+      desc: `Truk pengangkut sampah organik meluncur menuju ${city.districts[0]}. Persiapkan sampah terpilah Anda!`,
       time: "10 mnt lalu",
       category: "Jadwal"
     },
     {
       id: 2,
-      title: "Laporan UNS Terselesaikan",
-      desc: "Tumpukan sampah plastik parit di belakang UNS selesai dibersihkan oleh Petugas Budi Santoso. +150 pts ditambahkan!",
+      title: `Laporan ${city.districts[1]} Terselesaikan`,
+      desc: `Tumpukan sampah selesai dibersihkan oleh Petugas ${city.defaultProfiles.Petugas.name}. +150 pts ditambahkan!`,
       time: "2 jam lalu",
       category: "Laporan"
     },
     {
       id: 3,
-      title: "Krisis Putri Cempo Siaga",
-      desc: "Imbauan DLH Surakarta: Pilah sampah dapur organik untuk menekan pelepasan gas metana penyebab kebakaran sampah.",
+      title: `Krisis ${city.tpaName} Siaga`,
+      desc: `Imbauan ${city.wasteDeptAbbr}: Pilah sampah dapur organik untuk menekan pelepasan gas metana penyebab kebakaran sampah.`,
       time: "1 hari lalu",
       category: "Edukasi"
     }
@@ -143,7 +148,12 @@ export default function App() {
       )}
 
       {currentScreen === 'onboarding' && (
-        <Onboarding onComplete={() => setCurrentScreen('login')} isWireframe={isWireframe} />
+        <Onboarding
+          onComplete={() => setCurrentScreen('login')}
+          isWireframe={isWireframe}
+          city={city}
+          onCityChange={setSelectedCityId}
+        />
       )}
 
       {currentScreen === 'login' && (
@@ -152,6 +162,8 @@ export default function App() {
           isWireframe={isWireframe}
           selectedRole={selectedRole}
           setSelectedRole={setSelectedRole}
+          city={city}
+          onCityChange={setSelectedCityId}
         />
       )}
 
@@ -161,19 +173,20 @@ export default function App() {
           isWireframe={isWireframe}
           onNavigate={setCurrentScreen}
           onOpenNotifications={() => setShowNotifications(true)}
+          city={city}
         />
       )}
 
       {currentScreen === 'schedule' && (
-        <Schedule isWireframe={isWireframe} />
+        <Schedule isWireframe={isWireframe} city={city} />
       )}
 
       {currentScreen === 'map' && (
-        <MapScreen isWireframe={isWireframe} />
+        <MapScreen isWireframe={isWireframe} city={city} />
       )}
 
       {currentScreen === 'guide' && (
-        <Guide isWireframe={isWireframe} />
+        <Guide isWireframe={isWireframe} city={city} />
       )}
 
       {currentScreen === 'report' && (
@@ -182,6 +195,7 @@ export default function App() {
           reports={reports}
           setReports={setReports}
           userRole={selectedRole}
+          city={city}
         />
       )}
 
@@ -191,15 +205,26 @@ export default function App() {
           setProfile={setProfile}
           isWireframe={isWireframe}
           onNavigate={setCurrentScreen}
+          city={city}
         />
       )}
 
       {currentScreen === 'rewards' && (
-        <Rewards profile={profile} setProfile={setProfile} isWireframe={isWireframe} />
+        <Rewards
+          profile={profile}
+          setProfile={setProfile}
+          isWireframe={isWireframe}
+          city={city}
+        />
       )}
 
       {currentScreen === 'profile' && (
-        <Profile profile={profile} isWireframe={isWireframe} onLogout={handleLogout} />
+        <Profile
+          profile={profile}
+          isWireframe={isWireframe}
+          onLogout={handleLogout}
+          city={city}
+        />
       )}
     </>
   );

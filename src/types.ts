@@ -95,3 +95,48 @@ export interface EnvironmentalFact {
   fullText: string;
   imageUrl: string;
 }
+
+export interface CityProfile {
+  name: string;
+  shortName: string;
+  adminName: string;
+  tpaName: string;
+  transitName: string;
+  transitAbbr: string;
+  transitPartner: string;
+  wasteDept: string;
+  wasteDeptAbbr: string;
+  ecoRankPrefix: string;
+  emailDomain: string;
+  description: string;
+  districts: string[];
+  landmarks: { name: string; x: number; y: number }[];
+  streets: string[];
+  sampleAddresses: string[];
+  onboardingSlides: {
+    title: string;
+    description: string;
+  }[];
+  eduSlides: {
+    tag: string;
+    title: string;
+    desc: string;
+    bg: string;
+  }[];
+  notificationSamples: {
+    title: string;
+    desc: string;
+    category: string;
+  }[];
+  defaultProfileAddresses: Record<UserRole, string>;
+  defaultProfileEmails: Record<UserRole, string>;
+  defaultProfileEcoRanks: Record<UserRole, string>;
+  bankSampahLocations: Omit<BankSampahLocation, 'coordinates'>[];
+  pickupSchedules: Omit<PickupSchedule, 'id'>[];
+  initialReports: Omit<WasteReport, 'id' | 'date' | 'imageUrl'>[];
+  rewardItems: Omit<RewardItem, 'id'>[];
+  environmentalFacts: EnvironmentalFact[];
+  reportGpsLandmarks: { name: string; x: number; y: number }[];
+  mapRiverName: string;
+  mapRiverFlow: string;
+}

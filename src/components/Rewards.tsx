@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { REWARD_ITEMS } from '../data';
+
 import { RewardItem, UserProfile } from '../types';
 import { Award, ShoppingBag, Check, Gift, ArrowRight, Zap, RefreshCw, Smartphone, X } from 'lucide-react';
 
@@ -7,15 +7,16 @@ interface RewardsProps {
   profile: UserProfile;
   setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   isWireframe: boolean;
+  city: any;
 }
 
-export default function Rewards({ profile, setProfile, isWireframe }: RewardsProps) {
+export default function Rewards({ profile, setProfile, isWireframe, city }: RewardsProps) {
   const [activeCategory, setActiveCategory] = useState<'Semua' | 'Transportasi' | 'Voucher' | 'Kebutuhan' | 'Merchandise'>('Semua');
   const [selectedReward, setSelectedReward] = useState<RewardItem | null>(null);
   const [successRedeem, setSuccessRedeem] = useState<boolean>(false);
 
-  const filteredRewards = REWARD_ITEMS.filter(
-    (item) => activeCategory === 'Semua' || item.category === activeCategory
+  const filteredRewards = city.rewardItems.filter(
+    (item: RewardItem) => activeCategory === 'Semua' || item.category === activeCategory
   );
 
   const handleRedeem = (reward: RewardItem) => {
@@ -38,12 +39,11 @@ export default function Rewards({ profile, setProfile, isWireframe }: RewardsPro
     setSuccessRedeem(false);
   };
 
-  // Mock weekly quests for citizen engagement
   const MOCK_QUESTS = [
     {
       id: 'q1',
-      title: 'Pahlawan Plastik Solo',
-      desc: 'Setor 5 Kg sampah botol plastik ke Bank Sampah Mojosongo.',
+      title: `Pahlawan Plastik ${city.shortName}`,
+      desc: `Setor 5 Kg sampah botol plastik ke Bank Sampah terdekat.`,
       progress: 3,
       target: 5,
       unit: 'Kg',
@@ -269,7 +269,7 @@ export default function Rewards({ profile, setProfile, isWireframe }: RewardsPro
                     </div>
                   </div>
                   <p className="text-[10px] font-mono font-bold tracking-widest text-gray-600">
-                    EC-BST-9812A-SOLO
+                    EC-{city.id.toUpperCase().slice(0, 3)}-9812A
                   </p>
                 </div>
 

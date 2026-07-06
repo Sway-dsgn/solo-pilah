@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import logo from '../../logo.png';
-import { Lock, Mail, UserCheck, Shield, HelpCircle, ArrowRight } from 'lucide-react';
+import { Lock, Mail, UserCheck, Shield, HelpCircle, ArrowRight, ChevronDown, MapPin } from 'lucide-react';
 import { UserRole } from '../types';
+import { CITIES } from '../cities';
 
 interface LoginProps {
   onLogin: (role: UserRole) => void;
   isWireframe: boolean;
   selectedRole: UserRole;
   setSelectedRole: (role: UserRole) => void;
+  city: any;
+  onCityChange: (id: string) => void;
 }
 
-export default function Login({ onLogin, isWireframe, selectedRole, setSelectedRole }: LoginProps) {
+export default function Login({ onLogin, isWireframe, selectedRole, setSelectedRole, city, onCityChange }: LoginProps) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +21,6 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate login
     onLogin(selectedRole);
   };
 
@@ -26,12 +28,12 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
     {
       id: 'Masyarakat',
       label: 'Masyarakat',
-      desc: 'Warga Solo pelapor & pemilah sampah',
+      desc: `Warga ${city.shortName} pelapor & pemilah sampah`,
       icon: UserCheck
     },
     {
       id: 'Petugas',
-      label: 'Petugas DLH',
+      label: `Petugas ${city.wasteDeptAbbr.split(' ')[0]}`,
       desc: 'Tim pengangkut & pembersih sampah',
       icon: Shield
     },
@@ -50,8 +52,30 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-emerald-50 mb-3 border border-emerald-100">
           <img src={logo} alt="Solo Pilah" className="w-10 h-10 object-contain" />
         </div>
-        <h1 className="text-xl font-extrabold font-display tracking-tight text-gray-900">Solo Pilah</h1>
-        <p className="text-xs text-gray-500 mt-1">Platform Kolaboratif Pengelolaan Sampah Kota</p>
+        <h1 className="text-xl font-extrabold font-display tracking-tight text-gray-900">{city.appName}</h1>
+        <p className="text-xs text-gray-500 mt-1">{city.description}</p>
+      </div>
+
+      {/* City Selector */}
+      <div className="mb-4">
+        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
+          Pilih Daerah:
+        </label>
+        <select
+          onChange={(e) => onCityChange(e.target.value)}
+          value={city.id}
+          className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer bg-white ${
+            isWireframe
+              ? 'border-gray-400 focus:ring-gray-800'
+              : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 text-gray-700'
+          }`}
+        >
+          {CITIES.map((c: any) => (
+            <option key={c.id} value={c.id}>
+              {c.name} ({c.shortName})
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Role Selector */}

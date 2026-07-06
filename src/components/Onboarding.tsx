@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import logo from '../../logo.png';
 import { ArrowRight, Recycle, Trash2, Award, Camera, MapPin, Flame, AlertTriangle, CheckCircle, TrendingUp } from 'lucide-react';
+import { CITIES } from '../cities';
 
 interface OnboardingProps {
   onComplete: () => void;
   isWireframe: boolean;
+  city: any;
+  onCityChange: (id: string) => void;
 }
 
-export default function Onboarding({ onComplete, isWireframe }: OnboardingProps) {
+export default function Onboarding({ onComplete, isWireframe, city, onCityChange }: OnboardingProps) {
   const [step, setStep] = useState(0);
+  const [showCityPicker, setShowCityPicker] = useState(false);
 
   const slides = [
     {
@@ -169,18 +173,50 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
         <div className="flex justify-between items-center shrink-0">
           <div className="flex items-center gap-1.5">
             <img src={logo} alt="Solo Pilah" className="w-5 h-5 object-contain" />
-            <span className={`text-sm font-extrabold font-display ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`}>Solo Pilah</span>
+            <span className={`text-sm font-extrabold font-display ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`}>{city.appName}</span>
           </div>
-          <button
-            onClick={onComplete}
-            className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-all ${
-              isWireframe
-                ? 'text-gray-600 border border-gray-300 hover:bg-gray-100'
-                : 'text-emerald-600 hover:bg-emerald-50'
-            }`}
-          >
-            Lewati
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <button
+                onClick={() => setShowCityPicker(!showCityPicker)}
+                className={`text-[9px] font-bold px-2 py-1 rounded-lg flex items-center gap-1 cursor-pointer ${
+                  isWireframe
+                    ? 'text-gray-600 border border-gray-300 hover:bg-gray-100'
+                    : 'text-emerald-600 hover:bg-emerald-50 border border-emerald-100'
+                }`}
+              >
+                <MapPin className="w-3 h-3" />
+                {city.shortName}
+              </button>
+              {showCityPicker && (
+                <div className={`absolute right-0 top-8 w-40 rounded-xl border shadow-lg z-50 ${
+                  isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100'
+                }`}>
+                  {CITIES.map((c: any) => (
+                    <button
+                      key={c.id}
+                      onClick={() => { onCityChange(c.id); setShowCityPicker(false); }}
+                      className={`w-full text-left px-3 py-2 text-[10px] font-bold hover:bg-gray-50 flex items-center gap-2 ${
+                        c.id === city.id ? 'text-emerald-600' : 'text-gray-700'
+                      }`}
+                    >
+                      {c.appName}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button
+              onClick={onComplete}
+              className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-all ${
+                isWireframe
+                  ? 'text-gray-600 border border-gray-300 hover:bg-gray-100'
+                  : 'text-emerald-600 hover:bg-emerald-50'
+              }`}
+            >
+              Lewati
+            </button>
+          </div>
         </div>
 
         {/* Content */}

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { BANK_SAMPAH_LOCATIONS } from '../data';
+
 import { BankSampahLocation } from '../types';
 import { Map, MapPin, Search, Compass, Info, Phone, Clock, Award, Star, X } from 'lucide-react';
 
 interface MapProps {
   isWireframe: boolean;
+  city: any;
 }
 
-export default function MapScreen({ isWireframe }: MapProps) {
-  const [selectedLoc, setSelectedLoc] = useState<BankSampahLocation | null>(BANK_SAMPAH_LOCATIONS[1]); // Default to Bank Sampah Sido Mukti Mojo
+export default function MapScreen({ isWireframe, city }: MapProps) {
+  const [selectedLoc, setSelectedLoc] = useState<BankSampahLocation | null>(city.bankSampah[1]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<'Semua' | 'Bank Sampah' | 'TPS' | 'TPA'>('Semua');
 
-  const filteredLocations = BANK_SAMPAH_LOCATIONS.filter((loc) => {
+  const filteredLocations = city.bankSampah.filter((loc: BankSampahLocation) => {
     const matchesSearch = loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           loc.address.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = filterType === 'Semua' || loc.type === filterType;
@@ -25,7 +26,7 @@ export default function MapScreen({ isWireframe }: MapProps) {
       <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <Map className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
-          Peta Bank Sampah & TPS Solo
+          Peta Bank Sampah & TPS {city.shortName}
         </h2>
         <p className="text-[10px] text-gray-400 mt-0.5">Cari tempat penukaran dan pembuangan terdekat</p>
       </div>
@@ -69,19 +70,15 @@ export default function MapScreen({ isWireframe }: MapProps) {
         </div>
       </div>
 
-      {/* Interactive Vector Map of Surakarta (Solo) */}
       <div className="flex-1 min-h-[220px] bg-slate-100 relative overflow-hidden">
         {isWireframe ? (
-          /* Wireframe representation of map grid */
           <div className="absolute inset-0 grid-bg opacity-30 flex items-center justify-center pointer-events-none">
             <div className="border border-gray-400 p-2 bg-white/80 rounded font-mono text-[9px] text-gray-400">
-              [WIREFRAME_MAP_GRID: SURAKARTA_BOUNDS]
+              [WIREFRAME_MAP_GRID: {city.adminName.toUpperCase()}_BOUNDS]
             </div>
           </div>
         ) : (
-          /* Vector Art representing Surakarta geography */
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            {/* Bengawan Solo River flowing North-South on the right side */}
             <path
               d="M 85,0 Q 88,25 78,50 T 92,100"
               fill="none"
@@ -90,7 +87,6 @@ export default function MapScreen({ isWireframe }: MapProps) {
               strokeLinecap="round"
               opacity="0.6"
             />
-            {/* Kali Pepe flowing from West to East merging to Bengawan Solo */}
             <path
               d="M 0,35 Q 35,45 55,48 T 80,48"
               fill="none"
@@ -99,38 +95,29 @@ export default function MapScreen({ isWireframe }: MapProps) {
               strokeLinecap="round"
               opacity="0.5"
             />
-            {/* Major roads */}
-            {/* Jl. Slamet Riyadi (Horizontal center-left) */}
             <line x1="0" y1="60" x2="100" y2="60" stroke="#e2e8f0" strokeWidth="2.5" />
             <line x1="0" y1="60" x2="100" y2="60" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3,3" />
-
-            {/* Jl. Jenderal Sudirman / Urip Sumoharjo */}
             <line x1="58" y1="60" x2="58" y2="10" stroke="#e2e8f0" strokeWidth="2" />
           </svg>
         )}
 
-        {/* Landmarks tags on Map for orientation */}
         {!isWireframe && (
           <>
-            <div className="absolute left-6 top-[30%] text-[8px] font-bold text-gray-400 select-none bg-white/70 px-1 py-0.5 rounded">
-              Stadion Manahan
-            </div>
-            <div className="absolute left-2 top-[53%] text-[8px] font-bold text-gray-400 select-none bg-white/70 px-1 py-0.5 rounded">
-              Stasiun Purwosari
-            </div>
-            <div className="absolute left-1/2 top-[55%] -translate-x-1/2 text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">
-              Pasar Gede
-            </div>
-            <div className="absolute right-3 top-[10%] text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">
-              TPA Putri Cempo
-            </div>
-            <div className="absolute right-14 bottom-[20%] text-[8px] font-semibold text-sky-500 select-none tracking-widest uppercase rotate-90">
-              S. Bengawan Solo
+            {city.mapLandmarks.map((lm: any) => (
+              <div
+                key={lm.name}
+                className="absolute text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100"
+                style={{ left: `${lm.x}%`, top: `${lm.y}%`, transform: 'translate(-50%, -50%)' }}
+              >
+                {lm.label}
+              </div>
+            ))}
+            <div className="absolute right-3 bottom-[10%] text-[8px] font-semibold text-sky-500 select-none tracking-widest uppercase rotate-90">
+              {city.riverName}
             </div>
           </>
         )}
 
-        {/* Interactive Location Marker Pins */}
         {filteredLocations.map((loc) => {
           const isSelected = selectedLoc?.id === loc.id;
           const pinColor = isWireframe

@@ -6,14 +6,15 @@ interface ProfileProps {
   profile: UserProfile;
   isWireframe: boolean;
   onLogout: () => void;
+  city: any;
 }
 
-export default function Profile({ profile, isWireframe, onLogout }: ProfileProps) {
+export default function Profile({ profile, isWireframe, onLogout, city }: ProfileProps) {
   // Config setting rows
   const settingRows = [
     { label: "Verifikasi Identitas (NIK)", icon: Shield, color: "text-blue-500 bg-blue-50" },
     { label: "Pusat Bantuan & Syarat", icon: HelpCircle, color: "text-emerald-500 bg-emerald-50" },
-    { label: "Kebijakan Privasi DLH", icon: FileText, color: "text-purple-500 bg-purple-50" }
+    { label: `Kebijakan Privasi ${city.wasteDeptAbbr}`, icon: FileText, color: "text-purple-500 bg-purple-50" }
   ];
 
   return (
@@ -66,7 +67,7 @@ export default function Profile({ profile, isWireframe, onLogout }: ProfileProps
             <User className="w-4 h-4 text-gray-400 shrink-0" />
             <div className="space-y-0.5">
               <span className="text-gray-400 font-medium block text-[8px] uppercase">Peran / Hak Akses</span>
-              <span className="font-semibold text-gray-700">{profile.role} (Solo)</span>
+              <span className="font-semibold text-gray-700">{profile.role} ({city.shortName})</span>
             </div>
           </div>
 

@@ -4,9 +4,10 @@ import { BookOpen, Search, Leaf, Layers, Skull, Cpu, ArrowRight, HelpCircle, Ale
 
 interface GuideProps {
   isWireframe: boolean;
+  city: any;
 }
 
-export default function Guide({ isWireframe }: GuideProps) {
+export default function Guide({ isWireframe, city }: GuideProps) {
   const [activeCategory, setActiveCategory] = useState<string>('organik');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -68,7 +69,7 @@ export default function Guide({ isWireframe }: GuideProps) {
           <BookOpen className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Panduan Pemilahan Sampah
         </h2>
-        <p className="text-[10px] text-gray-400 mt-0.5">Pilahlah dengan benar untuk mendukung daur ulang Solo</p>
+        <p className="text-[10px] text-gray-400 mt-0.5">Pilahlah dengan benar untuk mendukung daur ulang {city.shortName}</p>
       </div>
 
       {/* Smart Search Bar */}

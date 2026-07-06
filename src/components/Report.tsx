@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { WasteReport } from '../types';
-import { INITIAL_REPORTS } from '../data';
+
 import {
   Camera,
   MapPin,
@@ -24,9 +24,10 @@ interface ReportProps {
   reports: WasteReport[];
   setReports: React.Dispatch<React.SetStateAction<WasteReport[]>>;
   userRole: string;
+  city: any;
 }
 
-export default function Report({ isWireframe, reports, setReports, userRole }: ReportProps) {
+export default function Report({ isWireframe, reports, setReports, userRole, city }: ReportProps) {
   const [activeTab, setActiveTab] = useState<'create' | 'history'>('create');
   const [selectedReport, setSelectedReport] = useState<WasteReport | null>(reports[1]); // Default to UNS report for details
 
@@ -64,13 +65,7 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
     }
   ];
 
-  // Simulated GPS Landmarks in Solo
-  const MOCK_GPS_LOCATIONS = [
-    { name: "Jl. Ki Hajar Dewantara, Jebres, Surakarta", x: 74, y: 32 },
-    { name: "Jl. Slamet Riyadi No. 120, Samping Solo Grand Mall", x: 28, y: 58 },
-    { name: "Bantaran Kali Pepe, Sudiroprajan, Jebres", x: 54, y: 48 },
-    { name: "Sekitar Stadion Manahan, Banjarsari", x: 30, y: 32 }
-  ];
+  const MOCK_GPS_LOCATIONS = city.gpsLandmarks;
 
   const handleCapturePhoto = (photoUrl: string) => {
     setChosenPhoto(photoUrl);
@@ -78,7 +73,6 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
   };
 
   const handleFetchGps = () => {
-    // Pick a random Solo location
     const randomLoc = MOCK_GPS_LOCATIONS[Math.floor(Math.random() * MOCK_GPS_LOCATIONS.length)];
     setGpsLocation(randomLoc);
   };
@@ -159,7 +153,7 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
             <Camera className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
             Laporan Sampah Liar
           </h2>
-          <span className="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">DLH Surakarta</span>
+          <span className="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">{city.wasteDeptAbbr}</span>
         </div>
       </div>
 
@@ -265,7 +259,7 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
             {/* GPS Fetching Box */}
             <div className="space-y-1.5">
               <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">
-                Lokasi GPS (Surakarta):
+                Lokasi GPS ({city.shortName}):
               </label>
               <div className="flex gap-2">
                 <div className={`flex-1 p-3 rounded-xl border flex items-center gap-2 min-h-[42px] ${
@@ -404,7 +398,7 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
                               ['Diverifikasi', 'Diproses', 'Selesai'].includes(rep.status) ? 'bg-indigo-500' : 'bg-gray-300'
                             }`}></span>
                             <span className={`font-semibold ${['Diverifikasi', 'Diproses', 'Selesai'].includes(rep.status) ? 'text-gray-700' : 'text-gray-400'}`}>
-                              Verifikasi Admin DLH Surakarta
+                              Verifikasi Admin {city.wasteDeptAbbr}
                             </span>
                             <span className="text-[8px] text-gray-400">11:30</span>
                           </div>
@@ -448,7 +442,7 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
                         }`}>
                           <div className="flex items-center gap-1.5 text-[9px] text-blue-800 font-bold">
                             <Truck className="w-3.5 h-3.5 text-blue-600" />
-                            <span>KOTAK SIMULASI PENANGANAN (PETUGAS DLH)</span>
+                            <span>KOTAK SIMULASI PENANGANAN (PETUGAS {city.wasteDeptAbbr.toUpperCase().split(' ')[0]})</span>
                           </div>
                           <p className="text-[9px] text-gray-500">
                             Sebagai Petugas atau Admin Demo, Anda bisa memproses laporan ini lebih lanjut:

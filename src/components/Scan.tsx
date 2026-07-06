@@ -21,6 +21,7 @@ interface ScanProps {
   setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   isWireframe: boolean;
   onNavigate: (screen: any) => void;
+  city: any;
 }
 
 interface ScanMockItem {
@@ -77,7 +78,7 @@ const MOCK_SCAN_ITEMS: ScanMockItem[] = [
   }
 ];
 
-export default function Scan({ profile, setProfile, isWireframe, onNavigate }: ScanProps) {
+export default function Scan({ profile, setProfile, isWireframe, onNavigate, city }: ScanProps) {
   const [scanState, setScanState] = useState<'idle' | 'scanning' | 'success' | 'claimed'>('idle');
   const [selectedItem, setSelectedItem] = useState<ScanMockItem | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
@@ -228,7 +229,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
           }`}>
             <Info className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
             <p className="text-[9px] text-gray-500 leading-normal">
-              <strong>Info:</strong> Mengapa memilah sampah mendapat poin? Setiap gram sampah plastik, logam, dan kertas bernilai ekonomi tinggi saat masuk ke rantai daur ulang di Surakarta.
+              <strong>Info:</strong> Mengapa memilah sampah mendapat poin? Setiap gram sampah plastik, logam, dan kertas bernilai ekonomi tinggi saat masuk ke rantai daur ulang di {city.shortName}.
             </p>
           </div>
         </div>
@@ -374,7 +375,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
               Selamat! <strong>+{selectedItem.points} CempoPoints</strong> telah berhasil ditambahkan ke saldo utama Anda.
             </p>
             <p className="text-[10px] text-gray-400 leading-normal bg-gray-50 p-2.5 rounded-xl border border-gray-100/60 font-medium">
-              Serta Anda telah mengamankan <strong>{selectedItem.weight} Kg</strong> sampah agar tidak berakhir mencemari TPA Putri Cempo Mojosongo!
+              Serta Anda telah mengamankan <strong>{selectedItem.weight} Kg</strong> sampah agar tidak berakhir mencemari {city.tpaName}!
             </p>
           </div>
 
