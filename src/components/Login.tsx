@@ -17,10 +17,17 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [fullName, setFullName] = useState('');
+  const [registered, setRegistered] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSignUp) {
+      setRegistered(true);
+      setIsSignUp(false);
+      return;
+    }
     onLogin(selectedRole);
   };
 
@@ -116,17 +123,44 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
         {isSignUp && (
           <div className="space-y-1.5">
             <label className="block text-[10px] font-bold text-gray-500 uppercase">Nama Lengkap</label>
+            <input
+              type="text" required placeholder="Ahmad Fauzi"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className={`w-full py-2.5 px-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
+                isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/30'
+              }`}
+            />
+          </div>
+        )}
+
+        <div className="space-y-1.5">
+          <label className="block text-[10px] font-bold text-gray-500 uppercase">Email / Nomor HP</label>
+          <div className="relative">
+            <Mail className="absolute left-3.5 top-3 w-4 h-4 text-gray-400" />
+            <input
+              type="text" required
+              placeholder="nama@email.com / 0812xxxx"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`w-full py-2.5 pl-10 pr-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
+                isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/30'
+              }`}
+            />
+          </div>
+        </div>
+
+        {isSignUp && (
+          <div className="space-y-1.5">
+            <label className="block text-[10px] font-bold text-gray-500 uppercase">Nomor HP</label>
             <div className="relative">
               <input
-                type="text"
-                required
-                placeholder="Ahmad Fauzi"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                className={`w-full py-2.5 pl-3 pr-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
-                  isWireframe
-                    ? 'border-gray-400 focus:ring-gray-800'
-                    : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/30'
+                type="tel" required
+                placeholder="0812-3456-7890"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className={`w-full py-2.5 px-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
+                  isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/30'
                 }`}
               />
             </div>
@@ -134,71 +168,50 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
         )}
 
         <div className="space-y-1.5">
-          <label className="block text-[10px] font-bold text-gray-500 uppercase">Email</label>
-          <div className="relative">
-            <Mail className="absolute left-3.5 top-3 w-4 h-4 text-gray-400" />
-            <input
-              type="email"
-              required
-              placeholder="nama@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={`w-full py-2.5 pl-10 pr-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
-                isWireframe
-                  ? 'border-gray-400 focus:ring-gray-800'
-                  : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/30'
-              }`}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-1.5">
           <div className="flex justify-between items-center">
             <label className="block text-[10px] font-bold text-gray-500 uppercase">Password</label>
             {!isSignUp && (
-              <a href="#forgot" className="text-[10px] text-emerald-600 hover:underline font-bold">Lupa?</a>
+              <button type="button" className="text-[10px] text-emerald-600 hover:underline font-bold">Lupa?</button>
             )}
           </div>
           <div className="relative">
             <Lock className="absolute left-3.5 top-3 w-4 h-4 text-gray-400" />
             <input
-              type="password"
-              required
+              type="password" required
               placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={`w-full py-2.5 pl-10 pr-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
-                isWireframe
-                  ? 'border-gray-400 focus:ring-gray-800'
-                  : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/30'
+                isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/30'
               }`}
             />
           </div>
         </div>
 
-        {/* Submit */}
-        <button
-          type="submit"
+        <button type="submit"
           className={`w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-            isWireframe
-              ? 'bg-gray-900 text-white hover:bg-gray-800 border-2 border-black'
-                : 'bg-emerald-500 hover:bg-emerald-600 text-white'
+            isWireframe ? 'bg-gray-900 text-white hover:bg-gray-800 border-2 border-black' : 'bg-emerald-500 hover:bg-emerald-600 text-white'
           }`}
         >
-          {isSignUp ? "Daftar Akun Baru" : `Masuk Sebagai ${selectedRole}`}
+          {isSignUp ? "Daftar" : "Masuk"}
           <ArrowRight className="w-4 h-4" />
         </button>
       </form>
 
-      {/* Switch Sign In / Sign Up */}
+      {registered && (
+        <div className="mt-4 text-center text-[10px] text-emerald-600 font-bold bg-emerald-50 p-2 rounded-xl border border-emerald-100">
+          Akun berhasil dibuat! Silakan masuk.
+        </div>
+      )}
+
       <div className="mt-6 pt-4 border-t border-gray-100 text-center">
-        <button
-          onClick={() => setIsSignUp(!isSignUp)}
+        <p className="text-[10px] text-gray-500 mb-2">Punya Akun?</p>
+        <button onClick={() => { setIsSignUp(!isSignUp); setRegistered(false); }}
           className={`text-[11px] font-bold transition-all ${
             isWireframe ? 'text-gray-900 hover:underline' : 'text-emerald-600 hover:text-emerald-700'
           }`}
         >
-          {isSignUp ? "Sudah punya akun? Masuk" : "Belum punya akun? Registrasi Sekarang"}
+          {isSignUp ? "Ya, Masuk" : "Tidak, Daftar Sekarang"}
         </button>
       </div>
     </div>

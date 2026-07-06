@@ -11,7 +11,7 @@ interface RewardsProps {
 }
 
 export default function Rewards({ profile, setProfile, isWireframe, city }: RewardsProps) {
-  const [activeCategory, setActiveCategory] = useState<'Semua' | 'Transportasi' | 'Voucher' | 'Kebutuhan' | 'Merchandise'>('Semua');
+  const [activeCategory, setActiveCategory] = useState<'Semua' | 'Transportasi' | 'Voucher' | 'Voucher UMKM' | 'Kebutuhan' | 'Merchandise'>('Semua');
   const [selectedReward, setSelectedReward] = useState<RewardItem | null>(null);
   const [successRedeem, setSuccessRedeem] = useState<boolean>(false);
 
@@ -21,7 +21,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
 
   const handleRedeem = (reward: RewardItem) => {
     if (profile.points < reward.pointsCost) {
-      alert("CempoPoints Anda tidak mencukupi untuk menukar reward ini!");
+      alert("EcoPoint Anda tidak mencukupi untuk menukar reward ini!");
       return;
     }
 
@@ -83,7 +83,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
           <div className="flex justify-between items-center relative z-10">
             <div>
               <span className={`text-[9px] font-bold uppercase tracking-wider ${isWireframe ? 'text-gray-500' : 'text-emerald-100'}`}>
-                CempoPoints Milik Anda
+                EcoPoint Milik Anda
               </span>
               <h3 className="text-xl font-black font-display tracking-tight mt-0.5">
                 {profile.points.toLocaleString()} <span className="text-xs font-semibold">pts</span>
@@ -150,7 +150,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
 
       {/* Rewards Categories */}
       <div className="px-4 py-2 shrink-0 bg-white border-t border-b border-gray-100 flex gap-1.5 overflow-x-auto phone-scroll mt-2">
-        {['Semua', 'Transportasi', 'Voucher', 'Kebutuhan', 'Merchandise'].map((cat) => (
+        {['Semua', 'Transportasi', 'Voucher', 'Voucher UMKM', 'Kebutuhan', 'Merchandise'].map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat as any)}
@@ -291,7 +291,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
 
                 <div className="bg-gray-50 p-3 rounded-xl flex justify-between items-center text-[10px] border border-gray-100">
                   <div className="space-y-0.5">
-                    <span className="text-gray-400 font-medium">CempoPoints Anda:</span>
+                    <span className="text-gray-400 font-medium">EcoPoint Anda:</span>
                     <p className="font-bold text-gray-800">{profile.points.toLocaleString()} pts</p>
                   </div>
                   <div className="space-y-0.5 text-right">

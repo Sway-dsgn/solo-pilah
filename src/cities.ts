@@ -225,6 +225,11 @@ export const CITIES: CityData[] = [
         category: 'Merchandise', description: 'Tas belanja kanvas tebal. Kurangi plastik!',
         imageUrl: '', partner: 'Kreasi Pemuda Jebres',
       },
+      {
+        id: 'rew-6', title: 'Voucher Makan Siang Rp 15.000', pointsCost: 600,
+        category: 'Voucher UMKM', description: 'Voucher makan siang di UMKM binaan DLH Surakarta.',
+        imageUrl: '', partner: 'UMKM Binaan DLH Surakarta',
+      },
     ],
     environmentalFacts: [
       {
@@ -389,6 +394,7 @@ export const CITIES: CityData[] = [
       { id: 'rew-3', title: '1 Karung Pupuk Kompos Organik (5kg)', pointsCost: 500, category: 'Kebutuhan', description: 'Pupuk kompos hasil pengolahan sampah organik Kota Bandung.', imageUrl: '', partner: 'Pusat Kompos TPA Sarimukti' },
       { id: 'rew-4', title: 'Saldo GoPay Rp 50.000', pointsCost: 1800, category: 'Voucher', description: 'Voucher digital GoPay senilai Rp 50.000.', imageUrl: '', partner: 'GoTo Financial' },
       { id: 'rew-5', title: 'Eco-Friendly Totebag Canvas', pointsCost: 800, category: 'Merchandise', description: 'Tas belanja kanvas tebal dengan ilustrasi Bandung Pilah.', imageUrl: '', partner: 'Kreasi Pemuda Bandung' },
+      { id: 'rew-6', title: 'Voucher Martabak Rp 20.000', pointsCost: 700, category: 'Voucher UMKM', description: 'Voucher martabak spesial di UMKM binaan DLH Bandung.', imageUrl: '', partner: 'UMKM Binaan DLH Bandung' },
     ],
     environmentalFacts: [
       { id: 'fact-1', title: 'Krisis Sampah TPA Sarimukti', snippet: 'TPA Sarimukti menerima 1500 ton sampah per hari dari Kota Bandung.', fullText: 'TPA Sarimukti yang terletak di Cipatat, Bandung Barat, merupakan tempat pembuangan akhir utama bagi seluruh warga Bandung. Dengan kapasitas terbatas, edukasi pemilahan sampah dari rumah adalah kunci utama.', imageUrl: '' },
@@ -500,6 +506,7 @@ export const CITIES: CityData[] = [
       { id: 'rew-3', title: '1 Karung Pupuk Kompos (5kg)', pointsCost: 500, category: 'Kebutuhan', description: 'Pupuk kompos hasil pengolahan sampah organik TPA Benowo.', imageUrl: '', partner: 'Pusat Kompos TPA Benowo' },
       { id: 'rew-4', title: 'Saldo GoPay Rp 50.000', pointsCost: 1800, category: 'Voucher', description: 'Voucher digital GoPay senilai Rp 50.000.', imageUrl: '', partner: 'GoTo Financial' },
       { id: 'rew-5', title: 'Eco-Friendly Totebag Canvas', pointsCost: 800, category: 'Merchandise', description: 'Tas belanja kanvas tebal dengan ilustrasi Surabaya Pilah.', imageUrl: '', partner: 'Kreasi Pemuda Surabaya' },
+      { id: 'rew-6', title: 'Voucher Rujak Cingur Rp 15.000', pointsCost: 600, category: 'Voucher UMKM', description: 'Voucher rujak cingur di UMKM binaan DLH Surabaya.', imageUrl: '', partner: 'UMKM Binaan DLH Surabaya' },
     ],
     environmentalFacts: [
       { id: 'fact-1', title: 'Krisis Sampah TPA Benowo', snippet: 'TPA Benowo menerima 1000+ ton sampah per hari dari Surabaya.', fullText: 'TPA Benowo memanfaatkan teknologi PLTSa untuk mengolah sampah menjadi listrik. Edukasi pemilahan dari rumah adalah kunci.', imageUrl: '' },

@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UserProfile } from '../types';
-import { User, Mail, Phone, MapPin, Award, LogOut, Shield, HelpCircle, FileText, ChevronRight, Leaf } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Award, LogOut, History, Edit3, Settings, ChevronRight, X, Save } from 'lucide-react';
 
 interface ProfileProps {
   profile: UserProfile;
+  setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   isWireframe: boolean;
   onLogout: () => void;
+  onNavigate: (screen: any) => void;
   city: any;
 }
 
-export default function Profile({ profile, isWireframe, onLogout, city }: ProfileProps) {
+export default function Profile({ profile, setProfile, isWireframe, onLogout, onNavigate, city }: ProfileProps) {
+  const [editOpen, setEditOpen] = useState(false);
+  const [editForm, setEditForm] = useState({
+    name: profile.name,
+    email: profile.email,
+    phone: profile.phone,
+    address: profile.address,
+  });
+
+  const handleEditSave = () => {
+    setProfile(prev => ({ ...prev, ...editForm }));
+    setEditOpen(false);
+  };
+
   // Config setting rows
   const settingRows = [
-    { label: "Verifikasi Identitas (NIK)", icon: Shield, color: "text-blue-500 bg-blue-50" },
-    { label: "Pusat Bantuan & Syarat", icon: HelpCircle, color: "text-emerald-500 bg-emerald-50" },
-    { label: `Kebijakan Privasi ${city.wasteDeptAbbr}`, icon: FileText, color: "text-purple-500 bg-purple-50" }
+    { label: "Riwayat Aktivitas", icon: History, color: "text-blue-500 bg-blue-50", action: () => onNavigate('report') },
+    { label: "Edit Profil", icon: Edit3, color: "text-emerald-500 bg-emerald-50", action: () => setEditOpen(true) },
+    { label: "Pengaturan Akun", icon: Settings, color: "text-gray-500 bg-gray-50", action: () => alert("Menu Pengaturan") }
   ];
 
   return (
@@ -121,7 +136,7 @@ export default function Profile({ profile, isWireframe, onLogout, city }: Profil
             return (
               <button
                 key={row.label}
-                onClick={() => alert(`Membuka menu ${row.label}...`)}
+                onClick={row.action}
                 className={`w-full p-3.5 bg-white hover:bg-gray-50 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                   isWireframe ? 'border-gray-300' : 'border-gray-100/50'
                 }`}
@@ -138,6 +153,60 @@ export default function Profile({ profile, isWireframe, onLogout, city }: Profil
           })}
         </div>
       </div>
+
+      {/* Edit Profile Modal */}
+      {editOpen && (
+        <div className="absolute inset-0 bg-black/60 flex items-end z-50 p-4">
+          <div className={`w-full bg-white rounded-t-3xl p-5 space-y-4 border-t-2 ${
+            isWireframe ? 'border-black' : 'border-emerald-500'
+          }`}>
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-extrabold text-gray-800 font-display">Edit Profil</h3>
+              <button onClick={() => setEditOpen(false)} className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Nama Lengkap</label>
+                <input value={editForm.name} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))}
+                  className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
+                    isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 bg-white'
+                  }`} />
+              </div>
+              <div>
+                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Email</label>
+                <input value={editForm.email} onChange={e => setEditForm(f => ({ ...f, email: e.target.value }))}
+                  className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
+                    isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 bg-white'
+                  }`} />
+              </div>
+              <div>
+                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">No HP</label>
+                <input value={editForm.phone} onChange={e => setEditForm(f => ({ ...f, phone: e.target.value }))}
+                  className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
+                    isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 bg-white'
+                  }`} />
+              </div>
+              <div>
+                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Alamat</label>
+                <textarea value={editForm.address} onChange={e => setEditForm(f => ({ ...f, address: e.target.value }))} rows={2}
+                  className={`w-full p-2.5 text-xs rounded-xl border focus:outline-none focus:ring-2 resize-none ${
+                    isWireframe ? 'border-gray-400 focus:ring-gray-800' : 'border-gray-200 focus:ring-emerald-500/20 bg-white'
+                  }`} />
+              </div>
+            </div>
+
+            <button onClick={handleEditSave}
+              className={`w-full py-3 text-xs font-extrabold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer ${
+                isWireframe ? 'bg-gray-900' : 'bg-emerald-600 hover:bg-emerald-700'
+              }`}>
+              <Save className="w-4 h-4" /> Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Logout Action Button */}
       <div className="p-4 shrink-0">

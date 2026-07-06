@@ -221,8 +221,10 @@ export default function App() {
       {currentScreen === 'profile' && (
         <Profile
           profile={profile}
+          setProfile={setProfile}
           isWireframe={isWireframe}
           onLogout={handleLogout}
+          onNavigate={setCurrentScreen}
           city={city}
         />
       )}
