@@ -22,7 +22,7 @@ export default function MapScreen({ isWireframe }: MapProps) {
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto relative ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-sm'}`}>
+      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <Map className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Peta Bank Sampah & TPS Solo
@@ -112,16 +112,16 @@ export default function MapScreen({ isWireframe }: MapProps) {
         {/* Landmarks tags on Map for orientation */}
         {!isWireframe && (
           <>
-            <div className="absolute left-6 top-[30%] text-[8px] font-bold text-gray-400 select-none bg-white/70 px-1 py-0.5 rounded shadow-sm">
+            <div className="absolute left-6 top-[30%] text-[8px] font-bold text-gray-400 select-none bg-white/70 px-1 py-0.5 rounded">
               Stadion Manahan
             </div>
-            <div className="absolute left-2 top-[53%] text-[8px] font-bold text-gray-400 select-none bg-white/70 px-1 py-0.5 rounded shadow-sm">
+            <div className="absolute left-2 top-[53%] text-[8px] font-bold text-gray-400 select-none bg-white/70 px-1 py-0.5 rounded">
               Stasiun Purwosari
             </div>
-            <div className="absolute left-1/2 top-[55%] -translate-x-1/2 text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded shadow-sm border border-blue-100">
+            <div className="absolute left-1/2 top-[55%] -translate-x-1/2 text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">
               Pasar Gede
             </div>
-            <div className="absolute right-3 top-[10%] text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded shadow-sm border border-blue-100">
+            <div className="absolute right-3 top-[10%] text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">
               TPA Putri Cempo
             </div>
             <div className="absolute right-14 bottom-[20%] text-[8px] font-semibold text-sky-500 select-none tracking-widest uppercase rotate-90">
@@ -149,7 +149,7 @@ export default function MapScreen({ isWireframe }: MapProps) {
               className="absolute -translate-x-1/2 -translate-y-1/2 p-1.5 cursor-pointer transition-all duration-300 hover:scale-125 group z-20"
             >
               <div className="relative">
-                <MapPin className={`w-7 h-7 filter drop-shadow-md ${pinColor}`} />
+                <MapPin className={`w-7 h-7 filter ${pinColor}`} />
                 {/* Visual ripple effect for TPA or active selection */}
                 {isSelected && !isWireframe && (
                   <span className="absolute -inset-0.5 bg-current opacity-20 rounded-full animate-ping pointer-events-none"></span>
@@ -161,7 +161,7 @@ export default function MapScreen({ isWireframe }: MapProps) {
               </div>
 
               {/* Tooltip on hover */}
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-all bg-gray-900 text-white text-[9px] font-bold px-2 py-1 rounded shadow-md whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-all bg-gray-900 text-white text-[9px] font-bold px-2 py-1 rounded whitespace-nowrap z-50 pointer-events-none">
                 {loc.name}
               </div>
             </button>
@@ -172,7 +172,7 @@ export default function MapScreen({ isWireframe }: MapProps) {
       {/* Selected Location Details Panel */}
       {selectedLoc ? (
         <div className={`p-4 bg-white border-t rounded-t-3xl shrink-0 space-y-3 relative z-30 ${
-          isWireframe ? 'border-gray-800' : 'border-gray-100 shadow-2xl shadow-gray-500/10'
+            isWireframe ? 'border-gray-800' : 'border-gray-100'
         }`}>
           <div className="flex justify-between items-start">
             <div className="space-y-0.5">
@@ -185,7 +185,7 @@ export default function MapScreen({ isWireframe }: MapProps) {
                   ? 'bg-red-50 text-red-700'
                   : 'bg-emerald-50 text-emerald-700'
               }`}>
-                {selectedLoc.type} • {selectedLoc.distance} terdekat
+                {selectedLoc.type} â€¢ {selectedLoc.distance} terdekat
               </span>
               <h3 className="text-xs font-bold font-display text-gray-800">{selectedLoc.name}</h3>
               <p className="text-[10px] text-gray-500">{selectedLoc.address}</p>
@@ -247,7 +247,7 @@ export default function MapScreen({ isWireframe }: MapProps) {
           <div className="flex gap-2 pt-1">
             <button
               onClick={() => alert(`Navigasi rute tercepat menuju ${selectedLoc.name}`)}
-              className={`flex-1 py-2.5 text-xs font-bold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer shadow-sm ${
+              className={`flex-1 py-2.5 text-xs font-bold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer ${
                 isWireframe ? 'bg-gray-900 border-2 border-black' : 'bg-emerald-500 hover:bg-emerald-600'
               }`}
             >

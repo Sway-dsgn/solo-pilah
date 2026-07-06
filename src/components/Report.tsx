@@ -330,12 +330,12 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer ${
+              className={`w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 isSubmitting
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   : isWireframe
                   ? 'bg-gray-900 text-white border-2 border-black'
-                  : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-100/50'
+                    : 'bg-emerald-500 hover:bg-emerald-600 text-white'
               }`}
             >
               {isSubmitting ? "Mengirim Laporan..." : "Kirim Laporan Sampah"}
@@ -364,7 +364,7 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
                           : 'border-emerald-500 bg-emerald-50/20'
                         : isWireframe
                         ? 'border-gray-300 bg-white'
-                        : 'border-gray-100 bg-white hover:border-gray-200 shadow-sm'
+                        : 'border-gray-100 bg-white hover:border-gray-200'
                     }`}
                   >
                     <div className="flex gap-2.5">
@@ -462,7 +462,7 @@ export default function Report({ isWireframe, reports, setReports, userRole }: R
                               className={`w-full py-1.5 text-[10px] font-bold text-white rounded-lg transition-all ${
                                 isWireframe
                                   ? 'bg-gray-900 border border-black'
-                                  : 'bg-blue-500 hover:bg-blue-600 shadow-sm'
+                                  : 'bg-blue-500 hover:bg-blue-600'
                               }`}
                             >
                               {rep.status === 'Menunggu' ? "Verifikasi Laporan" : rep.status === 'Diverifikasi' ? "Tugaskan Petugas" : "Selesaikan Pembersihan (Unggah Foto Sesudah)"}

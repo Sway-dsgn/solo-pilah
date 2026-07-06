@@ -13,10 +13,10 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
   const slides = [
     {
       title: "Krisis Sampah Putri Cempo Solo",
-      description: "TPA Putri Cempo Surakarta kelebihan muatan — 300 ton sampah per hari. Solo Pilah hadir mengajak warga Solo memilah sampah demi kota yang bersih dan bebas polusi metana.",
+      description: "TPA Putri Cempo Surakarta kelebihan muatan â€” 300 ton sampah per hari. Solo Pilah hadir mengajak warga Solo memilah sampah demi kota yang bersih dan bebas polusi metana.",
       illustration: (
         <div className={`w-full h-52 rounded-2xl flex items-center justify-center relative overflow-hidden ${
-          isWireframe ? 'border-2 border-dashed border-gray-400 bg-gray-50' : 'bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 shadow-inner'
+          isWireframe ? 'border-2 border-dashed border-gray-400 bg-gray-50' : 'bg-gradient-to-br from-red-600 via-orange-500 to-amber-400'
         }`}>
           {isWireframe ? (
             <div className="text-center p-4">
@@ -66,7 +66,7 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
         description: "Pilah sampah organik, anorganik, B3, dan elektronik dari rumah. Setorkan ke Bank Sampah terdekat untuk meraih CempoPoints yang bisa ditukar voucher belanja.",
         illustration: (
           <div className={`w-full h-52 rounded-2xl flex items-center justify-center relative overflow-hidden ${
-            isWireframe ? 'border-2 border-dashed border-gray-400 bg-gray-50' : 'bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 shadow-inner'
+            isWireframe ? 'border-2 border-dashed border-gray-400 bg-gray-50' : 'bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700'
           }`}>
             {isWireframe ? (
               <div className="text-center p-4">
@@ -91,7 +91,7 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
                     const BinIcon = bin.icon;
                     return (
                       <div key={i} className="flex flex-col items-center gap-1">
-                        <div className={`${bin.color} w-12 h-12 rounded-xl flex items-center justify-center shadow-lg shadow-black/20`}>
+                        <div className={`${bin.color} w-12 h-12 rounded-xl flex items-center justify-center`}>
                           <BinIcon className="w-6 h-6 text-white" />
                         </div>
                         <span className="text-[7px] text-white font-bold uppercase tracking-wider">{bin.label}</span>
@@ -114,7 +114,7 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
         description: "Temukan tumpukan sampah liar ilegal di jalanan Solo? Cukup foto dan kirim koordinat GPS. Petugas kebersihan DLH Solo akan segera meluncur membersihkan lokasi.",
         illustration: (
           <div className={`w-full h-52 rounded-2xl flex items-center justify-center relative overflow-hidden ${
-            isWireframe ? 'border-2 border-dashed border-gray-400 bg-gray-50' : 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 shadow-inner'
+            isWireframe ? 'border-2 border-dashed border-gray-400 bg-gray-50' : 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800'
           }`}>
             {isWireframe ? (
               <div className="text-center p-4">
@@ -134,7 +134,7 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
                     <div className="bg-white/20 backdrop-blur rounded-2xl p-4">
                       <Camera className="w-8 h-8 text-white" />
                     </div>
-                    <div className="text-white text-2xl font-black animate-pulse">⟶</div>
+                    <div className="text-white text-2xl font-black animate-pulse">âŸ¶</div>
                     <div className="bg-emerald-400/30 backdrop-blur rounded-2xl p-4 border border-emerald-300/30">
                       <MapPin className="w-8 h-8 text-emerald-200" />
                     </div>
@@ -226,10 +226,10 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
                 onComplete();
               }
             }}
-            className={`w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm cursor-pointer transition-all ${
+            className={`w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 cursor-pointer transition-all ${
               isWireframe
                 ? 'bg-gray-900 text-white hover:bg-gray-800 border-2 border-black'
-                : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-95 shadow-emerald-200/50'
+                  : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-95'
             }`}
           >
             {step === slides.length - 1 ? "Mulai Sekarang" : "Selanjutnya"}

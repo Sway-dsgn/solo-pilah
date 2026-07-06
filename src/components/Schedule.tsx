@@ -23,7 +23,7 @@ export default function Schedule({ isWireframe }: ScheduleProps) {
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className={`p-4 ${isWireframe ? 'bg-white border-b border-gray-300' : 'bg-white border-b border-gray-100 shadow-sm'}`}>
+      <div className={`p-4 ${isWireframe ? 'bg-white border-b border-gray-300' : 'bg-white border-b border-gray-100'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <Calendar className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Jadwal Pengangkutan Sampah
@@ -40,7 +40,7 @@ export default function Schedule({ isWireframe }: ScheduleProps) {
             className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer ${
               isWireframe
                 ? 'border-gray-400 focus:ring-gray-800 bg-white'
-                : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white text-gray-700 shadow-sm'
+                : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white text-gray-700'
             }`}
           >
             {kecamatanList.map((k) => (
@@ -112,7 +112,7 @@ export default function Schedule({ isWireframe }: ScheduleProps) {
                       ? 'border-gray-300 bg-white'
                       : isFinished
                       ? 'border-gray-100 bg-gray-50/50 opacity-70'
-                      : 'border-gray-100 bg-white shadow-sm'
+                      : 'border-gray-100 bg-white'
                   }`}
                 >
                   <div className="space-y-1.5 max-w-[75%]">
@@ -126,7 +126,7 @@ export default function Schedule({ isWireframe }: ScheduleProps) {
                           ? 'bg-blue-50 text-blue-700'
                           : 'bg-red-50 text-red-700'
                       }`}>
-                        {schedule.day} • {schedule.wasteType}
+                        {schedule.day} â€¢ {schedule.wasteType}
                       </span>
                     </div>
 

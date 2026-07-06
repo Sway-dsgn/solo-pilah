@@ -50,7 +50,7 @@ export default function Profile({ profile, isWireframe, onLogout }: ProfileProps
         <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Detail Akun</h4>
 
         <div className={`p-3.5 rounded-2xl bg-white border space-y-3 ${
-          isWireframe ? 'border-gray-300' : 'border-gray-100/50 shadow-sm'
+          isWireframe ? 'border-gray-300' : 'border-gray-100/50'
         }`}>
           {/* Phone row */}
           <div className="flex items-center gap-3 text-[11px] text-gray-600">
@@ -84,7 +84,7 @@ export default function Profile({ profile, isWireframe, onLogout }: ProfileProps
       {/* Performance Summary Statistics */}
       <div className="px-4 shrink-0">
         <div className={`p-4 rounded-2xl bg-white border flex items-center justify-between ${
-          isWireframe ? 'border-gray-300' : 'border-gray-100/50 shadow-sm'
+          isWireframe ? 'border-gray-300' : 'border-gray-100/50'
         }`}>
           <div className="space-y-1">
             <span className="text-[9px] text-gray-400 font-bold uppercase">Kontribusi Sampah</span>
@@ -121,7 +121,7 @@ export default function Profile({ profile, isWireframe, onLogout }: ProfileProps
               <button
                 key={row.label}
                 onClick={() => alert(`Membuka menu ${row.label}...`)}
-                className={`w-full p-3.5 bg-white hover:bg-gray-50 rounded-xl border flex items-center justify-between transition-all cursor-pointer shadow-sm ${
+                className={`w-full p-3.5 bg-white hover:bg-gray-50 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                   isWireframe ? 'border-gray-300' : 'border-gray-100/50'
                 }`}
               >

@@ -143,7 +143,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* App Bar */}
       <div className={`p-4 shrink-0 bg-white border-b flex items-center justify-between ${
-        isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-sm'
+        isWireframe ? 'border-gray-300' : 'border-gray-100'
       }`}>
         <div>
           <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
@@ -168,7 +168,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
           {/* Instructions and Camera Preview Box Mock */}
           <div className="space-y-4">
             <div className={`p-4 rounded-2xl border text-center relative overflow-hidden ${
-              isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-sm'
+              isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
             }`}>
               <div className="w-16 h-16 mx-auto rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mb-2.5">
                 <Camera className="w-8 h-8" />
@@ -192,7 +192,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
                     className={`w-full p-3 rounded-xl border flex items-center gap-3 text-left transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer ${
                       isWireframe 
                         ? 'border-gray-300 bg-white hover:bg-gray-50' 
-                        : 'bg-white hover:bg-emerald-50/20 border-gray-100/50 shadow-sm'
+                        : 'bg-white hover:bg-emerald-50/20 border-gray-100/50'
                     }`}
                   >
                     <img 
@@ -211,7 +211,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
                           {item.category}
                         </span>
                         <span className="text-[9px] text-gray-400 font-medium">
-                          {item.weight} Kg • +{item.points} pts
+                          {item.weight} Kg â€¢ +{item.points} pts
                         </span>
                       </div>
                     </div>
@@ -248,7 +248,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
 
             {/* Target Area Box with Laser Effect */}
             <div className="w-64 h-64 mx-auto border-2 border-dashed border-emerald-400 rounded-3xl relative flex items-center justify-center overflow-hidden my-4">
-              <div className="absolute top-0 inset-x-0 h-0.5 bg-emerald-400 animate-[bounce_2s_infinite] shadow-[0_0_15px_#10b981]"></div>
+              <div className="absolute top-0 inset-x-0 h-0.5 bg-emerald-400 animate-[bounce_2s_infinite]"></div>
               
               <div className="p-4 bg-black/70 rounded-2xl text-center max-w-[80%] border border-white/15">
                 <QrCode className="w-12 h-12 text-emerald-400 mx-auto animate-pulse mb-2" />
@@ -283,7 +283,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
           <div className="space-y-4">
             {/* Visual Success Header */}
             <div className={`p-4 rounded-2xl text-center border ${
-              isWireframe ? 'border-gray-300 bg-white' : 'bg-emerald-500/5 border-emerald-100 shadow-sm'
+              isWireframe ? 'border-gray-300 bg-white' : 'bg-emerald-500/5 border-emerald-100'
             }`}>
               <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2">
                 <CheckCircle2 className="w-7 h-7" />
@@ -294,7 +294,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
 
             {/* Item Details Card */}
             <div className={`p-3.5 rounded-2xl border space-y-3.5 ${
-              isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/50 shadow-sm'
+              isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/50'
             }`}>
               <div className="flex gap-3">
                 <img 
@@ -345,8 +345,8 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
           <div className="space-y-2 mt-4">
             <button
               onClick={handleClaimPoints}
-              className={`w-full py-3 text-xs font-extrabold text-white rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md ${
-                isWireframe ? 'bg-gray-800' : 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-100'
+              className={`w-full py-3 text-xs font-extrabold text-white rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                isWireframe ? 'bg-gray-800' : 'bg-emerald-600 hover:bg-emerald-700'
               }`}
             >
               <Award className="w-4 h-4" />
@@ -364,7 +364,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
 
       {scanState === 'claimed' && selectedItem && (
         <div className="flex-1 p-4 flex flex-col justify-center items-center text-center space-y-6">
-          <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto animate-bounce shadow-md">
+          <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto animate-bounce">
             <CheckCircle2 className="w-12 h-12" />
           </div>
 

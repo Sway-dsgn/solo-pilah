@@ -140,7 +140,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
             <input
               type="password"
               required
-              placeholder="••••••••"
+              placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={`w-full py-2.5 pl-10 pr-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
@@ -155,10 +155,10 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
         {/* Submit */}
         <button
           type="submit"
-          className={`w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer ${
+          className={`w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
             isWireframe
               ? 'bg-gray-900 text-white hover:bg-gray-800 border-2 border-black'
-              : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-100/50'
+                : 'bg-emerald-500 hover:bg-emerald-600 text-white'
           }`}
         >
           {isSignUp ? "Daftar Akun Baru" : `Masuk Sebagai ${selectedRole}`}

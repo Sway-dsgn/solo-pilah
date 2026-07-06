@@ -83,7 +83,7 @@ export default function App() {
     <>
       {showNotifications && (
         <div className="absolute inset-x-0 top-0 bottom-0 bg-black/50 z-40 flex flex-col justify-start">
-          <div className={`p-4 bg-white rounded-b-3xl border-b-2 shadow-2xl max-h-[75%] overflow-y-auto phone-scroll space-y-3.5 animate-in slide-in-from-top duration-300 ${
+          <div className={`p-4 bg-white rounded-b-3xl border-b-2 max-h-[75%] overflow-y-auto phone-scroll space-y-3.5 animate-in slide-in-from-top duration-300 ${
             isWireframe ? 'border-black' : 'border-emerald-500'
           }`}>
             <div className="flex justify-between items-center">
@@ -206,7 +206,7 @@ export default function App() {
 
   const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && (
     <div className={`fixed bottom-0 left-0 right-0 border-t flex justify-around items-center shrink-0 z-50 min-h-[52px] ${
-      isWireframe ? 'bg-white border-gray-400' : 'bg-white border-gray-100 shadow-xl'
+      isWireframe ? 'bg-white border-gray-400' : 'bg-white border-gray-100'
     }`}>
       {[
         { id: 'dashboard', label: 'Beranda', icon: Home },

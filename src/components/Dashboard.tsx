@@ -80,7 +80,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
       
       {/* 1. Mini App Bar / Header */}
       <div className={`p-4 flex items-center justify-between border-b ${
-        isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100/50 shadow-sm'
+        isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100/50'
       }`}>
         <div className="flex items-center gap-2">
           <div className="relative">
@@ -133,7 +133,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
             className={`p-3.5 rounded-2xl relative overflow-hidden cursor-pointer transition-all active:scale-[0.99] border ${
               isWireframe
                 ? 'border-2 border-gray-800 bg-white text-gray-800'
-                : `bg-gradient-to-br ${EDU_SLIDES[eduIndex].bg} text-white border-transparent shadow-sm`
+                : `bg-gradient-to-br ${EDU_SLIDES[eduIndex].bg} text-white border-transparent`
             }`}
           >
             {/* Background image fade decoration */}
@@ -184,7 +184,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
           <div className={`p-4 rounded-2xl relative overflow-hidden ${
             isWireframe
               ? 'border-2 border-gray-800 bg-white text-gray-800'
-              : 'bg-white border border-gray-100 shadow-sm'
+              : 'bg-white border border-gray-100'
           }`}>
             <div className="flex justify-between items-center">
               <div>
@@ -208,8 +208,8 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
                 className={`px-3.5 py-2 rounded-xl text-[10px] font-black flex items-center gap-1 transition-all cursor-pointer ${
                   isWireframe
                     ? 'border border-gray-800 bg-gray-100'
-                    : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-md shadow-emerald-100'
-                }`}
+                      : 'bg-emerald-500 text-white hover:bg-emerald-600'
+                  }`}
               >
                 Tukar Poin
                 <ArrowRight className="w-3 h-3" />
@@ -228,12 +228,12 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
             className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] group ${
               isWireframe
                 ? 'border-gray-800 bg-white text-gray-800'
-                : 'bg-gradient-to-r from-emerald-50/60 to-teal-50/20 border-emerald-100/60 hover:bg-emerald-50/80 shadow-sm'
+                : 'bg-gradient-to-r from-emerald-50/60 to-teal-50/20 border-emerald-100/60 hover:bg-emerald-50/80'
             }`}
           >
             <div className="flex items-center gap-3">
               <div className={`p-3 rounded-xl shrink-0 transition-transform group-hover:scale-110 ${
-                isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-500 text-white shadow-md shadow-emerald-100'
+                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-500 text-white'
               }`}>
                 <QrCode className="w-5 h-5 animate-pulse" />
               </div>
@@ -270,7 +270,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
               <div 
                 key={bank.id}
                 className={`p-3 rounded-2xl border flex flex-col justify-between ${
-                  isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-sm'
+                  isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
                 }`}
               >
                 <div>
@@ -312,7 +312,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
           </h4>
           
           <div className={`p-4 rounded-2xl border space-y-3.5 ${
-            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-sm'
+            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
           }`}>
             {/* Impact stats grid */}
             <div className="grid grid-cols-3 gap-2.5">

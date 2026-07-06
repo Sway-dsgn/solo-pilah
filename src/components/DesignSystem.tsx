@@ -21,7 +21,7 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
   const [activeTab, setActiveTab] = useState<'colors' | 'typography' | 'personas' | 'flows' | 'tpa_info'>('personas');
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden h-full flex flex-col">
+    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden h-full flex flex-col">
       {/* Header */}
       <div className="p-6 bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-600 text-white">
         <div className="flex items-center gap-3 mb-2">
@@ -83,7 +83,7 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
                 onClick={() => onSelectPersona('Masyarakat')}
                 className={`text-left p-4 rounded-xl border transition-all duration-200 cursor-pointer ${
                   activePersona === 'Masyarakat'
-                    ? 'border-emerald-500 bg-emerald-50/30 ring-2 ring-emerald-500/20 shadow-md'
+                    ? 'border-emerald-500 bg-emerald-50/30 ring-2 ring-emerald-500/20'
                     : 'border-gray-100 hover:border-gray-200 hover:shadow-sm bg-white'
                 }`}
               >
@@ -117,7 +117,7 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
                 onClick={() => onSelectPersona('Petugas')}
                 className={`text-left p-4 rounded-xl border transition-all duration-200 cursor-pointer ${
                   activePersona === 'Petugas'
-                    ? 'border-blue-500 bg-blue-50/30 ring-2 ring-blue-500/20 shadow-md'
+                    ? 'border-blue-500 bg-blue-50/30 ring-2 ring-blue-500/20'
                     : 'border-gray-100 hover:border-gray-200 hover:shadow-sm bg-white'
                 }`}
               >
@@ -151,7 +151,7 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
                 onClick={() => onSelectPersona('BankSampah')}
                 className={`text-left p-4 rounded-xl border transition-all duration-200 cursor-pointer ${
                   activePersona === 'BankSampah'
-                    ? 'border-indigo-500 bg-indigo-50/30 ring-2 ring-indigo-500/20 shadow-md'
+                    ? 'border-indigo-500 bg-indigo-50/30 ring-2 ring-indigo-500/20'
                     : 'border-gray-100 hover:border-gray-200 hover:shadow-sm bg-white'
                 }`}
               >
@@ -316,17 +316,17 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
             <div>
               <h3 className="text-sm font-bold text-gray-800 font-display mb-3">Solo Pilah Palette (Clean Minimalism)</h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded-xl bg-emerald-500 text-white shadow-sm">
+                <div className="p-3 rounded-xl bg-emerald-500 text-white">
                   <div className="text-xs font-bold font-display">Primary Green</div>
                   <div className="text-[10px] font-mono mt-1">#2D6A4F</div>
                   <div className="text-[9px] mt-2 opacity-90">Simbol alam, kebersihan, & kelestarian</div>
                 </div>
-                <div className="p-3 rounded-xl bg-emerald-600 text-white shadow-sm">
+                <div className="p-3 rounded-xl bg-emerald-600 text-white">
                   <div className="text-xs font-bold font-display">Deep Forest</div>
                   <div className="text-[10px] font-mono mt-1">#1B4332</div>
                   <div className="text-[9px] mt-2 opacity-90">Keasrian, kedalaman, & kontras kokoh</div>
                 </div>
-                <div className="p-3 rounded-xl bg-gray-900 text-white shadow-sm">
+                <div className="p-3 rounded-xl bg-gray-900 text-white">
                   <div className="text-xs font-bold font-display">Charcoal Gray</div>
                   <div className="text-[10px] font-mono mt-1">#111827</div>
                   <div className="text-[9px] mt-2 opacity-90">Teks kontras tinggi & elemen gelap</div>
@@ -345,10 +345,10 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
                 <div>
                   <h4 className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Tombol (Button) State</h4>
                   <div className="flex flex-wrap gap-2.5">
-                    <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm transition-all">
+                    <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-xl transition-all">
                       Primary Button
                     </button>
-                    <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm transition-all">
+                    <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition-all">
                       Secondary Button
                     </button>
                     <button className="px-4 py-2 border border-gray-200 hover:border-gray-300 text-gray-700 text-xs font-bold rounded-xl transition-all">
@@ -378,10 +378,10 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
                 <div>
                   <h4 className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Shadows & Card Borders</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="p-4 rounded-xl border border-gray-100 bg-white shadow-sm text-xs">
+                    <div className="p-4 rounded-xl border border-gray-100 bg-white text-xs">
                       <strong>Card Border Ringan:</strong> Cocok untuk visualisasi berulang dalam grid dengan kontras elegan.
                     </div>
-                    <div className="p-4 rounded-xl bg-white shadow-md text-xs">
+                    <div className="p-4 rounded-xl bg-white text-xs">
                       <strong>Card Shadow Sedang:</strong> Menandakan elemen interaktif melayang yang bisa ditekan (clickable).
                     </div>
                   </div>
@@ -417,7 +417,7 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
                 </div>
                 <div>
                   <div className="text-[10px] font-mono text-gray-400 mb-1">Metadata/Mono - JetBrains Mono Medium</div>
-                  <div className="text-[11px] font-mono text-emerald-600 font-medium">AD 9102 UA • GPS: -7.5361, 110.8549</div>
+                  <div className="text-[11px] font-mono text-emerald-600 font-medium">AD 9102 UA â€¢ GPS: -7.5361, 110.8549</div>
                 </div>
               </div>
             </div>
@@ -474,7 +474,7 @@ export default function DesignSystem({ onSelectPersona, activePersona }: DesignS
 
       {/* Footer info */}
       <div className="p-4 bg-gray-50 border-t border-gray-100 text-[10px] text-gray-400 flex justify-between">
-        <span>Solo Pilah Mobile UI/UX Prototype • Surakarta</span>
+        <span>Solo Pilah Mobile UI/UX Prototype â€¢ Surakarta</span>
         <span>Version 1.0.0</span>
       </div>
     </div>

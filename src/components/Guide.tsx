@@ -63,7 +63,7 @@ export default function Guide({ isWireframe }: GuideProps) {
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-sm'}`}>
+      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <BookOpen className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Panduan Pemilahan Sampah
@@ -98,7 +98,7 @@ export default function Guide({ isWireframe }: GuideProps) {
 
         {/* Real-time search suggestions dropdown */}
         {searchQuery && (
-          <div className={`border rounded-xl max-h-32 overflow-y-auto phone-scroll bg-white shadow-lg p-2 space-y-1 z-30 absolute left-3 right-3 ${
+          <div className={`border rounded-xl max-h-32 overflow-y-auto phone-scroll bg-white p-2 space-y-1 z-30 absolute left-3 right-3 ${
             isWireframe ? 'border-gray-800' : 'border-gray-100'
           }`}>
             {searchResults.length === 0 ? (
@@ -150,7 +150,7 @@ export default function Guide({ isWireframe }: GuideProps) {
                   isSelected
                     ? isWireframe
                       ? 'border-2 border-black bg-gray-100 font-extrabold'
-                      : `border-[1.5px] ring-2 shadow-sm`
+                      : `border-[1.5px] ring-2`
                     : 'border-gray-100 bg-white text-gray-500'
                 }`}
                 style={{
@@ -170,7 +170,7 @@ export default function Guide({ isWireframe }: GuideProps) {
       {/* Category Content Details */}
       <div className="px-3 pb-4 flex-1">
         <div className={`p-4 rounded-2xl border bg-white ${
-          isWireframe ? 'border-gray-300' : 'border-gray-100/60 shadow-sm'
+          isWireframe ? 'border-gray-300' : 'border-gray-100/60'
         }`}>
           {/* Header section */}
           <div className="flex items-start gap-3 mb-3 border-b border-gray-100 pb-3">
@@ -221,7 +221,7 @@ export default function Guide({ isWireframe }: GuideProps) {
             <ul className="space-y-1.5 list-none">
               {selectedCategoryData.tips.map((tip, idx) => (
                 <li key={idx} className="text-[9px] text-gray-500 leading-relaxed flex items-start gap-1">
-                  <span className="text-emerald-500 font-bold select-none">•</span>
+                  <span className="text-emerald-500 font-bold select-none">â€¢</span>
                   <span>{tip}</span>
                 </li>
               ))}

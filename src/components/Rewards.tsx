@@ -65,7 +65,7 @@ export default function Rewards({ profile, setProfile, isWireframe }: RewardsPro
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'} relative`}>
       {/* Header */}
-      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-sm'}`}>
+      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <Award className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Klaim Voucher & Merchandise
@@ -78,7 +78,7 @@ export default function Rewards({ profile, setProfile, isWireframe }: RewardsPro
         <div className={`p-4 rounded-2xl relative overflow-hidden text-white ${
           isWireframe
             ? 'border-2 border-gray-800 bg-white text-gray-800'
-            : 'bg-gradient-to-r from-emerald-500 via-teal-600 to-emerald-600 shadow-md shadow-emerald-100'
+              : 'bg-gradient-to-r from-emerald-500 via-teal-600 to-emerald-600'
         }`}>
           <div className="flex justify-between items-center relative z-10">
             <div>
@@ -109,7 +109,7 @@ export default function Rewards({ profile, setProfile, isWireframe }: RewardsPro
               <div
                 key={q.id}
                 className={`p-3 rounded-xl border bg-white ${
-                  isWireframe ? 'border-gray-300' : 'border-gray-100/60 shadow-sm'
+                  isWireframe ? 'border-gray-300' : 'border-gray-100/60'
                 }`}
               >
                 <div className="flex justify-between items-start gap-1">
@@ -176,7 +176,7 @@ export default function Rewards({ profile, setProfile, isWireframe }: RewardsPro
             <button
               key={reward.id}
               onClick={() => setSelectedReward(reward)}
-              className={`p-2.5 rounded-xl border bg-white flex flex-col justify-between text-left transition-all hover:scale-[1.02] active:scale-95 cursor-pointer shadow-sm ${
+              className={`p-2.5 rounded-xl border bg-white flex flex-col justify-between text-left transition-all hover:scale-[1.02] active:scale-95 cursor-pointer ${
                 isWireframe ? 'border-gray-300' : 'border-gray-100/50 hover:border-gray-200'
               }`}
             >
