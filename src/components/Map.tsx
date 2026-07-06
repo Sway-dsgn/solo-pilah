@@ -1,0 +1,274 @@
+import React, { useState } from 'react';
+import { BANK_SAMPAH_LOCATIONS } from '../data';
+import { BankSampahLocation } from '../types';
+import { Map, MapPin, Search, Compass, Info, Phone, Clock, Award, Star, X } from 'lucide-react';
+
+interface MapProps {
+  isWireframe: boolean;
+}
+
+export default function MapScreen({ isWireframe }: MapProps) {
+  const [selectedLoc, setSelectedLoc] = useState<BankSampahLocation | null>(BANK_SAMPAH_LOCATIONS[1]); // Default to Bank Sampah Sido Mukti Mojo
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterType, setFilterType] = useState<'Semua' | 'Bank Sampah' | 'TPS' | 'TPA'>('Semua');
+
+  const filteredLocations = BANK_SAMPAH_LOCATIONS.filter((loc) => {
+    const matchesSearch = loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          loc.address.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter = filterType === 'Semua' || loc.type === filterType;
+    return matchesSearch && matchesFilter;
+  });
+
+  return (
+    <div className={`h-full flex flex-col phone-scroll overflow-y-auto relative ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
+      {/* Header */}
+      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-sm'}`}>
+        <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
+          <Map className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
+          Peta Bank Sampah & TPS Solo
+        </h2>
+        <p className="text-[10px] text-gray-400 mt-0.5">Cari tempat penukaran dan pembuangan terdekat</p>
+      </div>
+
+      {/* Search and Filters */}
+      <div className="p-3 bg-white border-b border-gray-100 space-y-2 shrink-0">
+        <div className="relative">
+          <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Cari Kelurahan, Bank Sampah, TPS..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={`w-full py-2 pl-9 pr-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
+              isWireframe
+                ? 'border-gray-400 focus:ring-gray-800 bg-white'
+                : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/50'
+            }`}
+          />
+        </div>
+
+        {/* Filter Badges */}
+        <div className="flex gap-1.5 overflow-x-auto phone-scroll pb-1">
+          {['Semua', 'Bank Sampah', 'TPS', 'TPA'].map((type) => (
+            <button
+              key={type}
+              onClick={() => setFilterType(type as any)}
+              className={`px-3 py-1 rounded-full text-[9px] font-bold transition-all shrink-0 cursor-pointer ${
+                filterType === type
+                  ? isWireframe
+                    ? 'bg-gray-800 text-white border border-black'
+                    : 'bg-emerald-500 text-white'
+                  : isWireframe
+                  ? 'border border-gray-300 bg-white text-gray-600'
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              }`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Interactive Vector Map of Surakarta (Solo) */}
+      <div className="flex-1 min-h-[220px] bg-slate-100 relative overflow-hidden">
+        {isWireframe ? (
+          /* Wireframe representation of map grid */
+          <div className="absolute inset-0 grid-bg opacity-30 flex items-center justify-center pointer-events-none">
+            <div className="border border-gray-400 p-2 bg-white/80 rounded font-mono text-[9px] text-gray-400">
+              [WIREFRAME_MAP_GRID: SURAKARTA_BOUNDS]
+            </div>
+          </div>
+        ) : (
+          /* Vector Art representing Surakarta geography */
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {/* Bengawan Solo River flowing North-South on the right side */}
+            <path
+              d="M 85,0 Q 88,25 78,50 T 92,100"
+              fill="none"
+              stroke="#93c5fd"
+              strokeWidth="6"
+              strokeLinecap="round"
+              opacity="0.6"
+            />
+            {/* Kali Pepe flowing from West to East merging to Bengawan Solo */}
+            <path
+              d="M 0,35 Q 35,45 55,48 T 80,48"
+              fill="none"
+              stroke="#93c5fd"
+              strokeWidth="3"
+              strokeLinecap="round"
+              opacity="0.5"
+            />
+            {/* Major roads */}
+            {/* Jl. Slamet Riyadi (Horizontal center-left) */}
+            <line x1="0" y1="60" x2="100" y2="60" stroke="#e2e8f0" strokeWidth="2.5" />
+            <line x1="0" y1="60" x2="100" y2="60" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3,3" />
+
+            {/* Jl. Jenderal Sudirman / Urip Sumoharjo */}
+            <line x1="58" y1="60" x2="58" y2="10" stroke="#e2e8f0" strokeWidth="2" />
+          </svg>
+        )}
+
+        {/* Landmarks tags on Map for orientation */}
+        {!isWireframe && (
+          <>
+            <div className="absolute left-6 top-[30%] text-[8px] font-bold text-gray-400 select-none bg-white/70 px-1 py-0.5 rounded shadow-sm">
+              Stadion Manahan
+            </div>
+            <div className="absolute left-2 top-[53%] text-[8px] font-bold text-gray-400 select-none bg-white/70 px-1 py-0.5 rounded shadow-sm">
+              Stasiun Purwosari
+            </div>
+            <div className="absolute left-1/2 top-[55%] -translate-x-1/2 text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded shadow-sm border border-blue-100">
+              Pasar Gede
+            </div>
+            <div className="absolute right-3 top-[10%] text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded shadow-sm border border-blue-100">
+              TPA Putri Cempo
+            </div>
+            <div className="absolute right-14 bottom-[20%] text-[8px] font-semibold text-sky-500 select-none tracking-widest uppercase rotate-90">
+              S. Bengawan Solo
+            </div>
+          </>
+        )}
+
+        {/* Interactive Location Marker Pins */}
+        {filteredLocations.map((loc) => {
+          const isSelected = selectedLoc?.id === loc.id;
+          const pinColor = isWireframe
+            ? isSelected ? 'text-black' : 'text-gray-400'
+            : loc.type === 'Bank Sampah'
+            ? isSelected ? 'text-indigo-600 scale-125' : 'text-indigo-400'
+            : loc.type === 'TPA'
+            ? isSelected ? 'text-red-600 scale-125' : 'text-red-500'
+            : isSelected ? 'text-emerald-600 scale-125' : 'text-emerald-400';
+
+          return (
+            <button
+              key={loc.id}
+              onClick={() => setSelectedLoc(loc)}
+              style={{ left: `${loc.coordinates.x}%`, top: `${loc.coordinates.y}%` }}
+              className="absolute -translate-x-1/2 -translate-y-1/2 p-1.5 cursor-pointer transition-all duration-300 hover:scale-125 group z-20"
+            >
+              <div className="relative">
+                <MapPin className={`w-7 h-7 filter drop-shadow-md ${pinColor}`} />
+                {/* Visual ripple effect for TPA or active selection */}
+                {isSelected && !isWireframe && (
+                  <span className="absolute -inset-0.5 bg-current opacity-20 rounded-full animate-ping pointer-events-none"></span>
+                )}
+                {/* Mini icon on pin */}
+                <span className="absolute left-1/2 top-1.5 -translate-x-1/2 text-[7px] font-extrabold text-white font-mono uppercase">
+                  {loc.type[0]}
+                </span>
+              </div>
+
+              {/* Tooltip on hover */}
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-all bg-gray-900 text-white text-[9px] font-bold px-2 py-1 rounded shadow-md whitespace-nowrap z-50 pointer-events-none">
+                {loc.name}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Selected Location Details Panel */}
+      {selectedLoc ? (
+        <div className={`p-4 bg-white border-t rounded-t-3xl shrink-0 space-y-3 relative z-30 ${
+          isWireframe ? 'border-gray-800' : 'border-gray-100 shadow-2xl shadow-gray-500/10'
+        }`}>
+          <div className="flex justify-between items-start">
+            <div className="space-y-0.5">
+              <span className={`inline-block px-2 py-0.5 text-[8px] font-bold uppercase rounded-md ${
+                isWireframe
+                  ? 'bg-gray-200 text-gray-800'
+                  : selectedLoc.type === 'Bank Sampah'
+                  ? 'bg-indigo-50 text-indigo-700'
+                  : selectedLoc.type === 'TPA'
+                  ? 'bg-red-50 text-red-700'
+                  : 'bg-emerald-50 text-emerald-700'
+              }`}>
+                {selectedLoc.type} • {selectedLoc.distance} terdekat
+              </span>
+              <h3 className="text-xs font-bold font-display text-gray-800">{selectedLoc.name}</h3>
+              <p className="text-[10px] text-gray-500">{selectedLoc.address}</p>
+            </div>
+
+            <button
+              onClick={() => setSelectedLoc(null)}
+              className="text-gray-400 hover:text-gray-600 p-1"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 text-[10px] border-t border-b border-gray-100 py-2.5">
+            <div className="flex items-center gap-1.5 text-gray-600">
+              <Clock className="w-3.5 h-3.5 text-gray-400" />
+              <span>{selectedLoc.hours}</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-gray-600">
+              <Phone className="w-3.5 h-3.5 text-gray-400" />
+              <span>{selectedLoc.phone}</span>
+            </div>
+          </div>
+
+          {/* Pricing Rates or Acceptable categories */}
+          <div className="space-y-1.5">
+            <h4 className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">
+              {selectedLoc.type === 'Bank Sampah' ? 'Tarif Tukar Poin (per Kg)' : 'Menerima Sampah'}
+            </h4>
+            <div className="flex flex-wrap gap-1.5">
+              {selectedLoc.type === 'Bank Sampah' ? (
+                Object.entries(selectedLoc.rates).map(([item, rate]) => (
+                  <div
+                    key={item}
+                    className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[9px] font-bold ${
+                      isWireframe
+                        ? 'border border-gray-300'
+                        : 'bg-emerald-50/50 border border-emerald-100 text-emerald-800'
+                    }`}
+                  >
+                    <Award className="w-3 h-3 text-emerald-600" />
+                    <span>{item}: {rate} pts</span>
+                  </div>
+                ))
+              ) : (
+                selectedLoc.acceptedTypes.map((type) => (
+                  <span
+                    key={type}
+                    className="px-2 py-1 bg-gray-100 text-gray-600 rounded-lg text-[9px] font-medium"
+                  >
+                    {type}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Call to Action buttons */}
+          <div className="flex gap-2 pt-1">
+            <button
+              onClick={() => alert(`Navigasi rute tercepat menuju ${selectedLoc.name}`)}
+              className={`flex-1 py-2.5 text-xs font-bold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer shadow-sm ${
+                isWireframe ? 'bg-gray-900 border-2 border-black' : 'bg-emerald-500 hover:bg-emerald-600'
+              }`}
+            >
+              <Compass className="w-4 h-4" />
+              Petunjuk Rute
+            </button>
+            <a
+              href={`tel:${selectedLoc.phone}`}
+              className={`px-3.5 py-2.5 text-xs font-bold rounded-xl flex items-center justify-center border transition-colors ${
+                isWireframe ? 'border-gray-400 text-gray-800' : 'border-gray-200 hover:bg-gray-50 text-gray-600'
+              }`}
+            >
+              <Phone className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      ) : (
+        <div className="p-4 bg-white text-center text-xs text-gray-400 border-t border-gray-100">
+          Silakan tap pin marker di peta untuk melihat detail Bank Sampah atau TPS
+        </div>
+      )}
+    </div>
+  );
+}
