@@ -15,28 +15,12 @@ import DesignSystem from './components/DesignSystem';
 import { INITIAL_REPORTS } from './data';
 
 import {
-  Smartphone,
-  Eye,
-  RefreshCw,
   Home,
-  Calendar,
   Camera,
-  MapPin,
   User,
-  Wifi,
-  Battery,
   Bell,
-  Sparkles,
-  ArrowRight,
-  Compass,
-  CheckCircle,
   Award,
-  BookOpen,
-  Info,
-  Layers,
-  Leaf,
   Scan as ScanIcon,
-  ClipboardList,
   X
 } from 'lucide-react';
 
@@ -221,7 +205,7 @@ export default function App() {
   );
 
   const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && (
-    <div className={`border-t flex justify-around items-center shrink-0 z-40 min-h-[52px] lg:min-h-[64px] ${
+    <div className={`border-t flex justify-around items-center shrink-0 z-40 min-h-[52px] ${
       isWireframe ? 'bg-white border-gray-400' : 'bg-white border-gray-100 shadow-xl'
     }`}>
       {[
@@ -254,12 +238,12 @@ export default function App() {
               setCurrentScreen(tab.id as ScreenType);
               setShowNotifications(false);
             }}
-            className={`flex flex-col items-center justify-center py-1 px-2 lg:py-1.5 lg:px-3 rounded-lg cursor-pointer transition-all ${
+            className={`flex flex-col items-center justify-center py-1 px-2 rounded-lg cursor-pointer transition-all ${
               isTabActive ? 'scale-110 font-bold' : 'text-gray-400 hover:text-gray-600'
             }`}
           >
-            <Icon className={`w-[18px] h-[18px] lg:w-5 lg:h-5 ${isTabActive ? activeColor : 'text-gray-400'}`} />
-            <span className={`text-[8px] lg:text-[9px] mt-0.5 leading-none block ${
+            <Icon className={`w-[18px] h-[18px] ${isTabActive ? activeColor : 'text-gray-400'}`} />
+            <span className={`text-[8px] mt-0.5 leading-none block ${
               isTabActive ? isWireframe ? 'text-black' : 'text-gray-800' : 'text-gray-400'
             }`}>
               {tab.label}
@@ -271,94 +255,11 @@ export default function App() {
   );
 
   return (
-    <>
-      {/* DESKTOP: smartphone mockup */}
-      <div className="hidden lg:flex min-h-screen bg-black flex-col items-center justify-center p-6 font-sans">
-        <div className="w-full max-w-md flex flex-col items-center justify-center shrink-0">
-          <div className="w-[370px] h-[760px] bg-slate-900 rounded-[50px] p-4 shadow-2xl relative border-4 border-slate-800 flex flex-col select-none ring-12 ring-slate-950/20">
-            <div className="absolute left-[-6px] top-32 w-1.5 h-12 bg-slate-800 rounded-l-md"></div>
-            <div className="absolute left-[-6px] top-48 w-1.5 h-12 bg-slate-800 rounded-l-md"></div>
-            <div className="absolute right-[-6px] top-40 w-1.5 h-16 bg-slate-800 rounded-r-md"></div>
-
-            <div className="w-full h-full bg-white rounded-[38px] overflow-hidden flex flex-col relative border border-slate-950">
-              <div className={`h-11 px-6 pt-3 flex justify-between items-center text-[10px] font-bold z-50 shrink-0 ${
-                isWireframe ? 'bg-white text-gray-900 border-b border-gray-200' : 'bg-white text-gray-800'
-              }`}>
-                <span>09:41</span>
-                <div className="w-24 h-4.5 bg-black rounded-full absolute left-1/2 -translate-x-1/2 top-2.5 flex items-center justify-end px-2.5">
-                  <span className="w-1.5 h-1.5 bg-slate-800 rounded-full"></span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Wifi className="w-3 h-3 text-current" />
-                  <span className="text-[8px] leading-none">4G</span>
-                  <Battery className="w-4 h-4 text-current" />
-                </div>
-              </div>
-              <div className="flex-1 overflow-hidden relative flex flex-col">
-                {screenRoutes}
-              </div>
-              {bottomNav}
-            </div>
-          </div>
-        </div>
-
-        <div className="hidden lg:block mt-6 w-[370px] bg-neutral-900 border border-neutral-800 rounded-2xl p-4 shadow-xl text-neutral-300">
-          <h4 className="text-[10px] font-extrabold text-neutral-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
-            <ClipboardList className="w-3.5 h-3.5" /><span>Teks & Alamat untuk Disalin (Selectable)</span>
-          </h4>
-          <div className="space-y-3.5 text-xs">
-            <div>
-              <span className="text-[9px] text-neutral-500 font-bold block mb-1">Alamat Laporan 1</span>
-              <p className="bg-black p-2 rounded-lg border border-neutral-800 font-mono text-[10.5px] select-all cursor-text leading-relaxed text-emerald-400">
-                Jl. Ki Hajar Dewantara, Jebres, Surakarta
-              </p>
-            </div>
-            <div>
-              <span className="text-[9px] text-neutral-500 font-bold block mb-1">Alamat Laporan 2</span>
-              <p className="bg-black p-2 rounded-lg border border-neutral-800 font-mono text-[10.5px] select-all cursor-text leading-relaxed text-emerald-400">
-                Jl. Urip Sumoharjo (Samping Pasar Gede), Jebres
-              </p>
-            </div>
-            <div>
-              <span className="text-[9px] text-neutral-500 font-bold block mb-1">Alamat Laporan 3</span>
-              <p className="bg-black p-2 rounded-lg border border-neutral-800 font-mono text-[10.5px] select-all cursor-text leading-relaxed text-emerald-400">
-                Bantaran Kali Pepe, Sudiroprajan, Jebres
-              </p>
-            </div>
-            <div>
-              <span className="text-[9px] text-neutral-500 font-bold block mb-1">Alamat Landmark GPS Lainnya</span>
-              <div className="space-y-1.5">
-                <p className="bg-black p-2 rounded-lg border border-neutral-800 font-mono text-[10.5px] select-all cursor-text leading-relaxed text-neutral-400">
-                  Jl. Slamet Riyadi No. 120, Samping Solo Grand Mall
-                </p>
-                <p className="bg-black p-2 rounded-lg border border-neutral-800 font-mono text-[10.5px] select-all cursor-text leading-relaxed text-neutral-400">
-                  Sekitar Stadion Manahan, Banjarsari
-                </p>
-              </div>
-            </div>
-            <div className="border-t border-neutral-800 pt-3">
-              <span className="text-[9px] text-neutral-500 font-bold block mb-1 font-mono">Development App URL</span>
-              <p className="bg-black p-2 rounded-lg border border-neutral-800 font-mono text-[10px] select-all cursor-text leading-relaxed text-amber-500 break-all">
-                https://ais-dev-epca6okqu5j47s4y4mmakb-341368147403.asia-southeast1.run.app
-              </p>
-            </div>
-            <div>
-              <span className="text-[9px] text-neutral-500 font-bold block mb-1 font-mono">Shared App URL</span>
-              <p className="bg-black p-2 rounded-lg border border-neutral-800 font-mono text-[10px] select-all cursor-text leading-relaxed text-amber-500 break-all">
-                https://ais-pre-epca6okqu5j47s4y4mmakb-341368147403.asia-southeast1.run.app
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* MOBILE: fullscreen app */}
-      <div className="lg:hidden flex flex-col min-h-screen bg-white font-sans">
+    <div className="flex flex-col min-h-screen bg-white font-sans">
         <div className="flex-1 overflow-hidden relative flex flex-col">
           {screenRoutes}
         </div>
         {bottomNav}
-      </div>
-    </>
+    </div>
   );
 }
