@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, ChevronLeft, ChevronRight, Sparkles, Info, Globe, Leaf, Award, ArrowRight, Play, FileText, X } from 'lucide-react';
+import { BookOpen, ChevronLeft, ChevronRight, Sparkles, Info, Globe, Leaf, Award, ArrowRight, Play, FileText, X, ExternalLink } from 'lucide-react';
 
 interface EdukasiProps {
   isWireframe: boolean;
@@ -12,6 +12,7 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerSlide, setViewerSlide] = useState<any>(null);
   const [mediaTab, setMediaTab] = useState<'teks' | 'video'>('teks');
+  const [selectedFact, setSelectedFact] = useState<any>(null);
 
   const slides = city.eduSlides;
 
@@ -190,8 +191,8 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
 
             <div className="space-y-2.5">
               {facts.map((fact: any) => (
-                <div key={fact.id}
-                  className={`p-3.5 rounded-2xl border overflow-hidden relative ${
+                <div key={fact.id} onClick={() => setSelectedFact(fact)}
+                  className={`p-3.5 rounded-2xl border overflow-hidden relative cursor-pointer transition-all hover:translate-x-0.5 ${
                     isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100/60'
                   }`}>
                   <div className="flex gap-3">
@@ -201,8 +202,8 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
                     )}
                     <div className="flex-1 min-w-0 space-y-1">
                       <h5 className="text-[11px] font-extrabold text-gray-800 font-display leading-tight">{fact.title}</h5>
-                      <p className="text-[9px] text-gray-500 leading-relaxed">{fact.snippet}</p>
-                      <span className={`inline-flex items-center gap-1 text-[8px] font-bold cursor-pointer ${
+                      <p className="text-[9px] text-gray-500 leading-relaxed line-clamp-3">{fact.snippet}</p>
+                      <span className={`inline-flex items-center gap-1 text-[8px] font-bold ${
                         isWireframe ? 'text-gray-600' : 'text-emerald-600'
                       }`}>
                         Baca Selengkapnya <ArrowRight className="w-2.5 h-2.5" />
@@ -232,6 +233,55 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
           <Award className={`w-8 h-8 ${isWireframe ? 'text-gray-300' : 'text-emerald-300'}`} />
         </div>
       </div>
+
+      {/* Fact Detail Modal */}
+      {selectedFact && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end z-50" onClick={() => setSelectedFact(null)}>
+          <div className="w-full bg-white rounded-t-3xl pt-3 pb-5 max-h-[85%] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-center mb-3">
+              <div className={`w-8 h-1 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-gray-300'}`} />
+            </div>
+
+            <div className="px-5 space-y-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <div className={`p-1.5 rounded-lg ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50'}`}>
+                    <Globe className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`} />
+                  </div>
+                  <div>
+                    <span className="text-[8px] font-bold text-gray-400 uppercase tracking-wider">Fakta Lingkungan</span>
+                    <h4 className="text-sm font-extrabold font-display text-gray-800 leading-tight">{selectedFact.title}</h4>
+                  </div>
+                </div>
+                <button onClick={() => setSelectedFact(null)}
+                  className={`p-1.5 rounded-lg transition-all cursor-pointer shrink-0 ${
+                    isWireframe ? 'hover:bg-gray-100 text-gray-500' : 'hover:bg-gray-100 text-gray-400'
+                  }`}>
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {!isWireframe && selectedFact.imageUrl && (
+                <img src={selectedFact.imageUrl} alt={selectedFact.title}
+                  className="w-full h-40 rounded-2xl object-cover" />
+              )}
+
+              <div className="space-y-3">
+                <p className="text-[11px] text-gray-500 leading-relaxed">{selectedFact.snippet}</p>
+                <div className={`h-px ${isWireframe ? 'bg-gray-300' : 'bg-gray-100'}`} />
+                <p className="text-[11px] text-gray-700 leading-relaxed">{selectedFact.fullText}</p>
+              </div>
+
+              <button onClick={() => setSelectedFact(null)}
+                className={`w-full py-3 text-xs font-extrabold text-white rounded-xl transition-all active:scale-[0.98] cursor-pointer ${
+                  isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600'
+                }`}>
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Media Viewer Modal */}
       {viewerOpen && viewerSlide && (
