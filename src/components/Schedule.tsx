@@ -127,7 +127,7 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
                           ? 'bg-blue-50 text-blue-700'
                           : 'bg-red-50 text-red-700'
                       }`}>
-                        {schedule.day} â€¢ {schedule.wasteType}
+                        {schedule.day} - {schedule.wasteType}
                       </span>
                     </div>
 

@@ -17,7 +17,7 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
   const slides = [
     {
       title: "Krisis Sampah Putri Cempo Solo",
-      description: "TPA Putri Cempo Surakarta kelebihan muatan â€” 300 ton sampah per hari. Solo Pilah hadir mengajak warga Solo memilah sampah demi kota yang bersih dan bebas polusi metana.",
+      description: "TPA Putri Cempo Surakarta kelebihan muatan - 300 ton sampah per hari. Solo Pilah hadir mengajak warga Solo memilah sampah demi kota yang bersih dan bebas polusi metana.",
       illustration: (
         <div className={`w-full h-52 rounded-2xl flex items-center justify-center relative overflow-hidden ${
           isWireframe ? 'border-2 border-dashed border-gray-400 bg-gray-50' : 'bg-gradient-to-br from-red-600 via-orange-500 to-amber-400'
@@ -138,7 +138,7 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
                     <div className="bg-white/20 backdrop-blur rounded-2xl p-4">
                       <Camera className="w-8 h-8 text-white" />
                     </div>
-                    <div className="text-white text-2xl font-black animate-pulse">âŸ¶</div>
+                    <div className="text-white text-2xl font-black animate-pulse">→</div>
                     <div className="bg-emerald-400/30 backdrop-blur rounded-2xl p-4 border border-emerald-300/30">
                       <MapPin className="w-8 h-8 text-emerald-200" />
                     </div>

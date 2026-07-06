@@ -222,7 +222,7 @@ export default function Guide({ isWireframe, city }: GuideProps) {
             <ul className="space-y-1.5 list-none">
               {selectedCategoryData.tips.map((tip, idx) => (
                 <li key={idx} className="text-[9px] text-gray-500 leading-relaxed flex items-start gap-1">
-                  <span className="text-emerald-500 font-bold select-none">â€¢</span>
+                  <span className="text-emerald-500 font-bold select-none">•</span>
                   <span>{tip}</span>
                 </li>
               ))}
