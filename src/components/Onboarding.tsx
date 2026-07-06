@@ -184,7 +184,7 @@ export default function Onboarding({ onComplete, isWireframe }: OnboardingProps)
         </div>
 
         {/* Content */}
-        <div className="flex flex-col justify-center space-y-5 py-4 min-h-0">
+        <div className="flex flex-col space-y-5 py-4 min-h-0">
           {currentSlide.illustration}
 
           <div className="space-y-2">
