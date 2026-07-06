@@ -17,7 +17,7 @@ export default function Profile({ profile, isWireframe, onLogout }: ProfileProps
   ];
 
   return (
-    <div className={`h-full flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
+    <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header Profile Info Banner */}
       <div className={`p-6 text-center border-b flex flex-col items-center shrink-0 ${
         isWireframe ? 'bg-white border-gray-300' : 'bg-gradient-to-b from-emerald-50 to-white border-gray-100'

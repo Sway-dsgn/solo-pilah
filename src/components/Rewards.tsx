@@ -63,7 +63,7 @@ export default function Rewards({ profile, setProfile, isWireframe }: RewardsPro
   ];
 
   return (
-    <div className={`h-full flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'} relative`}>
+    <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'} relative`}>
       {/* Header */}
       <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-sm'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">

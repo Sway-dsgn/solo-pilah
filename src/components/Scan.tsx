@@ -140,7 +140,7 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate }: S
   };
 
   return (
-    <div className={`h-full flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
+    <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* App Bar */}
       <div className={`p-4 shrink-0 bg-white border-b flex items-center justify-between ${
         isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-sm'

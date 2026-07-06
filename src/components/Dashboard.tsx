@@ -76,7 +76,7 @@ export default function Dashboard({ profile, isWireframe, onNavigate, onOpenNoti
     .slice(0, 2);
 
   return (
-    <div className={`h-full flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
+    <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       
       {/* 1. Mini App Bar / Header */}
       <div className={`p-4 flex items-center justify-between border-b ${

@@ -21,7 +21,7 @@ export default function Schedule({ isWireframe }: ScheduleProps) {
   };
 
   return (
-    <div className={`h-full flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
+    <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
       <div className={`p-4 ${isWireframe ? 'bg-white border-b border-gray-300' : 'bg-white border-b border-gray-100 shadow-sm'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
