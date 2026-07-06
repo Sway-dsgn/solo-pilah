@@ -82,7 +82,7 @@ export default function App() {
   const screenRoutes = (
     <>
       {showNotifications && (
-        <div className="absolute inset-x-0 top-0 bottom-14 bg-black/50 z-50 flex flex-col justify-start">
+        <div className="absolute inset-x-0 top-0 bottom-0 bg-black/50 z-40 flex flex-col justify-start">
           <div className={`p-4 bg-white rounded-b-3xl border-b-2 shadow-2xl max-h-[75%] overflow-y-auto phone-scroll space-y-3.5 animate-in slide-in-from-top duration-300 ${
             isWireframe ? 'border-black' : 'border-emerald-500'
           }`}>
@@ -205,7 +205,7 @@ export default function App() {
   );
 
   const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && (
-    <div className={`border-t flex justify-around items-center shrink-0 z-40 min-h-[52px] ${
+    <div className={`fixed bottom-0 left-0 right-0 border-t flex justify-around items-center shrink-0 z-50 min-h-[52px] ${
       isWireframe ? 'bg-white border-gray-400' : 'bg-white border-gray-100 shadow-xl'
     }`}>
       {[
@@ -256,7 +256,7 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-screen bg-white font-sans">
-      <div className="flex-1 flex flex-col min-h-0">
+      <div className={`flex-1 flex flex-col min-h-0 relative ${currentScreen !== 'onboarding' && currentScreen !== 'login' ? 'pb-[52px]' : ''}`}>
         {screenRoutes}
       </div>
       {bottomNav}
