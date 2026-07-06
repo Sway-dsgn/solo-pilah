@@ -178,7 +178,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
             <Lock className="absolute left-3.5 top-3 w-4 h-4 text-gray-400" />
             <input
               type="password" required
-              placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+              placeholder="Masukkan password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={`w-full py-2.5 pl-10 pr-3 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
