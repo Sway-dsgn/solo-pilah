@@ -255,11 +255,13 @@ export default function App() {
   );
 
   return (
-    <div className="flex flex-col min-h-screen bg-white font-sans">
-        <div className="flex-1 overflow-hidden relative flex flex-col min-h-0">
+    <div className="flex flex-col h-screen bg-white font-sans">
+      <div className="flex-1 relative min-h-0">
+        <div className="absolute inset-0 overflow-y-auto">
           {screenRoutes}
         </div>
-        {bottomNav}
+      </div>
+      {bottomNav}
     </div>
   );
 }
