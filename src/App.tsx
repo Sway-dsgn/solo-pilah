@@ -221,7 +221,7 @@ export default function App() {
   );
 
   const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && (
-    <div className={`h-16 border-t flex justify-around items-center px-2 pb-2 shrink-0 z-40 ${
+    <div className={`border-t flex justify-around items-center shrink-0 z-40 min-h-[52px] lg:min-h-[64px] ${
       isWireframe ? 'bg-white border-gray-400' : 'bg-white border-gray-100 shadow-xl'
     }`}>
       {[
@@ -254,12 +254,12 @@ export default function App() {
               setCurrentScreen(tab.id as ScreenType);
               setShowNotifications(false);
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-3 rounded-lg cursor-pointer transition-all ${
+            className={`flex flex-col items-center justify-center py-1 px-2 lg:py-1.5 lg:px-3 rounded-lg cursor-pointer transition-all ${
               isTabActive ? 'scale-110 font-bold' : 'text-gray-400 hover:text-gray-600'
             }`}
           >
-            <Icon className={`w-5 h-5 ${isTabActive ? activeColor : 'text-gray-400'}`} />
-            <span className={`text-[9px] mt-0.5 leading-none block ${
+            <Icon className={`w-[18px] h-[18px] lg:w-5 lg:h-5 ${isTabActive ? activeColor : 'text-gray-400'}`} />
+            <span className={`text-[8px] lg:text-[9px] mt-0.5 leading-none block ${
               isTabActive ? isWireframe ? 'text-black' : 'text-gray-800' : 'text-gray-400'
             }`}>
               {tab.label}
