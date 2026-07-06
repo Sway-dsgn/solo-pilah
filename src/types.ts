@@ -125,6 +125,7 @@ export interface CityProfile {
     title: string;
     desc: string;
     bg: string;
+    videoUrl?: string;
   }[];
   notificationSamples: {
     title: string;
