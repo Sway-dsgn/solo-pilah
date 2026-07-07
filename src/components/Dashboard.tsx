@@ -95,12 +95,12 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         
         {/* 2. Edukasi Link Card */}
         <div onClick={() => onNavigate('edukasi')}
-          className={`p-4 rounded-2xl border flex items-center gap-3 cursor-pointer transition-all hover:scale-[1.01] btn-press group ${
+          className={`p-4 rounded-2xl border flex items-center gap-3 cursor-pointer transition-all btn-press group gradient-card ${
             isWireframe
               ? 'border-2 border-gray-800 bg-white text-gray-800'
               : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-transparent shadow-card'
           }`}>
-          <div className={`p-2.5 rounded-xl shrink-0 transition-transform group-hover:scale-110 group-hover:-rotate-3 ${
+          <div className={`p-2.5 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-6 ${
             isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-white/20'
           }`}>
             <BookOpen className="w-5 h-5" />
@@ -113,7 +113,9 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
               Pelajari cara pilah sampah, daur ulang, dan dampak lingkungan
             </p>
           </div>
-          <ChevronRight className="w-4 h-4 shrink-0 group-hover:translate-x-0.5 transition-transform" />
+          <div className={`p-1 rounded-lg transition-all group-hover:translate-x-1 ${isWireframe ? '' : 'bg-white/10'}`}>
+            <ChevronRight className="w-4 h-4" />
+          </div>
         </div>
 
         {/* 3. Poin Section (Saldo CempoPoints) */}
@@ -121,28 +123,33 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
             <CircleDollarSign className="w-3.5 h-3.5" /> Saldo & Poin
           </h4>
-          <div className={`p-4 rounded-2xl relative overflow-hidden shadow-card ${
+          <div className={`p-5 rounded-2xl relative overflow-hidden shadow-card ${
             isWireframe
               ? 'border-2 border-gray-800 bg-white text-gray-800'
-              : 'bg-white border border-gray-100'
+              : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white'
           }`}>
             {!isWireframe && (
-              <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-emerald-50/50 blur-xl" />
+              <>
+                <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-white/5 blur-2xl" />
+                <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-emerald-400/10 blur-2xl" />
+                <div className="absolute top-1/2 right-4 w-2 h-2 rounded-full bg-white/20" />
+                <div className="absolute top-3 right-12 w-1 h-1 rounded-full bg-white/10" />
+              </>
             )}
             <div className="flex justify-between items-center relative">
               <div>
-                <p className="text-[9px] text-gray-400 font-semibold uppercase tracking-wider">
+                <p className={`text-[9px] font-semibold uppercase tracking-wider ${isWireframe ? 'text-gray-500' : 'text-emerald-100'}`}>
                   CempoPoints Milik Anda
                 </p>
                 <div className="flex items-baseline gap-1 mt-1">
-                  <h2 className="text-2xl font-black font-display tracking-tight text-gray-800">
+                  <h2 className={`text-3xl font-black font-display tracking-tight ${isWireframe ? 'text-gray-800' : 'text-white'}`}>
                     {profile.points.toLocaleString()}
                   </h2>
-                  <span className="text-[10px] font-bold text-gray-400 uppercase">pts</span>
+                  <span className={`text-[10px] font-bold uppercase ${isWireframe ? 'text-gray-400' : 'text-emerald-200'}`}>pts</span>
                 </div>
-                <p className={`text-[9px] mt-1.5 flex items-center gap-1 text-emerald-600 font-medium`}>
+                <p className={`text-[9px] mt-1.5 flex items-center gap-1 font-medium ${isWireframe ? 'text-emerald-600' : 'text-emerald-100'}`}>
                   <TrendingUp className="w-3.5 h-3.5" />
-                  +120 poin berhasil didapat minggu ini
+                  +120 poin minggu ini
                 </p>
               </div>
 
@@ -151,7 +158,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                 className={`px-3.5 py-2 rounded-xl text-[10px] font-black flex items-center gap-1 transition-all cursor-pointer btn-press ${
                   isWireframe
                     ? 'border border-gray-800 bg-gray-100'
-                      : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-sm'
+                      : 'bg-white text-emerald-600 hover:bg-emerald-50 shadow-sm'
                   }`}
               >
                 Tukar Poin
@@ -230,12 +237,12 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             className={`p-4 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all btn-press group ${
               isWireframe
                 ? 'border-gray-800 bg-white text-gray-800'
-                : 'bg-gradient-to-r from-emerald-50 via-emerald-50/40 to-white border-emerald-100/60 hover:shadow-card-hover'
+                : 'bg-white border-emerald-100/60 shadow-card hover:shadow-card-hover'
             }`}
           >
             <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-3 ${
-                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-500 text-white shadow-sm'
+              <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-6 ${
+                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-sm'
               }`}>
                 <QrCode className="w-5 h-5" />
               </div>
@@ -249,7 +256,9 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-emerald-600 shrink-0 group-hover:translate-x-0.5 transition-transform" />
+            <div className="p-1 rounded-lg bg-emerald-50 text-emerald-500 group-hover:bg-emerald-100 transition-all">
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </div>
           </div>
         </div>
 
@@ -313,52 +322,58 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             <BarChart3 className="w-3.5 h-3.5" /> Dashboard Dampak Lingkungan
           </h4>
           
-          <div className={`p-4 rounded-2xl border space-y-3.5 shadow-card ${
+          <div className={`p-5 rounded-2xl border space-y-4 shadow-card ${
             isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
           }`}>
             {/* Impact stats grid */}
             <div className="grid grid-cols-3 gap-2.5">
-              <div className="text-center p-2.5 bg-emerald-50/40 rounded-xl border border-emerald-100/30">
-                <Leaf className="w-4 h-4 text-emerald-500 mx-auto mb-1" />
+              <div className="text-center p-3 bg-gradient-to-b from-emerald-50/60 to-transparent rounded-xl border border-emerald-100/30">
+                <div className="w-8 h-8 mx-auto rounded-lg bg-emerald-100 flex items-center justify-center mb-1.5">
+                  <Leaf className="w-4 h-4 text-emerald-600" />
+                </div>
                 <span className="text-[7.5px] text-gray-400 font-semibold block">Daur Ulang</span>
-                <span className="text-[11px] font-black text-gray-800 block mt-0.5">
+                <span className="text-xs font-black text-gray-800 block mt-0.5">
                   {profile.totalWasteSubmitted} Kg
                 </span>
               </div>
-              <div className="text-center p-2.5 bg-blue-50/40 rounded-xl border border-blue-100/30">
-                <TrendingDown className="w-4 h-4 text-blue-500 mx-auto mb-1" />
+              <div className="text-center p-3 bg-gradient-to-b from-blue-50/60 to-transparent rounded-xl border border-blue-100/30">
+                <div className="w-8 h-8 mx-auto rounded-lg bg-blue-100 flex items-center justify-center mb-1.5">
+                  <TrendingDown className="w-4 h-4 text-blue-600" />
+                </div>
                 <span className="text-[7.5px] text-gray-400 font-semibold block">Gas CO2</span>
-                <span className="text-[11px] font-black text-gray-800 block mt-0.5">
+                <span className="text-xs font-black text-gray-800 block mt-0.5">
                   {Number((profile.totalWasteSubmitted * 0.72).toFixed(1))} Kg
                 </span>
               </div>
-              <div className="text-center p-2.5 bg-amber-50/40 rounded-xl border border-amber-100/30">
-                <TreePine className="w-4 h-4 text-amber-500 mx-auto mb-1" />
+              <div className="text-center p-3 bg-gradient-to-b from-amber-50/60 to-transparent rounded-xl border border-amber-100/30">
+                <div className="w-8 h-8 mx-auto rounded-lg bg-amber-100 flex items-center justify-center mb-1.5">
+                  <TreePine className="w-4 h-4 text-amber-600" />
+                </div>
                 <span className="text-[7.5px] text-gray-400 font-semibold block">Pohon Selamat</span>
-                <span className="text-[11px] font-black text-gray-800 block mt-0.5">
+                <span className="text-xs font-black text-gray-800 block mt-0.5">
                   {Number((profile.totalWasteSubmitted * 0.03).toFixed(2))} Pohon
                 </span>
               </div>
             </div>
 
-            <div className={`p-3 rounded-xl border ${
-              isWireframe ? 'border-gray-300' : 'border-amber-200/50 bg-amber-50/40'
+            <div className={`p-3.5 rounded-xl border ${
+              isWireframe ? 'border-gray-300' : 'border-amber-200/50 bg-gradient-to-br from-amber-50/60 to-amber-50/20'
             }`}>
-              <div className="flex justify-between items-center mb-1.5">
+              <div className="flex justify-between items-center mb-2">
                 <span className="text-[9px] font-bold text-gray-700 flex items-center gap-1">
                   <Flame className="w-3.5 h-3.5 text-amber-500 map-pulse" />
                   Kapasitas {city.tpaName}
                 </span>
-                <span className="text-[9px] font-black text-red-600">78% Beban</span>
+                <span className="badge-red">78% Beban</span>
               </div>
               
-              <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-2.5 w-full bg-gray-200 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500 rounded-full"
+                  className="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500 rounded-full transition-all duration-1000"
                   style={{ width: '78%' }}
                 />
               </div>
-              <p className="text-[8px] text-gray-500 mt-1.5 leading-snug">
+              <p className="text-[8px] text-gray-500 mt-2 leading-snug">
                 Kontribusi pemilahan Anda mencegah overload & bahaya kebakaran gas metana di {city.shortName}.
               </p>
             </div>
