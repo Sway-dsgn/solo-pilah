@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import logo from '../../logo.png';
-import { Lock, Mail, UserCheck, Shield, HelpCircle, ArrowRight, ChevronDown, MapPin } from 'lucide-react';
+import { Lock, Mail, UserCheck, Shield, HelpCircle, ArrowRight, ChevronDown, MapPin, X, Search, Check, ChevronRight } from 'lucide-react';
 import { UserRole } from '../types';
 import { CityData } from '../cities';
 
@@ -21,6 +21,10 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
   const [registered, setRegistered] = useState(false);
   const [selectedKec, setSelectedKec] = useState(city.districts[0] || '');
   const [selectedKel, setSelectedKel] = useState('');
+  const [showPicker, setShowPicker] = useState(false);
+  const [pickerStep, setPickerStep] = useState<'kec' | 'kel'>('kec');
+  const [searchKec, setSearchKec] = useState('');
+  const [searchKel, setSearchKel] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,48 +66,158 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
         <p className="text-xs text-gray-500 mt-1">{city.description}</p>
       </div>
 
-      {/* Wilayah Selector */}
+      {/* Wilayah Picker - Custom Popup */}
       <div className={`mb-4 rounded-xl p-3 anim-fade-in-up ${isWireframe ? 'shadow-soft bg-white' : 'shadow-card bg-white'}`}>
         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
           Pilih Wilayah:
         </label>
-        <div className="space-y-2.5">
-          <div className="relative">
-            <select
-              value={selectedKec}
-              onChange={(e) => { setSelectedKec(e.target.value); setSelectedKel(''); }}
-              className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer bg-white ${
-                isWireframe
-                  ? 'border-gray-400 focus:ring-gray-800 shadow-soft'
-                  : 'border-gray-200 focus:ring-emerald-500/30 focus:border-emerald-500 text-gray-700 shadow-soft hover:border-gray-300 transition-all'
-              }`}
-            >
-              {city.districts.map((k: string) => (
-                <option key={k} value={k}>Kec. {k}</option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
+        <button
+          onClick={() => { setShowPicker(true); setPickerStep('kec'); setSearchKec(''); }}
+          className={`w-full p-3 text-xs font-bold rounded-xl border flex items-center gap-2.5 cursor-pointer transition-all ${
+            isWireframe
+              ? 'border-gray-400 bg-white text-gray-700 shadow-soft hover:bg-gray-50'
+              : 'border-gray-200 bg-white text-gray-700 shadow-soft hover:border-gray-300 hover:shadow-card'
+          }`}
+        >
+          <MapPin className={`w-4 h-4 shrink-0 ${isWireframe ? 'text-gray-500' : 'text-emerald-500'}`} />
+          <div className="flex-1 text-left min-w-0">
+            <span className="block truncate">
+              {selectedKel ? `Kel. ${selectedKel}` : `Kec. ${selectedKec}`}
+            </span>
+            {selectedKel && (
+              <span className="block text-[9px] text-gray-400 font-medium mt-0.5">Kec. {selectedKec}</span>
+            )}
           </div>
-          <div className="relative">
-            <select
-              value={selectedKel}
-              onChange={(e) => setSelectedKel(e.target.value)}
-              disabled={!selectedKec}
-              className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer bg-white ${
-                isWireframe
-                  ? 'border-gray-400 focus:ring-gray-800 shadow-soft'
-                  : 'border-gray-200 focus:ring-emerald-500/30 focus:border-emerald-500 text-gray-700 shadow-soft hover:border-gray-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
-              }`}
-            >
-              <option value="">Pilih Kelurahan</option>
-              {(city.subdistricts[selectedKec] || []).map((kel: string) => (
-                <option key={kel} value={kel}>{kel}</option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
+          <ChevronDown className={`w-4 h-4 shrink-0 transition-transform ${isWireframe ? 'text-gray-500' : 'text-gray-400'}`} />
+        </button>
+      </div>
+
+      {/* Wilayah Bottom Sheet Picker Modal */}
+      {showPicker && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent backdrop-blur-sm flex items-end z-50" onClick={() => setShowPicker(false)}>
+          <div className={`w-full bg-white rounded-t-3xl flex flex-col max-h-[70vh] overflow-hidden anim-scale-in ${
+            isWireframe ? '' : 'shadow-2xl'
+          }`} onClick={e => e.stopPropagation()}>
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-1 shrink-0">
+              <div className={`w-8 h-1 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-gray-300'}`} />
+            </div>
+
+            {/* Header */}
+            <div className="px-5 pb-3 border-b border-gray-100 shrink-0">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-xs font-extrabold font-display text-gray-800">
+                  {pickerStep === 'kec' ? 'Pilih Kecamatan' : 'Pilih Kelurahan'}
+                </h3>
+                <button onClick={() => setShowPicker(false)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 cursor-pointer">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="relative">
+                <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder={pickerStep === 'kec' ? "Cari kecamatan..." : "Cari kelurahan..."}
+                  value={pickerStep === 'kec' ? searchKec : searchKel}
+                  onChange={(e) => pickerStep === 'kec' ? setSearchKec(e.target.value) : setSearchKel(e.target.value)}
+                  className={`w-full pl-9 pr-3 py-2 text-[11px] rounded-xl border focus:outline-none focus:ring-2 ${
+                    isWireframe ? 'border-gray-400 focus:ring-gray-800 bg-gray-50' : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/50'
+                  }`}
+                  autoFocus
+                />
+              </div>
+            </div>
+
+            {/* Options List */}
+            <div className="flex-1 overflow-y-auto phone-scroll">
+              <div className="p-2 space-y-0.5">
+                {pickerStep === 'kec' ? (
+                  <>
+                    <button
+                      onClick={() => { setSelectedKec(''); setSelectedKel(''); setPickerStep('kel'); }}
+                      className={`w-full p-3 rounded-xl text-xs font-bold text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                        !selectedKec
+                          ? isWireframe ? 'bg-gray-100 border border-gray-400' : 'bg-emerald-50 border border-emerald-200 text-emerald-700'
+                          : isWireframe ? 'hover:bg-gray-50 text-gray-600' : 'hover:bg-gray-50 text-gray-600'
+                      }`}
+                    >
+                      <MapPin className="w-4 h-4 shrink-0" />
+                      <span>Semua Kecamatan</span>
+                    </button>
+                    {city.districts
+                      .filter(k => k.toLowerCase().includes(searchKec.toLowerCase()))
+                      .map((k) => (
+                        <button
+                          key={k}
+                          onClick={() => { setSelectedKec(k); setSelectedKel(''); setPickerStep('kel'); }}
+                          className={`w-full p-3 rounded-xl text-xs font-bold text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                            selectedKec === k
+                              ? isWireframe ? 'bg-gray-100 border border-gray-400' : 'bg-emerald-50 border border-emerald-200 text-emerald-700'
+                              : isWireframe ? 'hover:bg-gray-50 text-gray-600' : 'hover:bg-gray-50 text-gray-600'
+                          }`}
+                        >
+                          <MapPin className={`w-4 h-4 shrink-0 ${selectedKec === k ? 'text-emerald-500' : 'text-gray-400'}`} />
+                          <span className="flex-1">Kec. {k}</span>
+                          {selectedKec === k && <Check className="w-4 h-4 text-emerald-500" />}
+                          <ChevronRight className="w-3.5 h-3.5 text-gray-300" />
+                        </button>
+                      ))}
+                  </>
+                ) : (
+                  <>
+                    {selectedKec && (
+                      <div className="px-3 py-2 mb-1">
+                        <span className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">Kec. {selectedKec}</span>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => setPickerStep('kec')}
+                      className={`w-full p-3 rounded-xl text-xs font-bold text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                        isWireframe ? 'hover:bg-gray-50 text-gray-500' : 'hover:bg-gray-50 text-gray-500'
+                      }`}
+                    >
+                      <ChevronDown className="w-4 h-4 rotate-90 shrink-0" />
+                      <span>Kembali pilih kecamatan</span>
+                    </button>
+                    <div className="h-px bg-gray-100 my-1" />
+                    {(city.subdistricts[selectedKec] || [])
+                      .filter(kel => kel.toLowerCase().includes(searchKel.toLowerCase()))
+                      .map((kel) => (
+                        <button
+                          key={kel}
+                          onClick={() => { setSelectedKel(kel); setShowPicker(false); }}
+                          className={`w-full p-3 rounded-xl text-xs font-bold text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                            selectedKel === kel
+                              ? isWireframe ? 'bg-gray-100 border border-gray-400' : 'bg-emerald-50 border border-emerald-200 text-emerald-700'
+                              : isWireframe ? 'hover:bg-gray-50 text-gray-600' : 'hover:bg-gray-50 text-gray-600'
+                          }`}
+                        >
+                          <MapPin className={`w-4 h-4 shrink-0 ${selectedKel === kel ? 'text-emerald-500' : 'text-gray-400'}`} />
+                          <span className="flex-1">Kel. {kel}</span>
+                          {selectedKel === kel && <Check className="w-4 h-4 text-emerald-500" />}
+                        </button>
+                      ))}
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Bottom Action */}
+            <div className="p-4 border-t border-gray-100 shrink-0">
+              <button
+                onClick={() => setShowPicker(false)}
+                className={`w-full py-3 text-xs font-bold rounded-xl cursor-pointer transition-all ${
+                  isWireframe
+                    ? 'bg-gray-900 text-white'
+                    : 'bg-emerald-500 hover:bg-emerald-600 text-white'
+                }`}
+              >
+                {selectedKel ? `Konfirmasi (Kel. ${selectedKel})` : selectedKec ? `Konfirmasi (Kec. ${selectedKec})` : 'Lewati'}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Role Selector */}
       <div className={`mb-6 rounded-xl p-3 anim-fade-in-up ${isWireframe ? 'shadow-soft bg-white' : 'shadow-card bg-white'}`}>

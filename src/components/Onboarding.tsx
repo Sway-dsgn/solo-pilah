@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../../logo.png';
-import { ArrowRight, Recycle, Trash2, Award, Camera, MapPin, Flame, AlertTriangle, CheckCircle, TrendingUp, ChevronDown } from 'lucide-react';
+import { ArrowRight, Recycle, Trash2, Award, Camera, MapPin, Flame, AlertTriangle, CheckCircle, TrendingUp, ChevronDown, X, Check } from 'lucide-react';
 import { CityData } from '../cities';
 
 interface OnboardingProps {
@@ -190,48 +190,78 @@ export default function Onboarding({ onComplete, isWireframe, city }: Onboarding
                 {selectedKel || selectedKec}
               </button>
               {showWilayahPicker && (
-                <div className={`absolute right-0 top-8 w-56 rounded-2xl border-2 z-50 overflow-hidden ${
-                  isWireframe ? 'bg-white border-gray-400' : 'bg-white border-emerald-100/80 shadow-xl shadow-emerald-500/10'
-                }`}>
-                  <div className={`px-3.5 py-2.5 border-b text-[9px] font-bold uppercase tracking-wider ${
-                    isWireframe ? 'text-gray-500 border-gray-200' : 'text-gray-400 border-gray-100'
-                  }`}>
-                    Pilih Wilayah
+                <div className={`fixed inset-0 z-50 flex items-end bg-gradient-to-t from-black/60 via-black/20 to-transparent backdrop-blur-sm`} onClick={() => setShowWilayahPicker(false)}>
+                  <div className={`w-full bg-white rounded-t-3xl flex flex-col max-h-[70vh] overflow-hidden anim-scale-in ${
+                    isWireframe ? '' : 'shadow-2xl'
+                  }`} onClick={e => e.stopPropagation()}>
+                    <div className="flex justify-center pt-3 pb-1 shrink-0">
+                      <div className={`w-8 h-1 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-gray-300'}`} />
+                    </div>
+
+                    <div className="px-5 pb-3 border-b border-gray-100 shrink-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-xs font-extrabold font-display text-gray-800">Pilih Wilayah</h3>
+                        <button onClick={() => setShowWilayahPicker(false)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 cursor-pointer">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="p-3 space-y-3 overflow-y-auto phone-scroll">
+                      <div className="space-y-1">
+                        <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider px-1">Kecamatan</label>
+                        <div className="space-y-0.5">
+                          {city.districts.map((k) => (
+                            <button key={k}
+                              onClick={() => { setSelectedKec(k); setSelectedKel(''); }}
+                              className={`w-full p-3 rounded-xl text-xs font-bold text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                                selectedKec === k
+                                  ? isWireframe ? 'bg-gray-100 border border-gray-400' : 'bg-emerald-50 border border-emerald-200 text-emerald-700'
+                                  : isWireframe ? 'hover:bg-gray-50 text-gray-600 border border-transparent' : 'hover:bg-gray-50 text-gray-600 border border-transparent'
+                              }`}
+                            >
+                              <MapPin className={`w-4 h-4 shrink-0 ${selectedKec === k ? 'text-emerald-500' : 'text-gray-400'}`} />
+                              <span className="flex-1">Kec. {k}</span>
+                              {selectedKec === k && <Check className="w-4 h-4 text-emerald-500" />}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {selectedKec && (
+                        <div className="space-y-1">
+                          <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-wider px-1">Kelurahan ({selectedKec})</label>
+                          <div className="space-y-0.5">
+                            {(city.subdistricts[selectedKec] || []).map((kel) => (
+                              <button key={kel}
+                                onClick={() => { setSelectedKel(kel); setShowWilayahPicker(false); }}
+                                className={`w-full p-3 rounded-xl text-xs font-bold text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                                  selectedKel === kel
+                                    ? isWireframe ? 'bg-gray-100 border border-gray-400' : 'bg-emerald-50 border border-emerald-200 text-emerald-700'
+                                    : isWireframe ? 'hover:bg-gray-50 text-gray-600 border border-transparent' : 'hover:bg-gray-50 text-gray-600 border border-transparent'
+                                }`}
+                              >
+                                <MapPin className={`w-4 h-4 shrink-0 ${selectedKel === kel ? 'text-emerald-500' : 'text-gray-400'}`} />
+                                <span className="flex-1">Kel. {kel}</span>
+                                {selectedKel === kel && <Check className="w-4 h-4 text-emerald-500" />}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="p-4 border-t border-gray-100 shrink-0">
+                      <button
+                        onClick={() => setShowWilayahPicker(false)}
+                        className={`w-full py-3 text-[10px] font-bold rounded-xl cursor-pointer transition-all ${
+                          isWireframe ? 'bg-gray-900 text-white' : 'bg-emerald-500 hover:bg-emerald-600 text-white'
+                        }`}
+                      >
+                        {selectedKel ? `Konfirmasi (Kel. ${selectedKel})` : selectedKec ? `Pilih Kelurahan` : 'Lewati'}
+                      </button>
+                    </div>
                   </div>
-                  <div className="p-3 space-y-2">
-                    <select
-                      value={selectedKec}
-                      onChange={(e) => { setSelectedKec(e.target.value); setSelectedKel(''); }}
-                      className={`w-full p-2 text-[10px] font-bold rounded-xl border appearance-none cursor-pointer bg-white ${
-                        isWireframe ? 'border-gray-400' : 'border-gray-200 text-gray-700'
-                      }`}
-                    >
-                      {city.districts.map((k: string) => (
-                        <option key={k} value={k}>Kec. {k}</option>
-                      ))}
-                    </select>
-                    <select
-                      value={selectedKel}
-                      onChange={(e) => setSelectedKel(e.target.value)}
-                      disabled={!selectedKec}
-                      className={`w-full p-2 text-[10px] font-bold rounded-xl border appearance-none cursor-pointer bg-white ${
-                        isWireframe ? 'border-gray-400' : 'border-gray-200 text-gray-700 disabled:opacity-50'
-                      }`}
-                    >
-                      <option value="">Pilih Kelurahan</option>
-                      {(city.subdistricts[selectedKec] || []).map((kel: string) => (
-                        <option key={kel} value={kel}>{kel}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <button
-                    onClick={() => setShowWilayahPicker(false)}
-                    className={`w-full py-2.5 text-[10px] font-bold text-center border-t cursor-pointer ${
-                      isWireframe ? 'border-gray-200 text-gray-600' : 'border-gray-100 text-emerald-600'
-                    }`}
-                  >
-                    Simpan
-                  </button>
                 </div>
               )}
             </div>
