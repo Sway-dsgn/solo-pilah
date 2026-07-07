@@ -356,7 +356,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
               </div>
             </div>
 
-            <div className={`p-3.5 rounded-xl border ${
+            <div className={`p-4 rounded-2xl border ${
               isWireframe ? 'border-gray-300' : 'border-amber-200/50 bg-gradient-to-br from-amber-50/60 to-amber-50/20'
             }`}>
               <div className="flex justify-between items-center mb-2">
@@ -364,7 +364,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                   <Flame className="w-3.5 h-3.5 text-amber-500 map-pulse" />
                   Kapasitas {city.tpaName}
                 </span>
-                <span className="badge-red">78% Beban</span>
+                <span className="badge-red"><span className="text-[9px]">78</span>% Beban</span>
               </div>
               
               <div className="h-2.5 w-full bg-gray-200 rounded-full overflow-hidden">
