@@ -65,7 +65,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'} relative`}>
       {/* Header */}
-      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
+      <div className={`p-4 shrink-0 bg-white border-b shadow-soft ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <Award className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Klaim Voucher & Merchandise
@@ -75,7 +75,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
 
       {/* Points Card */}
       <div className="p-4 shrink-0">
-        <div className={`p-4 rounded-2xl relative overflow-hidden text-white ${
+        <div className={`p-4 rounded-2xl relative overflow-hidden text-white shadow-card ${
           isWireframe
             ? 'border-2 border-gray-800 bg-white text-gray-800'
               : 'bg-gradient-to-r from-emerald-500 via-teal-600 to-emerald-600'
@@ -108,7 +108,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
             return (
               <div
                 key={q.id}
-                className={`p-3 rounded-xl border bg-white ${
+                className={`p-3 rounded-xl border bg-white shadow-card ${
                   isWireframe ? 'border-gray-300' : 'border-gray-100/60'
                 }`}
               >
@@ -154,15 +154,15 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
           <button
             key={cat}
             onClick={() => setActiveCategory(cat as any)}
-            className={`px-3 py-1.5 rounded-xl text-[9px] font-bold transition-all shrink-0 cursor-pointer ${
-              activeCategory === cat
-                ? isWireframe
-                  ? 'bg-gray-800 text-white border border-black'
-                  : 'bg-emerald-500 text-white'
-                : isWireframe
-                ? 'border border-gray-300 bg-white text-gray-600'
-                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-            }`}
+              className={`px-3 py-1.5 rounded-xl text-[9px] font-bold transition-all shrink-0 cursor-pointer ${
+                activeCategory === cat
+                  ? isWireframe
+                    ? 'bg-gray-800 text-white border border-black shadow-sm'
+                    : 'bg-emerald-500 text-white shadow-sm shadow-emerald-200'
+                  : isWireframe
+                  ? 'border border-gray-300 bg-white text-gray-600'
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              }`}
           >
             {cat}
           </button>
@@ -176,7 +176,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
             <button
               key={reward.id}
               onClick={() => setSelectedReward(reward)}
-              className={`p-2.5 rounded-xl border bg-white flex flex-col justify-between text-left transition-all hover:scale-[1.02] active:scale-95 cursor-pointer ${
+              className={`p-2.5 rounded-xl border bg-white flex flex-col justify-between text-left transition-all card-hover cursor-pointer ${
                 isWireframe ? 'border-gray-300' : 'border-gray-100/50 hover:border-gray-200'
               }`}
             >
@@ -215,8 +215,8 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
 
       {/* Redemptions Modal Overlay (Simulated popup) */}
       {selectedReward && (
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end z-50" onClick={handleCloseModal}>
-          <div className={`w-full bg-white rounded-t-3xl p-5 pt-3 space-y-5 max-h-[85%] overflow-y-auto`} onClick={e => e.stopPropagation()}>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent backdrop-blur-sm flex items-end z-50" onClick={handleCloseModal}>
+          <div className={`w-full bg-white rounded-t-3xl p-5 pt-3 space-y-5 max-h-[85%] overflow-y-auto anim-scale-in`} onClick={e => e.stopPropagation()}>
             {/* Drag Handle */}
             <div className="flex justify-center">
               <div className={`w-8 h-1 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-gray-300'}`} />
@@ -264,7 +264,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
                 </div>
 
                 <button onClick={handleCloseModal}
-                  className={`w-full py-3 text-xs font-extrabold text-white rounded-xl cursor-pointer transition-all active:scale-[0.98] ${
+                  className={`w-full py-3 text-xs font-extrabold text-white rounded-xl cursor-pointer transition-all btn-press shadow-sm ${
                     isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600'
                   }`}>
                   <Check className="w-4 h-4 inline mr-1.5" />
@@ -319,13 +319,13 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
 
                 <div className="flex gap-2.5 pt-1">
                   <button onClick={handleCloseModal}
-                    className={`flex-1 py-3 border rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    className={`flex-1 py-3 border rounded-xl text-xs font-bold transition-all cursor-pointer btn-press ${
                       isWireframe ? 'border-gray-400 hover:bg-gray-100 text-gray-700' : 'border-gray-200 hover:bg-gray-50 text-gray-600'
                     }`}>
                     Batal
                   </button>
                   <button onClick={() => handleRedeem(selectedReward)}
-                    className={`flex-1 py-3 text-xs font-extrabold text-white rounded-xl cursor-pointer transition-all active:scale-[0.98] ${
+                    className={`flex-1 py-3 text-xs font-extrabold text-white rounded-xl cursor-pointer transition-all btn-press shadow-sm ${
                       isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600'
                     }`}>
                     <ShoppingBag className="w-4 h-4 inline mr-1.5" />

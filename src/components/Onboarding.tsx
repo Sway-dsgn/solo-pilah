@@ -182,7 +182,7 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
                 className={`text-[9px] font-bold px-2 py-1 rounded-lg flex items-center gap-1 cursor-pointer ${
                   isWireframe
                     ? 'text-gray-600 border border-gray-300 hover:bg-gray-100'
-                    : 'text-emerald-600 hover:bg-emerald-50 border border-emerald-100'
+                    : 'text-emerald-600 hover:bg-emerald-50 hover:shadow-sm hover:-translate-y-0.5 border border-emerald-100 transition-all'
                 }`}
               >
                 <MapPin className="w-3 h-3" />
@@ -190,7 +190,7 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
               </button>
               {showCityPicker && (
                 <div className={`absolute right-0 top-8 w-44 rounded-2xl border-2 z-50 overflow-hidden ${
-                  isWireframe ? 'bg-white border-gray-400' : 'bg-white border-emerald-100/80'
+                  isWireframe ? 'bg-white border-gray-400' : 'bg-white border-emerald-100/80 shadow-xl shadow-emerald-500/10'
                 }`}>
                   <div className={`px-3.5 py-2.5 border-b text-[9px] font-bold uppercase tracking-wider ${
                     isWireframe ? 'text-gray-500 border-gray-200' : 'text-gray-400 border-gray-100'
@@ -222,7 +222,7 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
               className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-all ${
                 isWireframe
                   ? 'text-gray-600 border border-gray-300 hover:bg-gray-100'
-                  : 'text-emerald-600 hover:bg-emerald-50'
+                  : 'text-emerald-600 hover:bg-emerald-50 hover:shadow-sm hover:-translate-y-0.5'
               }`}
             >
               Lewati
@@ -231,10 +231,12 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
         </div>
 
         {/* Content */}
-        <div className="flex-1 flex flex-col justify-center space-y-5 py-4 min-h-0">
-          {currentSlide.illustration}
+          <div key={step} className="flex-1 flex flex-col justify-center space-y-5 py-4 min-h-0 transition-all duration-500 ease-in-out">
+            <div className="transition-all duration-500 ease-in-out">
+              {currentSlide.illustration}
+            </div>
 
-          <div className="space-y-2">
+            <div className="space-y-2 transition-all duration-500 ease-in-out">
             <h2 className={`text-lg font-bold font-display leading-snug ${isWireframe ? 'text-gray-900 border-b border-gray-200 pb-1' : 'text-gray-800'}`}>
               {currentSlide.title}
             </h2>
@@ -276,7 +278,7 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
             className={`w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 cursor-pointer transition-all ${
               isWireframe
                 ? 'bg-gray-900 text-white hover:bg-gray-800 border-2 border-black'
-                  : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-95'
+                    : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-95 shadow-sm btn-press'
             }`}
           >
             {step === slides.length - 1 ? "Mulai Sekarang" : "Selanjutnya"}

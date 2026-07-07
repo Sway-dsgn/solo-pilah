@@ -55,13 +55,13 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
     .slice(0, 2);
 
   return (
-    <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
+    <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50/80'}`}>
       
       {/* 1. Mini App Bar / Header */}
-      <div className={`p-4 flex items-center justify-between border-b ${
-        isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100/50'
+      <div className={`p-4 flex items-center justify-between border-b shadow-soft ${
+        isWireframe ? 'bg-white border-gray-300' : 'glass bg-white/90 border-gray-100/50'
       }`}>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <div className="relative">
             <img
               src={profile.avatar}
@@ -82,12 +82,12 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
         <button
           onClick={onOpenNotifications}
-          className={`p-2 rounded-xl relative transition-all cursor-pointer ${
-            isWireframe ? 'border border-gray-300' : 'hover:bg-gray-100 bg-gray-50'
+          className={`p-2 rounded-xl relative transition-all cursor-pointer btn-press ${
+            isWireframe ? 'border border-gray-300' : 'hover:bg-gray-100 bg-gray-50 border border-gray-100/50'
           }`}
         >
           <Bell className="w-4 h-4 text-gray-600" />
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full map-pulse"></span>
         </button>
       </div>
 
@@ -95,12 +95,12 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         
         {/* 2. Edukasi Link Card */}
         <div onClick={() => onNavigate('edukasi')}
-          className={`p-3.5 rounded-2xl border flex items-center gap-3 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] group ${
+          className={`p-4 rounded-2xl border flex items-center gap-3 cursor-pointer transition-all hover:scale-[1.01] btn-press group ${
             isWireframe
               ? 'border-2 border-gray-800 bg-white text-gray-800'
-              : 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white border-transparent'
+              : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-transparent shadow-card'
           }`}>
-          <div className={`p-2.5 rounded-xl shrink-0 transition-transform group-hover:scale-110 ${
+          <div className={`p-2.5 rounded-xl shrink-0 transition-transform group-hover:scale-110 group-hover:-rotate-3 ${
             isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-white/20'
           }`}>
             <BookOpen className="w-5 h-5" />
@@ -121,12 +121,15 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
             <CircleDollarSign className="w-3.5 h-3.5" /> Saldo & Poin
           </h4>
-          <div className={`p-4 rounded-2xl relative overflow-hidden ${
+          <div className={`p-4 rounded-2xl relative overflow-hidden shadow-card ${
             isWireframe
               ? 'border-2 border-gray-800 bg-white text-gray-800'
               : 'bg-white border border-gray-100'
           }`}>
-            <div className="flex justify-between items-center">
+            {!isWireframe && (
+              <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-emerald-50/50 blur-xl" />
+            )}
+            <div className="flex justify-between items-center relative">
               <div>
                 <p className="text-[9px] text-gray-400 font-semibold uppercase tracking-wider">
                   CempoPoints Milik Anda
@@ -145,10 +148,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
               <button
                 onClick={() => onNavigate('rewards')}
-                className={`px-3.5 py-2 rounded-xl text-[10px] font-black flex items-center gap-1 transition-all cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-[10px] font-black flex items-center gap-1 transition-all cursor-pointer btn-press ${
                   isWireframe
                     ? 'border border-gray-800 bg-gray-100'
-                      : 'bg-emerald-500 text-white hover:bg-emerald-600'
+                      : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-sm'
                   }`}
               >
                 Tukar Poin
@@ -163,7 +166,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
             <Flame className="w-3.5 h-3.5 text-orange-500" /> Streak Aktif
           </h4>
-          <div className={`p-3.5 rounded-2xl border ${
+          <div className={`p-4 rounded-2xl border shadow-card ${
             isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
           }`}>
             <div className="flex items-center justify-between mb-3">
@@ -180,10 +183,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                 </div>
               </div>
               <button onClick={handleCheckin}
-                className={`px-2.5 py-1 rounded-xl text-[9px] font-bold cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-[9px] font-bold cursor-pointer transition-all btn-press ${
                   checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0]
-                    ? isWireframe ? 'bg-gray-300 text-gray-500 cursor-default' : 'bg-gray-200 text-gray-500 cursor-default'
-                    : isWireframe ? 'bg-gray-800 text-white' : 'bg-orange-500 text-white hover:bg-orange-600'
+                    ? isWireframe ? 'bg-gray-300 text-gray-500 cursor-default' : 'bg-gray-200 text-gray-500 cursor-default border border-gray-200'
+                    : isWireframe ? 'bg-gray-800 text-white' : 'bg-orange-500 text-white hover:bg-orange-600 shadow-sm'
                 }`}>
                 {checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0] ? '✔ Check-in' : '+25 Check-in'}
               </button>
@@ -197,11 +200,11 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                 return (
                   <div key={day} className="flex flex-col items-center gap-1">
                     <span className="text-[7px] font-bold text-gray-400 uppercase">{day}</span>
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-bold ${
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[8px] font-bold transition-all ${
                       isActive
-                        ? isWireframe ? 'bg-gray-800 text-white' : 'bg-orange-500 text-white'
+                        ? isWireframe ? 'bg-gray-800 text-white' : 'bg-orange-500 text-white shadow-sm'
                         : isToday
-                        ? isWireframe ? 'border border-gray-400' : 'border border-orange-200 bg-orange-50 text-orange-500'
+                        ? isWireframe ? 'border border-gray-400' : 'border-2 border-orange-200 bg-orange-50 text-orange-500'
                         : 'bg-gray-100 text-gray-400'
                     }`}>
                       {i + 1}
@@ -224,22 +227,22 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           </h4>
           <div 
             onClick={() => onNavigate('scan')}
-            className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] group ${
+            className={`p-4 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all btn-press group ${
               isWireframe
                 ? 'border-gray-800 bg-white text-gray-800'
-                : 'bg-gradient-to-r from-emerald-50/60 to-teal-50/20 border-emerald-100/60 hover:bg-emerald-50/80'
+                : 'bg-gradient-to-r from-emerald-50 via-emerald-50/40 to-white border-emerald-100/60 hover:shadow-card-hover'
             }`}
           >
             <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-xl shrink-0 transition-transform group-hover:scale-110 ${
-                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-500 text-white'
+              <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-3 ${
+                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-500 text-white shadow-sm'
               }`}>
-                <QrCode className="w-5 h-5 animate-pulse" />
+                <QrCode className="w-5 h-5" />
               </div>
               <div className="min-w-0">
                 <h5 className="text-[11px] font-extrabold text-gray-800 font-display flex items-center gap-1">
                   Mulai Pindai Sampah
-                  <Sparkles className="w-3 h-3 text-amber-500" />
+                  <Sparkles className="w-3 h-3 text-amber-500 anim-float" />
                 </h5>
                 <p className="text-[9px] text-gray-400 mt-0.5 leading-snug">
                   Ambil foto sampah kering Anda untuk klaim poin instant!
@@ -258,18 +261,18 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             </h4>
             <button 
               onClick={() => onNavigate('map')}
-              className="text-[9px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-0.5"
+              className="text-[9px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-0.5 transition-all"
             >
               Lihat Peta <ChevronRight className="w-2.5 h-2.5" />
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2.5">
             {nearestBanks.map((bank) => (
               <div 
                 key={bank.id}
-                className={`p-3 rounded-2xl border flex flex-col justify-between ${
-                  isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
+                className={`p-3 rounded-2xl border flex flex-col justify-between card-hover ${
+                  isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-soft'
                 }`}
               >
                 <div>
@@ -291,10 +294,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
                 <button
                   onClick={() => onNavigate('map')}
-                  className={`w-full py-1.5 mt-2.5 rounded-lg text-[8px] font-black uppercase text-center block border ${
+                  className={`w-full py-1.5 mt-2.5 rounded-lg text-[8px] font-black uppercase text-center block border transition-all btn-press ${
                     isWireframe 
                       ? 'border-gray-400 text-gray-700 hover:bg-gray-100' 
-                      : 'border-emerald-100 text-emerald-600 hover:bg-emerald-50/40 bg-emerald-50/10'
+                      : 'border-emerald-100 text-emerald-600 hover:bg-emerald-50/40 bg-emerald-50/10 hover:border-emerald-200'
                   }`}
                 >
                   Rute Lokasi
@@ -310,26 +313,26 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             <BarChart3 className="w-3.5 h-3.5" /> Dashboard Dampak Lingkungan
           </h4>
           
-          <div className={`p-4 rounded-2xl border space-y-3.5 ${
+          <div className={`p-4 rounded-2xl border space-y-3.5 shadow-card ${
             isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
           }`}>
             {/* Impact stats grid */}
             <div className="grid grid-cols-3 gap-2.5">
-              <div className="text-center p-1.5 bg-emerald-50/20 rounded-xl border border-emerald-100/10">
+              <div className="text-center p-2.5 bg-emerald-50/40 rounded-xl border border-emerald-100/30">
                 <Leaf className="w-4 h-4 text-emerald-500 mx-auto mb-1" />
                 <span className="text-[7.5px] text-gray-400 font-semibold block">Daur Ulang</span>
                 <span className="text-[11px] font-black text-gray-800 block mt-0.5">
                   {profile.totalWasteSubmitted} Kg
                 </span>
               </div>
-              <div className="text-center p-1.5 bg-blue-50/20 rounded-xl border border-blue-100/10">
+              <div className="text-center p-2.5 bg-blue-50/40 rounded-xl border border-blue-100/30">
                 <TrendingDown className="w-4 h-4 text-blue-500 mx-auto mb-1" />
                 <span className="text-[7.5px] text-gray-400 font-semibold block">Gas CO2</span>
                 <span className="text-[11px] font-black text-gray-800 block mt-0.5">
                   {Number((profile.totalWasteSubmitted * 0.72).toFixed(1))} Kg
                 </span>
               </div>
-              <div className="text-center p-1.5 bg-amber-50/20 rounded-xl border border-amber-100/10">
+              <div className="text-center p-2.5 bg-amber-50/40 rounded-xl border border-amber-100/30">
                 <TreePine className="w-4 h-4 text-amber-500 mx-auto mb-1" />
                 <span className="text-[7.5px] text-gray-400 font-semibold block">Pohon Selamat</span>
                 <span className="text-[11px] font-black text-gray-800 block mt-0.5">
@@ -338,24 +341,24 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
               </div>
             </div>
 
-            <div className={`p-2.5 rounded-xl border ${
+            <div className={`p-3 rounded-xl border ${
               isWireframe ? 'border-gray-300' : 'border-amber-200/50 bg-amber-50/40'
             }`}>
               <div className="flex justify-between items-center mb-1.5">
                 <span className="text-[9px] font-bold text-gray-700 flex items-center gap-1">
-                  <Flame className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+                  <Flame className="w-3.5 h-3.5 text-amber-500 map-pulse" />
                   Kapasitas {city.tpaName}
                 </span>
                 <span className="text-[9px] font-black text-red-600">78% Beban</span>
               </div>
               
-              <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500"
+                  className="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500 rounded-full"
                   style={{ width: '78%' }}
                 />
               </div>
-              <p className="text-[8px] text-gray-500 mt-1 leading-snug">
+              <p className="text-[8px] text-gray-500 mt-1.5 leading-snug">
                 Kontribusi pemilahan Anda mencegah overload & bahaya kebakaran gas metana di {city.shortName}.
               </p>
             </div>

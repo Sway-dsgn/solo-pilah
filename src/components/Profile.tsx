@@ -36,7 +36,7 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header Profile Info Banner */}
       <div className={`p-6 text-center border-b flex flex-col items-center shrink-0 ${
-        isWireframe ? 'bg-white border-gray-300' : 'bg-gradient-to-b from-emerald-50 to-white border-gray-100'
+        isWireframe ? 'bg-white border-gray-300' : 'bg-gradient-to-b from-emerald-400 via-emerald-50 to-white border-gray-100 shadow-soft'
       }`}>
         {/* Avatar with Ring */}
         <div className="relative mb-3">
@@ -66,7 +66,7 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
         <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Detail Akun</h4>
 
         <div className={`p-3.5 rounded-2xl bg-white border space-y-3 ${
-          isWireframe ? 'border-gray-300' : 'border-gray-100/50'
+          isWireframe ? 'border-gray-300' : 'border-gray-100/50 shadow-card'
         }`}>
           {/* Phone row */}
           <div className="flex items-center gap-3 text-[11px] text-gray-600">
@@ -100,7 +100,7 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
       {/* Performance Summary Statistics */}
       <div className="px-4 shrink-0">
         <div className={`p-4 rounded-2xl bg-white border flex items-center justify-between ${
-          isWireframe ? 'border-gray-300' : 'border-gray-100/50'
+          isWireframe ? 'border-gray-300' : 'border-gray-100/50 shadow-card'
         }`}>
           <div className="space-y-1">
             <span className="text-[9px] text-gray-400 font-bold uppercase">Kontribusi Sampah</span>
@@ -138,7 +138,7 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
                 key={row.label}
                 onClick={row.action}
                 className={`w-full p-3.5 bg-white hover:bg-gray-50 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
-                  isWireframe ? 'border-gray-300' : 'border-gray-100/50'
+                  isWireframe ? 'border-gray-300' : 'border-gray-100/50 card-hover'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -156,8 +156,8 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
 
       {/* Edit Profile Modal */}
       {editOpen && (
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end z-50" onClick={() => setEditOpen(false)}>
-          <div className={`w-full bg-white rounded-t-3xl p-5 pt-3 space-y-5 ${
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent backdrop-blur-sm flex items-end z-50" onClick={() => setEditOpen(false)}>
+          <div className={`w-full bg-white rounded-t-3xl p-5 pt-3 space-y-5 anim-scale-in ${
             isWireframe ? '' : ''
           }`} onClick={e => e.stopPropagation()}>
             {/* Drag Handle */}
@@ -219,8 +219,8 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
             </div>
 
             <button onClick={handleEditSave}
-              className={`w-full py-3 text-xs font-extrabold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer transition-all active:scale-[0.98] ${
-                isWireframe ? 'bg-gray-900 hover:bg-gray-800' : 'bg-emerald-600 hover:bg-emerald-700'
+              className={`w-full py-3 text-xs font-extrabold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer transition-all btn-press shadow-sm ${
+                isWireframe ? 'bg-gray-900 hover:bg-gray-800' : 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20'
               }`}>
               <Save className="w-4 h-4" /> Simpan Perubahan
             </button>

@@ -64,17 +64,17 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
       </div>
 
       {/* City Selector */}
-      <div className="mb-4">
+      <div className="mb-4 shadow-soft rounded-xl p-3 bg-white">
         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
           Pilih Daerah:
         </label>
         <select
           onChange={(e) => onCityChange(e.target.value)}
           value={city.id}
-          className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer bg-white ${
+          className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer bg-white shadow-soft ${
             isWireframe
               ? 'border-gray-400 focus:ring-gray-800'
-              : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 text-gray-700'
+              : 'border-gray-200 focus:ring-emerald-500/30 focus:border-emerald-500 text-gray-700'
           }`}
         >
           {CITIES.map((c: any) => (
@@ -86,11 +86,11 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
       </div>
 
       {/* Role Selector */}
-      <div className="mb-6">
+      <div className="mb-6 shadow-soft rounded-xl p-3 bg-white">
         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
           Pilih Peran Simulasi Anda:
         </label>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-3">
           {rolesList.map((r) => {
             const Icon = r.icon;
             const isSelected = selectedRole === r.id;
@@ -99,12 +99,12 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
                 key={r.id}
                 type="button"
                 onClick={() => setSelectedRole(r.id)}
-                className={`p-2.5 rounded-xl border flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
+                className={`card-hover p-2.5 rounded-xl border flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
                   isSelected
                     ? isWireframe
                       ? 'border-2 border-black bg-gray-100 font-bold'
-                      : 'border-emerald-500 bg-emerald-50/50 text-emerald-700 ring-2 ring-emerald-500/10'
-                    : 'border-gray-100 bg-white text-gray-500 hover:border-gray-200'
+                      : 'border-emerald-500 bg-emerald-50 text-emerald-700 ring-2 ring-emerald-500/20 shadow-sm'
+                    : 'border-gray-100 bg-white text-gray-500 hover:border-gray-200 hover:shadow-sm'
                 }`}
               >
                 <Icon className={`w-4 h-4 mb-1.5 ${isSelected && !isWireframe ? 'text-emerald-600' : 'text-gray-400'}`} />

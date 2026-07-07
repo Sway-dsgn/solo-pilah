@@ -40,7 +40,7 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
       <div className={`p-4 shrink-0 bg-white border-b flex items-center justify-between ${
-        isWireframe ? 'border-gray-300' : 'border-gray-100'
+        isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-soft'
       }`}>
         <div className="flex items-center gap-2">
           <div className={`p-1.5 rounded-lg ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50'}`}>
@@ -52,7 +52,7 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
           </div>
         </div>
         <button onClick={onClose}
-          className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+          className={`p-1.5 rounded-lg transition-all cursor-pointer btn-press ${
             isWireframe ? 'hover:bg-gray-100 text-gray-500' : 'hover:bg-gray-100 text-gray-400'
           }`}>
           <ChevronLeft className="w-4 h-4" />
@@ -67,7 +67,7 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
           </h4>
 
           <div onClick={() => openViewer(slides[slideIndex])}
-            className={`p-5 rounded-2xl relative overflow-hidden border cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] ${
+            className={`p-5 rounded-2xl relative overflow-hidden border cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] shadow-card card-hover ${
               isWireframe
                 ? 'border-2 border-gray-800 bg-white text-gray-800'
                 : `bg-gradient-to-br ${slides[slideIndex]?.bg === 'bg-emerald-500' ? 'from-emerald-600 to-teal-700' : slides[slideIndex]?.bg === 'bg-blue-500' ? 'from-blue-600 to-indigo-700' : 'from-purple-600 to-violet-700'} text-white border-transparent`
@@ -107,13 +107,13 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
               </div>
               <div className="flex gap-1.5">
                 <button onClick={(e) => { e.stopPropagation(); setSlideIndex(i => (i - 1 + slides.length) % slides.length); }}
-                  className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                  className={`p-1.5 rounded-lg transition-all cursor-pointer btn-press ${
                     isWireframe ? 'hover:bg-gray-100 text-gray-600 bg-white border border-gray-300' : 'bg-white/20 hover:bg-white/30 text-white'
                   }`}>
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
                 <button onClick={(e) => { e.stopPropagation(); setSlideIndex(i => (i + 1) % slides.length); }}
-                  className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                  className={`p-1.5 rounded-lg transition-all cursor-pointer btn-press ${
                     isWireframe ? 'hover:bg-gray-100 text-gray-600 bg-white border border-gray-300' : 'bg-white/20 hover:bg-white/30 text-white'
                   }`}>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -139,7 +139,7 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
               return (
                 <div key={i}
                   onClick={() => openViewer(slide)}
-                  className={`p-3.5 rounded-xl border cursor-pointer transition-all hover:translate-x-0.5 ${
+                  className={`p-3.5 rounded-xl border cursor-pointer transition-all hover:translate-x-0.5 shadow-card card-hover ${
                     bgMap[slide.bg] || (isWireframe ? 'border-gray-300 bg-white' : 'border-gray-100 bg-white')
                   } ${i === slideIndex ? 'ring-2 ' + (isWireframe ? 'ring-gray-800' : 'ring-emerald-500/30') : ''}`}>
                   <div className="flex items-start gap-3">
@@ -192,7 +192,7 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
             <div className="space-y-2.5">
               {facts.map((fact: any) => (
                 <div key={fact.id} onClick={() => setSelectedFact(fact)}
-                  className={`p-3.5 rounded-2xl border overflow-hidden relative cursor-pointer transition-all hover:translate-x-0.5 ${
+                  className={`p-3.5 rounded-2xl border overflow-hidden relative cursor-pointer transition-all hover:translate-x-0.5 shadow-card card-hover ${
                     isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100/60'
                   }`}>
                   <div className="flex gap-3">
@@ -217,7 +217,7 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
         )}
 
         {/* Impact Stats */}
-        <div className={`p-4 rounded-2xl border flex items-center justify-between ${
+        <div className={`p-4 rounded-2xl border flex items-center justify-between shadow-card card-hover ${
           isWireframe ? 'bg-white border-gray-300' : 'bg-gradient-to-br from-emerald-50 to-teal-50/30 border-emerald-100/40'
         }`}>
           <div className="flex items-center gap-3">
@@ -273,10 +273,10 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
               </div>
 
               <button onClick={() => setSelectedFact(null)}
-                className={`w-full py-3 text-xs font-extrabold text-white rounded-xl transition-all active:scale-[0.98] cursor-pointer ${
+                className={`w-full py-3 text-xs font-extrabold text-white rounded-xl transition-all active:scale-[0.98] cursor-pointer btn-press shadow-sm ${
                   isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600'
                 }`}>
-                Tutup
+                  Tutup
               </button>
             </div>
           </div>
@@ -302,7 +302,7 @@ export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
                   return (
                     <button key={tab}
                       onClick={() => setMediaTab(tab as 'video' | 'teks')}
-                      className={`flex-1 py-2 text-[10px] font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                      className={`flex-1 py-2 text-[10px] font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer btn-press ${
                         isActive
                           ? isWireframe ? 'bg-white text-gray-900 border border-gray-300' : 'bg-white text-gray-800 shadow-sm'
                           : 'text-gray-400'

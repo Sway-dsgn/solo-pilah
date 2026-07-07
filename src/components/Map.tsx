@@ -23,7 +23,7 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto relative ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
+      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-soft'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <Map className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Peta Bank Sampah & TPS {city.shortName}
@@ -58,7 +58,7 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
                 filterType === type
                   ? isWireframe
                     ? 'bg-gray-800 text-white border border-black'
-                    : 'bg-emerald-500 text-white'
+                    : 'bg-emerald-500 text-white shadow-sm'
                   : isWireframe
                   ? 'border border-gray-300 bg-white text-gray-600'
                   : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
@@ -133,7 +133,7 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
               key={loc.id}
               onClick={() => setSelectedLoc(loc)}
               style={{ left: `${loc.coordinates.x}%`, top: `${loc.coordinates.y}%` }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 p-1.5 cursor-pointer transition-all duration-300 hover:scale-125 group z-20"
+              className="absolute -translate-x-1/2 -translate-y-1/2 p-1.5 cursor-pointer transition-all duration-300 hover:scale-125 group z-20 card-hover"
             >
               <div className="relative">
                 <MapPin className={`w-7 h-7 filter ${pinColor}`} />
@@ -159,7 +159,7 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
       {/* Selected Location Details Panel */}
       {selectedLoc ? (
         <div className={`p-4 pt-3 bg-white border-t rounded-t-3xl shrink-0 space-y-3.5 relative z-30 ${
-            isWireframe ? 'border-gray-800' : 'border-gray-100'
+            isWireframe ? 'border-gray-800' : 'border-gray-100 shadow-card anim-fade-in-up'
         }`}>
           {/* Drag Handle */}
           <div className="flex justify-center -mt-1 mb-1">
@@ -187,7 +187,7 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
             </div>
 
             <button onClick={() => setSelectedLoc(null)}
-              className={`p-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
+              className={`p-1.5 rounded-lg transition-all shrink-0 cursor-pointer btn-press ${
                 isWireframe ? 'hover:bg-gray-100 text-gray-500' : 'hover:bg-gray-100 text-gray-400'
               }`}>
               <X className="w-4 h-4" />
@@ -255,14 +255,14 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
           {/* Call to Action buttons */}
           <div className="flex gap-2 pt-1">
             <button onClick={() => alert(`Navigasi rute tercepat menuju ${selectedLoc.name}`)}
-              className={`flex-1 py-2.5 text-xs font-bold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer transition-all active:scale-[0.98] ${
-                isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600'
+              className={`flex-1 py-2.5 text-xs font-bold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer transition-all btn-press active:scale-[0.98] ${
+                isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800 shadow-none' : 'bg-emerald-500 hover:bg-emerald-600 shadow-sm'
               }`}>
               <Compass className="w-4 h-4" />
               Petunjuk Rute
             </button>
             <a href={`tel:${selectedLoc.phone}`}
-              className={`px-4 py-2.5 text-xs font-bold rounded-xl flex items-center justify-center border transition-all ${
+              className={`px-4 py-2.5 text-xs font-bold rounded-xl flex items-center justify-center border transition-all btn-press ${
                 isWireframe ? 'border-gray-400 text-gray-800 hover:bg-gray-100' : 'border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600'
               }`}>
               <Phone className="w-4 h-4" />

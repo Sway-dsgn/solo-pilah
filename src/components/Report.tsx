@@ -112,7 +112,7 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
 
   if (submitted) {
     return (
-      <div className={`flex-1 flex flex-col items-center justify-center p-6 text-center space-y-6 ${isWireframe ? 'bg-white' : 'bg-gray-50'}`}>
+      <div className={`flex-1 flex flex-col items-center justify-center p-6 text-center space-y-6 anim-fade-in-up ${isWireframe ? 'bg-white' : 'bg-gray-50'}`}>
         <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center animate-bounce">
           <CheckCircle2 className="w-12 h-12" />
         </div>
@@ -132,7 +132,7 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
 
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
-      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
+      <div className={`p-4 shrink-0 bg-white border-b shadow-soft ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <Camera className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Laporan
@@ -142,13 +142,13 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
       <div className="flex border-b border-gray-200 shrink-0 bg-white">
         <button onClick={() => setActiveTab('create')}
           className={`flex-1 py-3 text-xs font-bold text-center border-b-2 flex items-center justify-center gap-1.5 cursor-pointer ${
-            activeTab === 'create' ? 'border-emerald-500 text-emerald-600' : 'border-transparent text-gray-400'
+            activeTab === 'create' ? 'border-emerald-500 text-emerald-600 bg-emerald-50/30' : 'border-transparent text-gray-400 hover:text-gray-600'
           }`}>
           <PlusCircle className="w-4 h-4" /> Lapor Baru
         </button>
         <button onClick={() => setActiveTab('history')}
           className={`flex-1 py-3 text-xs font-bold text-center border-b-2 flex items-center justify-center gap-1.5 cursor-pointer ${
-            activeTab === 'history' ? 'border-emerald-500 text-emerald-600' : 'border-transparent text-gray-400'
+            activeTab === 'history' ? 'border-emerald-500 text-emerald-600 bg-emerald-50/30' : 'border-transparent text-gray-400 hover:text-gray-600'
           }`}>
           <History className="w-4 h-4" /> Riwayat ({reports.length})
         </button>
@@ -166,10 +166,10 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
                   const isSelected = reportType === rt.id;
                   return (
                     <button key={rt.id} type="button" onClick={() => setReportType(rt.id)}
-                      className={`p-3 rounded-xl border flex flex-col items-center gap-1 cursor-pointer transition-all ${
-                        isSelected
-                          ? isWireframe ? 'border-2 border-black bg-gray-100' : `${rt.bg} border-2 ${rt.color}`
-                          : isWireframe ? 'border-gray-300 bg-white' : 'border-gray-100 bg-white hover:border-gray-200'
+className={`p-3 rounded-xl border flex flex-col items-center gap-1 cursor-pointer transition-all shadow-card card-hover ${
+                         isSelected
+                           ? isWireframe ? 'border-2 border-black bg-gray-100 shadow-card' : `${rt.bg} border-2 ${rt.color} shadow-card`
+                           : isWireframe ? 'border-gray-300 bg-white shadow-soft' : 'border-gray-100 bg-white shadow-soft hover:border-gray-200 hover:shadow-card'
                       }`}>
                       <Icon className={`w-5 h-5 ${isSelected ? rt.color : 'text-gray-400'}`} />
                       <span className={`text-[9px] font-bold ${isSelected ? 'text-gray-800' : 'text-gray-500'}`}>{rt.label}</span>
@@ -186,7 +186,7 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
                 <div className="grid grid-cols-3 gap-2">
                   {MOCK_PHOTOS.map((p) => (
                     <button key={p.label} type="button" onClick={() => handleCapturePhoto(p)}
-                      className="rounded-xl overflow-hidden border border-gray-200 h-24 relative group cursor-pointer">
+                      className="rounded-xl overflow-hidden border border-gray-200 h-24 relative group cursor-pointer shadow-soft">
                       <img src={p.url} alt={p.label} className="w-full h-full object-cover" />
                       <span className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
                         <Camera className="w-5 h-5 text-white opacity-0 group-hover:opacity-100" />
@@ -195,7 +195,7 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
                   ))}
                 </div>
               ) : photo ? (
-                <div className="relative rounded-2xl overflow-hidden border border-gray-200 h-40">
+                <div className="relative rounded-2xl overflow-hidden border border-gray-200 h-40 shadow-soft">
                   <img src={photo.url} alt={photo.label} className="w-full h-full object-cover" />
                   <button type="button" onClick={() => { setPhoto(null); setIsCapturing(true); }}
                     className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-500 text-white rounded-full p-1.5 cursor-pointer">
@@ -204,8 +204,8 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
                 </div>
               ) : (
                 <button type="button" onClick={() => setIsCapturing(true)}
-                  className={`w-full h-32 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-1.5 cursor-pointer ${
-                    isWireframe ? 'border-gray-400 bg-white' : 'border-emerald-200 bg-emerald-50/20 hover:bg-emerald-50/50'
+                  className={`w-full h-32 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-1.5 cursor-pointer card-hover ${
+                    isWireframe ? 'border-gray-400 bg-white' : 'border-emerald-200 bg-emerald-50/20 hover:bg-emerald-50/50 hover:border-emerald-300 shadow-soft'
                   }`}>
                   <Camera className={`w-8 h-8 ${isWireframe ? 'text-gray-400' : 'text-emerald-500'}`} />
                   <span className="text-xs font-bold text-gray-700">Tap untuk Upload Foto</span>
@@ -223,7 +223,7 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
             <div className="space-y-1.5">
               <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">Lokasi</label>
               <div className="flex gap-2">
-                <div className={`flex-1 p-3 rounded-xl border flex items-center gap-2 min-h-[42px] ${
+                <div className={`flex-1 p-3 rounded-xl border flex items-center gap-2 min-h-[42px] shadow-soft ${
                   isWireframe ? 'border-gray-400 bg-white' : 'border-gray-200 bg-gray-50/30'
                 }`}>
                   <MapPin className="w-4 h-4 text-red-500 shrink-0" />

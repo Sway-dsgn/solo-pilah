@@ -64,7 +64,7 @@ export default function Guide({ isWireframe, city }: GuideProps) {
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100'}`}>
+      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-soft'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <BookOpen className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Panduan Pemilahan Sampah
@@ -100,7 +100,7 @@ export default function Guide({ isWireframe, city }: GuideProps) {
         {/* Real-time search suggestions dropdown */}
         {searchQuery && (
           <div className={`border rounded-xl max-h-32 overflow-y-auto phone-scroll bg-white p-2 space-y-1 z-30 absolute left-3 right-3 ${
-            isWireframe ? 'border-gray-800' : 'border-gray-100'
+            isWireframe ? 'border-gray-800' : 'border-gray-100 shadow-card'
           }`}>
             {searchResults.length === 0 ? (
               <div className="p-2 text-center text-[10px] text-gray-400 flex items-center justify-center gap-1">
@@ -148,15 +148,17 @@ export default function Guide({ isWireframe, city }: GuideProps) {
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
                 className={`p-2 rounded-xl border flex flex-col items-center text-center cursor-pointer transition-all ${
+                  !isWireframe ? 'card-hover btn-press' : ''
+                } ${
                   isSelected
                     ? isWireframe
                       ? 'border-2 border-black bg-gray-100 font-extrabold'
-                      : `border-[1.5px] ring-2`
+                      : `border-[1.5px] ring-2 shadow-sm`
                     : 'border-gray-100 bg-white text-gray-500'
                 }`}
                 style={{
                   borderColor: isSelected && !isWireframe ? cat.color : undefined,
-                  boxShadow: isSelected && !isWireframe ? `${cat.color}15 0px 4px 12px` : undefined,
+                  boxShadow: isSelected && !isWireframe ? `${cat.color}20 0px 4px 12px, 0 1px 2px rgba(0,0,0,0.05)` : undefined,
                   color: isSelected && !isWireframe ? cat.color : undefined,
                 }}
               >
@@ -171,7 +173,7 @@ export default function Guide({ isWireframe, city }: GuideProps) {
       {/* Category Content Details */}
       <div className="px-3 pb-4 flex-1">
         <div className={`p-4 rounded-2xl border bg-white ${
-          isWireframe ? 'border-gray-300' : 'border-gray-100/60'
+          isWireframe ? 'border-gray-300' : 'border-gray-100/60 shadow-card'
         }`}>
           {/* Header section */}
           <div className="flex items-start gap-3 mb-3 border-b border-gray-100 pb-3">

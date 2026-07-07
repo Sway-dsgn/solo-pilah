@@ -24,7 +24,7 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className={`p-4 ${isWireframe ? 'bg-white border-b border-gray-300' : 'bg-white border-b border-gray-100'}`}>
+        <div className={`p-4 ${isWireframe ? 'bg-white border-b border-gray-300' : 'bg-white border-b border-gray-100 shadow-soft'}`}>
         <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <Calendar className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Jadwal Pengangkutan Sampah
@@ -59,7 +59,7 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
         <div className={`p-4 rounded-2xl relative overflow-hidden ${
           isWireframe
             ? 'border-2 border-gray-800 bg-white'
-            : 'bg-gradient-to-r from-emerald-50 to-emerald-100/50 border border-emerald-200/50'
+            : 'bg-gradient-to-br from-emerald-50 via-emerald-50/80 to-emerald-100/50 border border-emerald-200/60 shadow-card'
         }`}>
           <div className="flex items-start gap-3">
             <div className={`p-2 rounded-xl shrink-0 ${isWireframe ? 'border border-gray-300' : 'bg-emerald-500 text-white'}`}>
@@ -94,7 +94,7 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
         </h4>
 
         {filteredSchedules.length === 0 ? (
-          <div className="text-center py-8 text-gray-400 space-y-1">
+          <div className="text-center py-8 text-gray-400 space-y-1 anim-fade-in-up">
             <AlertCircle className="w-8 h-8 mx-auto stroke-1" />
             <p className="text-xs font-semibold">Tidak ada jadwal pengangkutan</p>
             <p className="text-[10px]">Silakan pilih wilayah kecamatan lain</p>
@@ -108,12 +108,12 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
               return (
                 <div
                   key={schedule.id}
-                  className={`p-3.5 rounded-xl border flex justify-between items-center transition-all ${
+                  className={`p-3.5 rounded-xl border flex justify-between items-center transition-all anim-fade-in-up ${
                     isWireframe
                       ? 'border-gray-300 bg-white'
                       : isFinished
-                      ? 'border-gray-100 bg-gray-50/50 opacity-70'
-                      : 'border-gray-100 bg-white'
+                      ? 'border-gray-100 bg-gray-50/50 opacity-70 shadow-soft'
+                      : 'border-gray-100 bg-white shadow-soft card-hover'
                   }`}
                 >
                   <div className="space-y-1.5 max-w-[75%]">
@@ -152,10 +152,10 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
                         : hasReminder
                         ? isWireframe
                           ? 'bg-gray-800 text-white border-black'
-                          : 'bg-emerald-500 text-white border-emerald-500 hover:bg-emerald-600'
+                          : 'bg-emerald-500 text-white border-emerald-500 hover:bg-emerald-600 shadow-sm btn-press'
                         : isWireframe
                         ? 'border-gray-400 text-gray-600'
-                        : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600'
+                        : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-600 btn-press'
                     }`}
                   >
                     {isFinished ? (

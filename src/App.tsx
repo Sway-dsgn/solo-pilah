@@ -88,10 +88,10 @@ export default function App() {
   const screenRoutes = (
     <>
       {showNotifications && (
-        <div className="absolute inset-x-0 top-0 bottom-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent z-40 flex flex-col justify-start">
-          <div className={`p-5 bg-white rounded-b-3xl border-b-2 max-h-[75%] overflow-y-auto phone-scroll space-y-4 animate-in slide-in-from-top duration-200 ${
+        <div className="absolute inset-x-0 top-0 bottom-0 z-40 flex flex-col justify-start animate-in slide-in-from-top duration-200" onClick={() => setShowNotifications(false)}>
+          <div className={`p-5 bg-white rounded-b-3xl border-b-2 max-h-[75%] overflow-y-auto phone-scroll space-y-4 shadow-card ${
             isWireframe ? 'border-black' : 'border-emerald-500'
-          }`}>
+          }`} onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className={`p-1.5 rounded-lg ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50'}`}>
@@ -103,15 +103,13 @@ export default function App() {
                 </div>
               </div>
               <button onClick={() => setShowNotifications(false)}
-                className={`p-1.5 rounded-lg transition-all cursor-pointer ${
-                  isWireframe ? 'hover:bg-gray-100 text-gray-500' : 'hover:bg-gray-100 text-gray-400'
-                }`}>
+                className={`p-1.5 rounded-lg transition-all cursor-pointer hover:bg-gray-100 text-gray-400`}>
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="space-y-2.5">
-              {mockNotifications.map((n) => {
+              {mockNotifications.map((n, idx) => {
                 const catColors: Record<string, string> = {
                   Jadwal: 'border-l-emerald-400 bg-emerald-50/30',
                   Laporan: 'border-l-blue-400 bg-blue-50/30',
@@ -124,9 +122,10 @@ export default function App() {
                 };
                 return (
                   <div key={n.id}
-                    className={`p-3.5 rounded-xl border text-[10.5px] space-y-1.5 border-l-4 transition-all hover:translate-x-0.5 ${
+                    className={`p-3.5 rounded-xl border text-[10.5px] space-y-1.5 border-l-4 transition-all hover:translate-x-0.5 card-hover anim-fade-in-up ${
                       isWireframe ? 'border-gray-300 bg-white border-l-gray-500' : `${catColors[n.category] || 'bg-gray-50 border-gray-100 border-l-gray-300'}`
-                    }`}>
+                    }`}
+                    style={{ animationDelay: `${idx * 50}ms`, animationFillMode: 'backwards' }}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         <span className={`w-1.5 h-1.5 rounded-full ${isWireframe ? 'bg-gray-500' : catDot[n.category] || 'bg-gray-400'}`} />
@@ -142,12 +141,13 @@ export default function App() {
             </div>
 
             <button onClick={() => { setShowNotifications(false); setCurrentScreen('schedule'); }}
-              className={`w-full py-3 text-[10px] font-extrabold text-white rounded-xl transition-all text-center block cursor-pointer ${
-                isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98]'
+              className={`w-full py-3 text-[10px] font-extrabold text-white rounded-xl transition-all text-center block cursor-pointer btn-press ${
+                isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800' : 'bg-emerald-500 hover:bg-emerald-600'
               }`}>
               Lihat Jadwal Pengangkutan
             </button>
           </div>
+          <div className="flex-1" onClick={() => setShowNotifications(false)} />
         </div>
       )}
 
@@ -245,8 +245,8 @@ export default function App() {
   );
 
   const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && (
-    <div className={`fixed bottom-0 left-0 right-0 border-t flex justify-around items-center shrink-0 z-50 min-h-[52px] ${
-      isWireframe ? 'bg-white border-gray-400' : 'bg-white border-gray-100'
+    <div className={`fixed bottom-0 left-0 right-0 border-t flex justify-around items-center shrink-0 z-50 min-h-[58px] shadow-nav ${
+      isWireframe ? 'bg-white border-gray-400' : 'glass bg-white/95 border-gray-100/80'
     }`}>
       {[
         { id: 'dashboard', label: 'Beranda', icon: Home },
@@ -278,12 +278,15 @@ export default function App() {
               setCurrentScreen(tab.id as ScreenType);
               setShowNotifications(false);
             }}
-            className={`flex flex-col items-center justify-center py-1 px-2 rounded-lg cursor-pointer transition-all ${
-              isTabActive ? 'scale-110 font-bold' : 'text-gray-400 hover:text-gray-600'
+            className={`flex flex-col items-center justify-center py-1.5 px-3 rounded-lg cursor-pointer transition-all relative ${
+              isTabActive ? '' : 'text-gray-400 hover:text-gray-600'
             }`}
           >
-            <Icon className={`w-[18px] h-[18px] ${isTabActive ? activeColor : 'text-gray-400'}`} />
-            <span className={`text-[8px] mt-0.5 leading-none block ${
+            {isTabActive && (
+              <span className={`absolute -top-0.5 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full ${isWireframe ? 'bg-gray-800' : activeColor}`} />
+            )}
+            <Icon className={`w-[18px] h-[18px] transition-all ${isTabActive ? activeColor : 'text-gray-400'}`} />
+            <span className={`text-[8px] mt-0.5 leading-none block font-bold transition-all ${
               isTabActive ? isWireframe ? 'text-black' : 'text-gray-800' : 'text-gray-400'
             }`}>
               {tab.label}
