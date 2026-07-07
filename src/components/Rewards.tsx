@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CustomAlert from './CustomAlert';
 
 import { RewardItem, UserProfile } from '../types';
 import { Award, ShoppingBag, Check, Gift, ArrowRight, Zap, RefreshCw, Smartphone, X } from 'lucide-react';
@@ -14,6 +15,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
   const [activeCategory, setActiveCategory] = useState<'Semua' | 'Transportasi' | 'Voucher' | 'Voucher UMKM' | 'Kebutuhan' | 'Merchandise'>('Semua');
   const [selectedReward, setSelectedReward] = useState<RewardItem | null>(null);
   const [successRedeem, setSuccessRedeem] = useState<boolean>(false);
+  const [alertState, setAlertState] = useState<{ open: boolean; title: string; message: string; type?: 'info' | 'warning' | 'success' }>({ open: false, title: '', message: '' });
 
   const filteredRewards = city.rewardItems.filter(
     (item: RewardItem) => activeCategory === 'Semua' || item.category === activeCategory
@@ -21,7 +23,7 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
 
   const handleRedeem = (reward: RewardItem) => {
     if (profile.points < reward.pointsCost) {
-      alert("EcoPoint Anda tidak mencukupi untuk menukar reward ini!");
+      setAlertState({ open: true, title: "Poin Tidak Cukup", message: "EcoPoint Anda tidak mencukupi untuk menukar reward ini!", type: 'warning' });
       return;
     }
 
@@ -337,6 +339,14 @@ export default function Rewards({ profile, setProfile, isWireframe, city }: Rewa
           </div>
         </div>
       )}
+
+      <CustomAlert
+        open={alertState.open}
+        onClose={() => setAlertState(a => ({ ...a, open: false }))}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
     </div>
   );
 }

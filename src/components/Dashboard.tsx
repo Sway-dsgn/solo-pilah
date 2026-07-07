@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CustomAlert from './CustomAlert';
 import {
   Bell,
   Award,
@@ -31,11 +32,12 @@ interface DashboardProps {
 
 export default function Dashboard({ profile, setProfile, isWireframe, onNavigate, onOpenNotifications, city }: DashboardProps) {
   const [checkedIn, setCheckedIn] = useState(false);
+  const [alertState, setAlertState] = useState<{ open: boolean; title: string; message: string; type?: 'info' | 'warning' | 'success' }>({ open: false, title: '', message: '' });
 
   const handleCheckin = () => {
     const today = new Date().toISOString().split('T')[0];
     if (profile.lastActiveDate === today) {
-      alert("Anda sudah check-in hari ini!");
+      setAlertState({ open: true, title: "Sudah Check-in", message: "Anda sudah check-in hari ini! Streak akan tetap terjaga.", type: 'info' });
       return;
     }
     const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
@@ -392,6 +394,14 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         </div>
 
       </div>
+
+      <CustomAlert
+        open={alertState.open}
+        onClose={() => setAlertState(a => ({ ...a, open: false }))}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
     </div>
   );
 }

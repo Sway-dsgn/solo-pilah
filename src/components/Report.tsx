@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { WasteReport } from '../types';
+import CustomAlert from './CustomAlert';
 
 import {
   Camera,
@@ -52,6 +53,7 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
   const [gpsLocation, setGpsLocation] = useState<{ name: string; x: number; y: number } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [alertState, setAlertState] = useState<{ open: boolean; title: string; message: string; type?: 'info' | 'warning' | 'success' }>({ open: false, title: '', message: '' });
 
   const handleCapturePhoto = (p: { url: string; label: string }) => {
     setPhoto(p);
@@ -66,7 +68,7 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
   const handleSubmitReport = (e: React.FormEvent) => {
     e.preventDefault();
     if (!photo || !gpsLocation || !reportType) {
-      alert("Harap pilih jenis laporan, foto, dan lokasi GPS!");
+      setAlertState({ open: true, title: "Laporan Belum Lengkap", message: "Harap pilih jenis laporan, foto, dan lokasi GPS!", type: 'warning' });
       return;
     }
     setIsSubmitting(true);
@@ -327,6 +329,14 @@ className={`p-3 rounded-xl border flex flex-col items-center gap-1 cursor-pointe
           </div>
         )}
       </div>
+
+      <CustomAlert
+        open={alertState.open}
+        onClose={() => setAlertState(a => ({ ...a, open: false }))}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
     </div>
   );
 }

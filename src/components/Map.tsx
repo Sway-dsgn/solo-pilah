@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CustomAlert from './CustomAlert';
 
 import { BankSampahLocation } from '../types';
 import { Map, MapPin, Search, Compass, Info, Phone, Clock, Award, Star, X } from 'lucide-react';
@@ -12,6 +13,7 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
   const [selectedLoc, setSelectedLoc] = useState<BankSampahLocation | null>(city.bankSampah[1]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<'Semua' | 'Bank Sampah' | 'TPS' | 'TPA'>('Semua');
+  const [alertState, setAlertState] = useState<{ open: boolean; title: string; message: string; type?: 'info' | 'warning' | 'success'; actionLabel?: string; onAction?: () => void }>({ open: false, title: '', message: '' });
 
   const filteredLocations = city.bankSampah.filter((loc: BankSampahLocation) => {
     const matchesSearch = loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -21,6 +23,7 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
   });
 
   return (
+    <>
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto relative ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
       <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-soft'}`}>
@@ -254,7 +257,7 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
 
           {/* Call to Action buttons */}
           <div className="flex gap-2 pt-1">
-            <button onClick={() => alert(`Navigasi rute tercepat menuju ${selectedLoc.name}`)}
+            <button onClick={() => setAlertState({ open: true, title: "Navigasi Rute", message: `Navigasi rute tercepat menuju ${selectedLoc.name} akan segera tersedia!`, type: 'info' })}
               className={`flex-1 py-2.5 text-xs font-bold text-white rounded-xl flex items-center justify-center gap-1.5 cursor-pointer transition-all btn-press active:scale-[0.98] ${
                 isWireframe ? 'bg-gray-900 border-2 border-black hover:bg-gray-800 shadow-none' : 'bg-emerald-500 hover:bg-emerald-600 shadow-sm'
               }`}>
@@ -275,6 +278,17 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
           Ketuk pin marker untuk lihat detail
         </div>
       )}
-    </div>
-  );
-}
+        </div>
+
+        <CustomAlert
+          open={alertState.open}
+          onClose={() => setAlertState(a => ({ ...a, open: false }))}
+          title={alertState.title}
+          message={alertState.message}
+          type={alertState.type as any}
+          actionLabel={alertState.actionLabel}
+          onAction={alertState.onAction}
+        />
+      </>
+    );
+  }
