@@ -29,7 +29,7 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
   const settingRows = [
     { label: "Riwayat Aktivitas", icon: History, color: "text-blue-500 bg-blue-50", action: () => onNavigate('report') },
     { label: "Edit Profil", icon: Edit3, color: "text-emerald-500 bg-emerald-50", action: () => setEditOpen(true) },
-    { label: "Pengaturan Akun", icon: Settings, color: "text-gray-500 bg-gray-50", action: () => alert("Menu Pengaturan") }
+    { label: "Pengaturan Akun", icon: Settings, color: "text-gray-500 bg-gray-50", action: () => onNavigate('settings') }
   ];
 
   return (

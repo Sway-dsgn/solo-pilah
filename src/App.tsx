@@ -12,6 +12,7 @@ import Report from './components/Report';
 import Rewards from './components/Rewards';
 import Profile from './components/Profile';
 import Edukasi from './components/Edukasi';
+import Settings from './components/Settings';
 
 import {
   Home,
@@ -239,6 +240,14 @@ export default function App() {
           isWireframe={isWireframe}
           city={city}
           onClose={() => setCurrentScreen('dashboard')}
+        />
+      )}
+
+      {currentScreen === 'settings' && (
+        <Settings
+          isWireframe={isWireframe}
+          profile={profile}
+          onClose={() => setCurrentScreen('profile')}
         />
       )}
     </>
