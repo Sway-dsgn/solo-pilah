@@ -364,7 +364,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                   <Flame className="w-3.5 h-3.5 text-amber-500 map-pulse" />
                   Kapasitas {city.tpaName}
                 </span>
-                <span className="badge-red"><span className="text-[9px]">78</span>% Beban</span>
+                <span className="text-[8px] font-extrabold text-red-700 bg-red-50 border border-red-200 px-2.5 py-1 rounded-full">78% Beban</span>
               </div>
               
               <div className="h-2.5 w-full bg-gray-200 rounded-full overflow-hidden">
