@@ -402,7 +402,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                           ? isWireframe ? 'text-gray-500' : 'text-orange-400'
                           : 'text-gray-300'
                       }`}>
-                        {dayNum}
+                        {i + 1}
                       </span>
                     </div>
                   );
