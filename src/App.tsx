@@ -158,7 +158,6 @@ export default function App() {
           onComplete={() => setCurrentScreen('login')}
           isWireframe={isWireframe}
           city={city}
-          onCityChange={setSelectedCityId}
         />
       )}
 
@@ -169,7 +168,6 @@ export default function App() {
           selectedRole={selectedRole}
           setSelectedRole={setSelectedRole}
           city={city}
-          onCityChange={setSelectedCityId}
         />
       )}
 

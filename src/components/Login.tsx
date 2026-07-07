@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from '../../logo.png';
 import { Lock, Mail, UserCheck, Shield, HelpCircle, ArrowRight, ChevronDown, MapPin } from 'lucide-react';
 import { UserRole } from '../types';
-import { CityData, CITIES } from '../cities';
+import { CityData } from '../cities';
 
 interface LoginProps {
   onLogin: (role: UserRole) => void;
@@ -10,16 +10,17 @@ interface LoginProps {
   selectedRole: UserRole;
   setSelectedRole: (role: UserRole) => void;
   city: CityData;
-  onCityChange: (id: string) => void;
 }
 
-export default function Login({ onLogin, isWireframe, selectedRole, setSelectedRole, city, onCityChange }: LoginProps) {
+export default function Login({ onLogin, isWireframe, selectedRole, setSelectedRole, city }: LoginProps) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [fullName, setFullName] = useState('');
   const [registered, setRegistered] = useState(false);
+  const [selectedKec, setSelectedKec] = useState(city.districts[0] || '');
+  const [selectedKel, setSelectedKel] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,26 +64,47 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
         <p className="text-xs text-gray-500 mt-1">{city.description}</p>
       </div>
 
-      {/* City Selector */}
+      {/* Wilayah Selector */}
       <div className={`mb-4 rounded-xl p-3 anim-fade-in-up ${isWireframe ? 'shadow-soft bg-white' : 'shadow-card bg-white'}`}>
         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
-          Pilih Daerah:
+          Pilih Wilayah:
         </label>
-        <select
-          onChange={(e) => onCityChange(e.target.value)}
-          value={city.id}
-          className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer bg-white ${
-            isWireframe
-              ? 'border-gray-400 focus:ring-gray-800 shadow-soft'
-              : 'border-gray-200 focus:ring-emerald-500/30 focus:border-emerald-500 text-gray-700 shadow-soft hover:border-gray-300 transition-all'
-          }`}
-        >
-          {CITIES.map((c: any) => (
-            <option key={c.id} value={c.id}>
-              {c.name} ({c.shortName})
-            </option>
-          ))}
-        </select>
+        <div className="space-y-2.5">
+          <div className="relative">
+            <select
+              value={selectedKec}
+              onChange={(e) => { setSelectedKec(e.target.value); setSelectedKel(''); }}
+              className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer bg-white ${
+                isWireframe
+                  ? 'border-gray-400 focus:ring-gray-800 shadow-soft'
+                  : 'border-gray-200 focus:ring-emerald-500/30 focus:border-emerald-500 text-gray-700 shadow-soft hover:border-gray-300 transition-all'
+              }`}
+            >
+              {city.districts.map((k: string) => (
+                <option key={k} value={k}>Kec. {k}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
+          </div>
+          <div className="relative">
+            <select
+              value={selectedKel}
+              onChange={(e) => setSelectedKel(e.target.value)}
+              disabled={!selectedKec}
+              className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer bg-white ${
+                isWireframe
+                  ? 'border-gray-400 focus:ring-gray-800 shadow-soft'
+                  : 'border-gray-200 focus:ring-emerald-500/30 focus:border-emerald-500 text-gray-700 shadow-soft hover:border-gray-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
+              }`}
+            >
+              <option value="">Pilih Kelurahan</option>
+              {(city.subdistricts[selectedKec] || []).map((kel: string) => (
+                <option key={kel} value={kel}>{kel}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
+          </div>
+        </div>
       </div>
 
       {/* Role Selector */}

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import logo from '../../logo.png';
-import { ArrowRight, Recycle, Trash2, Award, Camera, MapPin, Flame, AlertTriangle, CheckCircle, TrendingUp } from 'lucide-react';
-import { CityData, CITIES } from '../cities';
+import { ArrowRight, Recycle, Trash2, Award, Camera, MapPin, Flame, AlertTriangle, CheckCircle, TrendingUp, ChevronDown } from 'lucide-react';
+import { CityData } from '../cities';
 
 interface OnboardingProps {
   onComplete: () => void;
   isWireframe: boolean;
   city: CityData;
-  onCityChange: (id: string) => void;
 }
 
-export default function Onboarding({ onComplete, isWireframe, city, onCityChange }: OnboardingProps) {
+export default function Onboarding({ onComplete, isWireframe, city }: OnboardingProps) {
   const [step, setStep] = useState(0);
-  const [showCityPicker, setShowCityPicker] = useState(false);
+  const [showWilayahPicker, setShowWilayahPicker] = useState(false);
+  const [selectedKec, setSelectedKec] = useState(city.districts[0] || '');
+  const [selectedKel, setSelectedKel] = useState('');
 
   const slides = [
     {
@@ -178,7 +179,7 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
           <div className="flex items-center gap-2">
             <div className="relative">
               <button
-                onClick={() => setShowCityPicker(!showCityPicker)}
+                onClick={() => setShowWilayahPicker(!showWilayahPicker)}
                 className={`text-[9px] font-bold px-2 py-1 rounded-lg flex items-center gap-1 cursor-pointer ${
                   isWireframe
                     ? 'text-gray-600 border border-gray-300 hover:bg-gray-100'
@@ -186,34 +187,51 @@ export default function Onboarding({ onComplete, isWireframe, city, onCityChange
                 }`}
               >
                 <MapPin className="w-3 h-3" />
-                {city.shortName}
+                {selectedKel || selectedKec}
               </button>
-              {showCityPicker && (
-                <div className={`absolute right-0 top-8 w-44 rounded-2xl border-2 z-50 overflow-hidden ${
+              {showWilayahPicker && (
+                <div className={`absolute right-0 top-8 w-56 rounded-2xl border-2 z-50 overflow-hidden ${
                   isWireframe ? 'bg-white border-gray-400' : 'bg-white border-emerald-100/80 shadow-xl shadow-emerald-500/10'
                 }`}>
                   <div className={`px-3.5 py-2.5 border-b text-[9px] font-bold uppercase tracking-wider ${
                     isWireframe ? 'text-gray-500 border-gray-200' : 'text-gray-400 border-gray-100'
                   }`}>
-                    Pilih Kota
+                    Pilih Wilayah
                   </div>
-                  {CITIES.map((c: any, i: number) => (
-                    <button key={c.id}
-                      onClick={() => { onCityChange(c.id); setShowCityPicker(false); }}
-                      className={`w-full text-left px-3.5 py-2.5 text-[10px] font-bold flex items-center gap-2.5 transition-all cursor-pointer ${
-                        c.id === city.id
-                          ? isWireframe ? 'bg-gray-100 text-gray-900' : 'bg-emerald-50 text-emerald-700'
-                          : 'text-gray-600 hover:bg-gray-50'
-                      } ${i < CITIES.length - 1 ? 'border-b border-gray-50' : ''}`}>
-                      <div className={`w-2 h-2 rounded-full ${
-                        c.id === city.id ? isWireframe ? 'bg-gray-900' : 'bg-emerald-500' : 'bg-gray-300'
-                      }`} />
-                      <span>{c.shortName}</span>
-                      <span className={`ml-auto text-[8px] ${c.id === city.id ? 'text-emerald-500' : 'text-gray-400'}`}>
-                        {c.id === city.id ? 'Aktif' : 'Pilih'}
-                      </span>
-                    </button>
-                  ))}
+                  <div className="p-3 space-y-2">
+                    <select
+                      value={selectedKec}
+                      onChange={(e) => { setSelectedKec(e.target.value); setSelectedKel(''); }}
+                      className={`w-full p-2 text-[10px] font-bold rounded-xl border appearance-none cursor-pointer bg-white ${
+                        isWireframe ? 'border-gray-400' : 'border-gray-200 text-gray-700'
+                      }`}
+                    >
+                      {city.districts.map((k: string) => (
+                        <option key={k} value={k}>Kec. {k}</option>
+                      ))}
+                    </select>
+                    <select
+                      value={selectedKel}
+                      onChange={(e) => setSelectedKel(e.target.value)}
+                      disabled={!selectedKec}
+                      className={`w-full p-2 text-[10px] font-bold rounded-xl border appearance-none cursor-pointer bg-white ${
+                        isWireframe ? 'border-gray-400' : 'border-gray-200 text-gray-700 disabled:opacity-50'
+                      }`}
+                    >
+                      <option value="">Pilih Kelurahan</option>
+                      {(city.subdistricts[selectedKec] || []).map((kel: string) => (
+                        <option key={kel} value={kel}>{kel}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <button
+                    onClick={() => setShowWilayahPicker(false)}
+                    className={`w-full py-2.5 text-[10px] font-bold text-center border-t cursor-pointer ${
+                      isWireframe ? 'border-gray-200 text-gray-600' : 'border-gray-100 text-emerald-600'
+                    }`}
+                  >
+                    Simpan
+                  </button>
                 </div>
               )}
             </div>
