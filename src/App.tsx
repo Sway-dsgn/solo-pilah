@@ -1,7 +1,30 @@
-import SoloPilahUI from './components/SoloPilahUI';
+﻿import React, { useState, useEffect } from 'react';
+import { getCity, generateProfiles, CITIES } from './cities';
+import { UserRole, ScreenType, WasteReport, UserProfile } from './types';
+import Onboarding from './components/Onboarding';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import Scan from './components/Scan';
+import Schedule from './components/Schedule';
+import MapScreen from './components/Map';
+import Guide from './components/Guide';
+import Report from './components/Report';
+import Rewards from './components/Rewards';
+import Profile from './components/Profile';
+import Edukasi from './components/Edukasi';
+
+import {
+  Home,
+  Camera,
+  User,
+  Bell,
+  Award,
+  Scan as ScanIcon,
+  X,
+  MapPin
+} from 'lucide-react';
 
 export default function App() {
-<<<<<<< HEAD
   const [isWireframe, setIsWireframe] = useState<boolean>(false);
   const [currentScreen, setCurrentScreen] = useState<ScreenType>('onboarding');
   const [selectedRole, setSelectedRole] = useState<UserRole>('Masyarakat');
@@ -282,7 +305,4 @@ export default function App() {
       {bottomNav}
     </div>
   );
-=======
-  return <SoloPilahUI />;
->>>>>>> f30d812af0a3e79a7c2d0038f88ed2dee0b8b70c
 }
