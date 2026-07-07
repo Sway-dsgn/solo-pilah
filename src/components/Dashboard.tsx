@@ -177,23 +177,25 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
           }`}>
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className={`p-2 rounded-xl ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-orange-50 border border-orange-100'}`}>
-                  <Flame className={`w-5 h-5 ${isWireframe ? 'text-gray-800' : 'text-orange-500'}`} />
+              <div className="flex items-center gap-2.5">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-orange-400 to-orange-600 shadow-sm'
+                }`}>
+                  <Flame className={`w-5 h-5 ${isWireframe ? 'text-gray-800' : 'text-white'}`} />
                 </div>
                 <div>
-                  <span className={`text-lg font-black font-display ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>
+                  <span className={`text-xl font-black font-display tracking-tight ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>
                     {profile.streak}
                   </span>
-                  <span className="text-[9px] text-gray-500 font-bold ml-1">hari</span>
-                  <p className="text-[8px] text-gray-400">berturut-turut aktif</p>
+                  <span className="text-[9px] text-gray-500 font-bold ml-0.5">hari</span>
+                  <p className="text-[8px] text-gray-400 leading-none mt-0.5">berturut-turut aktif</p>
                 </div>
               </div>
               <button onClick={handleCheckin}
-                className={`px-3 py-1.5 rounded-xl text-[9px] font-bold cursor-pointer transition-all btn-press ${
+                className={`px-3.5 py-2 rounded-xl text-[9px] font-bold cursor-pointer transition-all btn-press ${
                   checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0]
-                    ? isWireframe ? 'bg-gray-300 text-gray-500 cursor-default' : 'bg-gray-200 text-gray-500 cursor-default border border-gray-200'
-                    : isWireframe ? 'bg-gray-800 text-white' : 'bg-orange-500 text-white hover:bg-orange-600 shadow-sm'
+                    ? isWireframe ? 'bg-gray-300 text-gray-500 cursor-default' : 'bg-gray-100 text-gray-400 cursor-default border border-gray-200'
+                    : isWireframe ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm hover:shadow-md'
                 }`}>
                 {checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0] ? '✔ Check-in' : '+25 Check-in'}
               </button>
@@ -204,18 +206,27 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
               {['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map((day, i) => {
                 const isActive = i < profile.streak % 7 || (profile.streak > 0 && i === 0 && profile.streak >= 7);
                 const isToday = i === new Date().getDay() - 1 || (new Date().getDay() === 0 && i === 6);
+                const dayNum = i + 1;
+                const progress = profile.streak % 7 || 7;
                 return (
-                  <div key={day} className="flex flex-col items-center gap-1">
-                    <span className="text-[7px] font-bold text-gray-400 uppercase">{day}</span>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[8px] font-bold transition-all ${
-                      isActive
-                        ? isWireframe ? 'bg-gray-800 text-white' : 'bg-orange-500 text-white shadow-sm'
-                        : isToday
-                        ? isWireframe ? 'border border-gray-400' : 'border-2 border-orange-200 bg-orange-50 text-orange-500'
-                        : 'bg-gray-100 text-gray-400'
-                    }`}>
-                      {i + 1}
+                  <div key={day} className="flex flex-col items-center gap-1 flex-1">
+                    <span className="text-[6px] font-bold text-gray-400 uppercase tracking-wider">{day}</span>
+                    <div className={`w-full h-1 rounded-full ${isWireframe ? 'bg-gray-200' : 'bg-gray-100'}`}>
+                      <div className={`h-full rounded-full transition-all duration-500 ${
+                        i < progress
+                          ? isWireframe ? 'bg-gray-800' : 'bg-gradient-to-r from-orange-400 to-orange-500'
+                          : ''
+                      }`} style={{ width: i < progress ? '100%' : '0%' }} />
                     </div>
+                    <span className={`text-[8px] font-bold transition-all ${
+                      isActive
+                        ? isWireframe ? 'text-gray-800' : 'text-orange-600'
+                        : isToday
+                        ? isWireframe ? 'text-gray-500' : 'text-orange-400'
+                        : 'text-gray-300'
+                    }`}>
+                      {dayNum}
+                    </span>
                   </div>
                 );
               })}
