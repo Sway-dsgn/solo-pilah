@@ -9,14 +9,15 @@ interface EdukasiProps {
 }
 
 export default function Edukasi({ isWireframe, city, onClose, onModalChange }: EdukasiProps) {
-  React.useEffect(() => {
-    onModalChange?.(viewerOpen || !!selectedFact);
-  }, [viewerOpen, selectedFact]);
   const [slideIndex, setSlideIndex] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerSlide, setViewerSlide] = useState<any>(null);
   const [mediaTab, setMediaTab] = useState<'teks' | 'video'>('teks');
   const [selectedFact, setSelectedFact] = useState<any>(null);
+
+  React.useEffect(() => {
+    onModalChange?.(viewerOpen || !!selectedFact);
+  }, [viewerOpen, selectedFact]);
 
   const slides = city.eduSlides;
 
