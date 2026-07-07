@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 import { Calendar, Clock, MapPin, Truck, Bell, AlertCircle, ChevronDown, CheckCircle } from 'lucide-react';
+import { CityData } from '../cities';
 
 interface ScheduleProps {
   isWireframe: boolean;
-  city: any;
+  city: CityData;
 }
 
 export default function Schedule({ isWireframe, city }: ScheduleProps) {
@@ -12,6 +13,7 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
   const [reminders, setReminders] = useState<{ [key: string]: boolean }>({});
 
   const kecamatanList = city.districts;
+  const kelurahanList = selectedKecamatan ? city.subdistricts[selectedKecamatan] || [] : [];
 
   const filteredSchedules = city.schedules.filter(
     (s: any) => s.kecamatan.toLowerCase() === selectedKecamatan.toLowerCase()
@@ -53,6 +55,25 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
           <ChevronDown className="absolute right-3.5 top-3.5 w-4 h-4 text-gray-400 pointer-events-none" />
         </div>
       </div>
+
+      {/* Kelurahan List */}
+      {kelurahanList.length > 0 && (
+        <div className="px-4 pb-2 shrink-0">
+          <div className="flex flex-wrap gap-1.5">
+            {kelurahanList.map((kel) => (
+              <span key={kel}
+                className={`px-2.5 py-1 rounded-full text-[8px] font-bold ${
+                  isWireframe
+                    ? 'bg-gray-100 border border-gray-300 text-gray-700'
+                    : 'bg-emerald-50 border border-emerald-100 text-emerald-700'
+                }`}>
+                {kel}
+              </span>
+            ))}
+          </div>
+          <p className="text-[8px] text-gray-400 mt-1.5">{kelurahanList.length} kelurahan di Kecamatan {selectedKecamatan}</p>
+        </div>
+      )}
 
       {/* Real-time Tracking Countdown Box */}
       <div className="px-4 mb-1 shrink-0">

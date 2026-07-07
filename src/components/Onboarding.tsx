@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import logo from '../../logo.png';
 import { ArrowRight, Recycle, Trash2, Award, Camera, MapPin, Flame, AlertTriangle, CheckCircle, TrendingUp } from 'lucide-react';
-import { CITIES } from '../cities';
+import { CityData, CITIES } from '../cities';
 
 interface OnboardingProps {
   onComplete: () => void;
   isWireframe: boolean;
-  city: any;
+  city: CityData;
   onCityChange: (id: string) => void;
 }
 

@@ -19,7 +19,9 @@ export const DEFAULT_PROFILES: { [key: string]: UserProfile } = {
     phone: "0812-3456-7890",
     address: "Jl. Slamet Riyadi No. 120, Keprabon, Surakarta",
     ecoRank: "Laskar Cempo Hijau",
-    totalWasteSubmitted: 42.5
+    totalWasteSubmitted: 42.5,
+    streak: 5,
+    lastActiveDate: "2026-07-07"
   },
   Petugas: {
     name: "Budi Santoso",
@@ -30,7 +32,9 @@ export const DEFAULT_PROFILES: { [key: string]: UserProfile } = {
     phone: "0823-4567-8912",
     address: "Kantor Dinas Lingkungan Hidup Surakarta, Jebres",
     ecoRank: "Pahlawan Kebersihan Solo",
-    totalWasteSubmitted: 1450 // As a worker, this is total cleared waste in kg
+    totalWasteSubmitted: 1450,
+    streak: 12,
+    lastActiveDate: "2026-07-07"
   },
   BankSampah: {
     name: "Siti Rahmawati",
@@ -41,7 +45,9 @@ export const DEFAULT_PROFILES: { [key: string]: UserProfile } = {
     phone: "0856-7890-1234",
     address: "Bank Sampah Sido Mukti, Mojosongo, Jebres, Surakarta",
     ecoRank: "Srikandi Eco Cempo",
-    totalWasteSubmitted: 3240 // Total processed waste from community in kg
+    totalWasteSubmitted: 3240,
+    streak: 3,
+    lastActiveDate: "2026-07-07"
   }
 };
 

@@ -19,6 +19,7 @@ import {
   Zap
 } from 'lucide-react';
 import { UserProfile, ScreenType } from '../types';
+import { CityData } from '../cities';
 
 
 interface DashboardProps {
@@ -27,7 +28,7 @@ interface DashboardProps {
   isWireframe: boolean;
   onNavigate: (screen: ScreenType) => void;
   onOpenNotifications: () => void;
-  city: any;
+  city: CityData;
 }
 
 export default function Dashboard({ profile, setProfile, isWireframe, onNavigate, onOpenNotifications, city }: DashboardProps) {

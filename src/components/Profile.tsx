@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { UserProfile } from '../types';
+import { UserProfile, ScreenType } from '../types';
+import { CityData } from '../cities';
 import { User, Mail, Phone, MapPin, Award, LogOut, History, Edit3, Settings, ChevronRight, X, Save } from 'lucide-react';
 
 interface ProfileProps {
@@ -7,8 +8,8 @@ interface ProfileProps {
   setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   isWireframe: boolean;
   onLogout: () => void;
-  onNavigate: (screen: any) => void;
-  city: any;
+  onNavigate: (screen: ScreenType) => void;
+  city: CityData;
 }
 
 export default function Profile({ profile, setProfile, isWireframe, onLogout, onNavigate, city }: ProfileProps) {

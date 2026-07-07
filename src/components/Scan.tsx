@@ -9,14 +9,15 @@ import {
   X,
   RefreshCw,
 } from 'lucide-react';
-import { UserProfile } from '../types';
+import { UserProfile, ScreenType } from '../types';
+import { CityData } from '../cities';
 
 interface ScanProps {
   profile: UserProfile;
   setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   isWireframe: boolean;
-  onNavigate: (screen: any) => void;
-  city: any;
+  onNavigate: (screen: ScreenType) => void;
+  city: CityData;
 }
 
 const MOCK_PHOTOS = [

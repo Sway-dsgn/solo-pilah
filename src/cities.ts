@@ -23,6 +23,7 @@ export interface CityData {
   slogan: string;
   coordinates: { x: number; y: number };
   districts: string[];
+  subdistricts: Record<string, string[]>;
   defaultProfiles: {
     Masyarakat: Partial<UserProfile>;
     Petugas: Partial<UserProfile>;
@@ -56,11 +57,18 @@ export const CITIES: CityData[] = [
     transitAbbr: 'BST',
     wasteDept: 'Dinas Lingkungan Hidup',
     wasteDeptAbbr: 'DLH Surakarta',
-    emailDomain: 'surakata.go.id',
-    description: 'Platform Kolaboratif Pengelolaan Sampah Kota',
-    slogan: 'Misi Surakarta Bebas Sampah',
+    emailDomain: 'surakarta.go.id',
+    description: 'Platform Kolaboratif Pengelolaan Sampah Solo Raya — 5 Kecamatan, 49 Kelurahan',
+    slogan: 'Misi Solo Raya Bebas Sampah',
     coordinates: { x: 50, y: 50 },
     districts: ['Jebres', 'Banjarsari', 'Laweyan', 'Serengan', 'Pasar Kliwon'],
+    subdistricts: {
+      Jebres: ['Jebres', 'Pucangsawit', 'Jagalan', 'Purwodiningratan', 'Sudiroprajan', 'Mojosongo', 'Gandekan', 'Kepatihan Wetan', 'Kepatihan Kulon'],
+      Banjarsari: ['Banjarsari', 'Kadipiro', 'Nusukan', 'Gilingan', 'Kestalan', 'Keprabon', 'Timuran', 'Ketelan', 'Punggawan', 'Mangkubumen', 'Manahan', 'Sumber', 'Kerten', 'Setabelan', 'Purbowardayan'],
+      Laweyan: ['Pajang', 'Karangasem', 'Penumping', 'Sriwedari', 'Purwosari', 'Bumi', 'Laweyan', 'Sondakan', 'Semanggi', 'Jajar'],
+      Serengan: ['Tipes', 'Serengan', 'Joyotakan', 'Danukusuman', 'Jayengan', 'Kratonan'],
+      'Pasar Kliwon': ['Pasar Kliwon', 'Gajahan', 'Sangkrah', 'Kauman', 'Kedung Lumbu', 'Mojo', 'Baluwarti', 'Joyosuran', 'Semanggi'],
+    },
     defaultProfiles: {
       Masyarakat: {
         name: 'Ahmad Fauzi',
@@ -281,6 +289,15 @@ export const CITIES: CityData[] = [
     slogan: 'Misi Bandung Bersih & Hijau',
     coordinates: { x: 50, y: 50 },
     districts: ['Bojongloa Kidul', 'Bojongloa Kaler', 'Cibeunying', 'Andir', 'Kiaracondong', 'Cicendo', 'Sukajadi'],
+    subdistricts: {
+      'Bojongloa Kidul': ['Cibaduyut', 'Cibaduyut Kidul', 'Cibaduyut Wetan', 'Kebon Lega', 'Mekarwangi', 'Situsaeur'],
+      'Bojongloa Kaler': ['Bojongloa', 'Jamika', 'Kopo', 'Suka Asih', 'Babakan Tarogong'],
+      'Cibeunying': ['Cibeunying', 'Cigadung', 'Cihapit', 'Cikutra', 'Dago', 'Lebakgede', 'Sukamulya', 'Sukamaju'],
+      'Andir': ['Andir', 'Campaka', 'Garuda', 'Kebon Jeruk', 'Maleber', 'Melong'],
+      'Kiaracondong': ['Cicaheum', 'Karang Pamulang', 'Kebon Jayanti', 'Kiaracondong', 'Sukapura'],
+      'Cicendo': ['Arjuna', 'Cicendo', 'Husen Sastranegara', 'Pajajaran', 'Pasir Kaliki', 'Sukaraja'],
+      'Sukajadi': ['Cipedes', 'Sukabungah', 'Sukajadi', 'Sukawarna'],
+    },
     defaultProfiles: {
       Masyarakat: {
         name: 'Dewi Sartika',
@@ -437,6 +454,15 @@ export const CITIES: CityData[] = [
     slogan: 'Misi Surabaya Bersih & Sehat',
     coordinates: { x: 50, y: 50 },
     districts: ['Gubeng', 'Tegalsari', 'Genteng', 'Bubutan', 'Simokerto', 'Sawahan', 'Wonokromo'],
+    subdistricts: {
+      'Gubeng': ['Gubeng', 'Kertajaya', 'Mojo', 'Pucang Sewu'],
+      'Tegalsari': ['Keputran', 'Tegalsari', 'Dr. Sutomo', 'Kedungdoro'],
+      'Genteng': ['Embong Kaliasin', 'Genteng', 'Kapasan', 'Ketabang', 'Peneleh'],
+      'Bubutan': ['Alun-Alun Contong', 'Bubutan', 'Gundih', 'Jepara', 'Tembok Dukuh'],
+      'Simokerto': ['Kapasan', 'Simokerto', 'Simolawang', 'Tambakrejo'],
+      'Sawahan': ['Banyu Urip', 'Pakis', 'Putat Jaya', 'Sawahan'],
+      'Wonokromo': ['Darmo', 'Jagir', 'Ngagel', 'Ngagel Rejo', 'Wonokromo'],
+    },
     defaultProfiles: {
       Masyarakat: {
         name: 'Rudi Hartono',

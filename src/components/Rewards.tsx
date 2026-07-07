@@ -3,12 +3,13 @@ import CustomAlert from './CustomAlert';
 
 import { RewardItem, UserProfile } from '../types';
 import { Award, ShoppingBag, Check, Gift, ArrowRight, Zap, RefreshCw, Smartphone, X } from 'lucide-react';
+import { CityData } from '../cities';
 
 interface RewardsProps {
   profile: UserProfile;
   setProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
   isWireframe: boolean;
-  city: any;
+  city: CityData;
 }
 
 export default function Rewards({ profile, setProfile, isWireframe, city }: RewardsProps) {

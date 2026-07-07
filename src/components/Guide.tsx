@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { WASTE_CATEGORIES } from '../data';
-import { BookOpen, Search, Leaf, Layers, Skull, Cpu, ArrowRight, HelpCircle, AlertCircle, X, Star } from 'lucide-react';
+import { BookOpen, Search, Leaf, Layers, Skull, Cpu, HelpCircle, AlertCircle, X, Star } from 'lucide-react';
+import { CityData } from '../cities';
 
 interface GuideProps {
   isWireframe: boolean;
-  city: any;
+  city: CityData;
 }
 
 export default function Guide({ isWireframe, city }: GuideProps) {

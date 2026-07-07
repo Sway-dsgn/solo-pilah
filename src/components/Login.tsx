@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import logo from '../../logo.png';
 import { Lock, Mail, UserCheck, Shield, HelpCircle, ArrowRight, ChevronDown, MapPin } from 'lucide-react';
 import { UserRole } from '../types';
-import { CITIES } from '../cities';
+import { CityData, CITIES } from '../cities';
 
 interface LoginProps {
   onLogin: (role: UserRole) => void;
   isWireframe: boolean;
   selectedRole: UserRole;
   setSelectedRole: (role: UserRole) => void;
-  city: any;
+  city: CityData;
   onCityChange: (id: string) => void;
 }
 

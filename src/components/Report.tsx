@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { WasteReport } from '../types';
 import CustomAlert from './CustomAlert';
+import { CityData } from '../cities';
 
 import {
   Camera,
@@ -27,7 +28,7 @@ interface ReportProps {
   reports: WasteReport[];
   setReports: React.Dispatch<React.SetStateAction<WasteReport[]>>;
   userRole: string;
-  city: any;
+  city: CityData;
 }
 
 const REPORT_TYPES = [

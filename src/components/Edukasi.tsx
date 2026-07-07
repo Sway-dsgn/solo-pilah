@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { BookOpen, ChevronLeft, ChevronRight, Sparkles, Info, Globe, Leaf, Award, ArrowRight, Play, FileText, X, ExternalLink } from 'lucide-react';
+import { CityData } from '../cities';
 
 interface EdukasiProps {
   isWireframe: boolean;
-  city: any;
+  city: CityData;
   onClose: () => void;
   onModalChange?: (open: boolean) => void;
 }
@@ -233,6 +234,7 @@ export default function Edukasi({ isWireframe, city, onClose, onModalChange }: E
               <span className="text-[8px] font-bold text-gray-400 uppercase tracking-wider block">Dampak Positif Warga</span>
               <span className="text-lg font-black text-gray-800 font-display">{city.districts.length} Kecamatan</span>
               <span className="text-[9px] text-gray-500 ml-1">aktif memilah</span>
+              <span className="text-[8px] text-gray-400 block mt-0.5">{Object.values(city.subdistricts).flat().length} Kelurahan</span>
             </div>
           </div>
           <Award className={`w-8 h-8 ${isWireframe ? 'text-gray-300' : 'text-emerald-300'}`} />

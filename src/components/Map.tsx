@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import CustomAlert from './CustomAlert';
 
 import { BankSampahLocation } from '../types';
-import { Map, MapPin, Search, Compass, Info, Phone, Clock, Award, Star, X } from 'lucide-react';
+import { CityData } from '../cities';
+import { Map, MapPin, Search, Compass, Info, Phone, Clock, Award, X } from 'lucide-react';
 
 interface MapProps {
   isWireframe: boolean;
-  city: any;
+  city: CityData;
 }
 
 export default function MapScreen({ isWireframe, city }: MapProps) {
