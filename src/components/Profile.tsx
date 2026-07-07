@@ -37,7 +37,10 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header Profile Info Banner */}
       <div className={`p-6 text-center border-b flex flex-col items-center shrink-0 ${
-        isWireframe ? 'bg-white border-gray-300' : 'bg-gradient-to-b from-emerald-400 via-emerald-50 to-white border-gray-100 shadow-soft'
+        isWireframe ? 'bg-white border-gray-300'
+        : profile.role === 'Masyarakat' ? 'bg-gradient-to-b from-emerald-400 via-emerald-50 to-white border-gray-100 shadow-soft'
+        : profile.role === 'Petugas' ? 'bg-gradient-to-b from-blue-400 via-blue-50 to-white border-gray-100 shadow-soft'
+        : 'bg-gradient-to-b from-indigo-400 via-indigo-50 to-white border-gray-100 shadow-soft'
       }`}>
         {/* Avatar with Ring */}
         <div className="relative mb-3">
@@ -45,18 +48,29 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
             src={profile.avatar}
             alt="User Avatar"
             className={`w-18 h-18 rounded-full object-cover border-4 ${
-              isWireframe ? 'border-gray-500' : 'border-emerald-500'
+              isWireframe ? 'border-gray-500'
+              : profile.role === 'Masyarakat' ? 'border-emerald-500'
+              : profile.role === 'Petugas' ? 'border-blue-500'
+              : 'border-indigo-500'
             }`}
           />
           <span className={`absolute bottom-0 right-0 p-1.5 rounded-full border-2 border-white text-white ${
-            isWireframe ? 'bg-gray-800' : 'bg-emerald-500'
+            isWireframe ? 'bg-gray-800'
+            : profile.role === 'Masyarakat' ? 'bg-emerald-500'
+            : profile.role === 'Petugas' ? 'bg-blue-500'
+            : 'bg-indigo-500'
           }`}>
             <Award className="w-3.5 h-3.5" />
           </span>
         </div>
 
         <h3 className="text-sm font-extrabold font-display text-gray-800">{profile.name}</h3>
-        <p className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full mt-1.5 border border-emerald-100">
+        <p className={`text-[10px] font-bold px-2 py-0.5 rounded-full mt-1.5 border ${
+          isWireframe ? 'bg-gray-200 text-gray-800 border-gray-300'
+          : profile.role === 'Masyarakat' ? 'text-emerald-600 bg-emerald-50 border-emerald-100'
+          : profile.role === 'Petugas' ? 'text-blue-600 bg-blue-50 border-blue-100'
+          : 'text-indigo-600 bg-indigo-50 border-indigo-100'
+        }`}>
           {profile.ecoRank}
         </p>
         <p className="text-[9px] text-gray-400 mt-1">{profile.email}</p>
@@ -98,33 +112,63 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
         </div>
       </div>
 
-      {/* Performance Summary Statistics */}
+      {/* Performance Summary Statistics - Role Specific */}
       <div className="px-4 shrink-0">
-        <div className={`p-4 rounded-2xl bg-white border flex items-center justify-between ${
-          isWireframe ? 'border-gray-300' : 'border-gray-100/50 shadow-card'
-        }`}>
-          <div className="space-y-1">
-            <span className="text-[9px] text-gray-400 font-bold uppercase">Kontribusi Sampah</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-xl font-extrabold text-gray-800 font-display">
-                {profile.totalWasteSubmitted.toLocaleString()}
-              </span>
-              <span className="text-xs text-gray-500 font-semibold">Kg</span>
+        {profile.role === 'Masyarakat' ? (
+          <div className={`p-4 rounded-2xl bg-white border flex items-center justify-between ${
+            isWireframe ? 'border-gray-300' : 'border-gray-100/50 shadow-card'
+          }`}>
+            <div className="space-y-1">
+              <span className="text-[9px] text-gray-400 font-bold uppercase">Kontribusi Sampah</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-xl font-extrabold text-gray-800 font-display">{profile.totalWasteSubmitted.toLocaleString()}</span>
+                <span className="text-xs text-gray-500 font-semibold">Kg</span>
+              </div>
+            </div>
+            <div className="h-10 w-[1px] bg-gray-100"></div>
+            <div className="space-y-1 text-right">
+              <span className="text-[9px] text-gray-400 font-bold uppercase">Akumulasi Poin</span>
+              <div className="flex items-baseline justify-end gap-1">
+                <span className="text-xl font-extrabold text-emerald-600 font-display">{profile.points.toLocaleString()}</span>
+                <span className="text-xs text-gray-500 font-semibold">pts</span>
+              </div>
             </div>
           </div>
-
-          <div className="h-10 w-[1px] bg-gray-100"></div>
-
-          <div className="space-y-1 text-right">
-            <span className="text-[9px] text-gray-400 font-bold uppercase">Akumulasi Poin</span>
-            <div className="flex items-baseline justify-end gap-1">
-              <span className="text-xl font-extrabold text-emerald-600 font-display">
-                {profile.points.toLocaleString()}
-              </span>
-              <span className="text-xs text-gray-500 font-semibold">pts</span>
+        ) : profile.role === 'Petugas' ? (
+          <div className={`p-4 rounded-2xl bg-white border grid grid-cols-3 gap-2 ${
+            isWireframe ? 'border-gray-300' : 'border-gray-100/50 shadow-card'
+          }`}>
+            <div className="text-center">
+              <span className="text-[18px] font-extrabold text-gray-800 font-display block">87</span>
+              <span className="text-[8px] text-gray-400 font-bold uppercase">Rute Selesai</span>
+            </div>
+            <div className="text-center">
+              <span className="text-[18px] font-extrabold text-blue-600 font-display block">1.450</span>
+              <span className="text-[8px] text-gray-400 font-bold uppercase">Kg Angkut</span>
+            </div>
+            <div className="text-center">
+              <span className="text-[18px] font-extrabold text-amber-600 font-display block">12</span>
+              <span className="text-[8px] text-gray-400 font-bold uppercase">Laporan</span>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className={`p-4 rounded-2xl bg-white border grid grid-cols-3 gap-2 ${
+            isWireframe ? 'border-gray-300' : 'border-gray-100/50 shadow-card'
+          }`}>
+            <div className="text-center">
+              <span className="text-[18px] font-extrabold text-indigo-600 font-display block">3.240</span>
+              <span className="text-[8px] text-gray-400 font-bold uppercase">Kg Gudang</span>
+            </div>
+            <div className="text-center">
+              <span className="text-[18px] font-extrabold text-gray-800 font-display block">45</span>
+              <span className="text-[8px] text-gray-400 font-bold uppercase">Nasabah</span>
+            </div>
+            <div className="text-center">
+              <span className="text-[18px] font-extrabold text-emerald-600 font-display block">12.4K</span>
+              <span className="text-[8px] text-gray-400 font-bold uppercase">Poin Terbit</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* App settings list */}

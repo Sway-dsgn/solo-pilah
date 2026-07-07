@@ -57,9 +57,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
     <div className={`flex-1 flex flex-col p-6 overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gradient-to-b from-emerald-50/60 via-white to-white shadow-card'}`}>
       {/* Branding */}
       <div className="text-center my-6 anim-fade-in-up">
-        <div className={`inline-flex items-center justify-center p-3 rounded-2xl mb-3 ${isWireframe ? 'bg-white border border-gray-300' : 'bg-gradient-to-br from-emerald-50 to-emerald-100/50 border border-emerald-100 shadow-sm'}`}>
-          <img src={logo} alt="Solo Pilah" className="w-10 h-10 object-contain" />
-        </div>
+        <img src={logo} alt="Solo Pilah" className="w-14 h-14 object-contain mx-auto mb-3" />
         <h1 className="text-xl font-extrabold font-display tracking-tight text-gray-900">{city.appName}</h1>
         <p className="text-xs text-gray-500 mt-1">{city.description}</p>
       </div>

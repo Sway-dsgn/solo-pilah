@@ -183,7 +183,7 @@ export default function App() {
       )}
 
       {currentScreen === 'schedule' && (
-        <Schedule isWireframe={isWireframe} city={city} />
+        <Schedule isWireframe={isWireframe} city={city} userRole={selectedRole} />
       )}
 
       {currentScreen === 'map' && (
@@ -253,17 +253,39 @@ export default function App() {
     </>
   );
 
-  const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && !modalOpen && (
-    <div className={`fixed bottom-0 left-0 right-0 border-t flex justify-around items-center shrink-0 z-50 min-h-[58px] shadow-nav ${
-      isWireframe ? 'bg-white border-gray-400' : 'glass bg-white/95 border-gray-100/80'
-    }`}>
-      {[
+  const getBottomNavTabs = () => {
+    if (selectedRole === 'Masyarakat') {
+      return [
         { id: 'dashboard', label: 'Beranda', icon: Home },
         { id: 'scan', label: 'Scan', icon: ScanIcon },
         { id: 'rewards', label: 'Reward', icon: Award },
         { id: 'report', label: 'Lapor', icon: Camera },
         { id: 'profile', label: 'Profil', icon: User },
-      ].map((tab) => {
+      ];
+    }
+    if (selectedRole === 'Petugas') {
+      return [
+        { id: 'dashboard', label: 'Beranda', icon: Home },
+        { id: 'schedule', label: 'Jadwal', icon: MapPin },
+        { id: 'rewards', label: 'Reward', icon: Award },
+        { id: 'report', label: 'Verifikasi', icon: Camera },
+        { id: 'profile', label: 'Profil', icon: User },
+      ];
+    }
+    return [
+      { id: 'dashboard', label: 'Beranda', icon: Home },
+      { id: 'report', label: 'Timbang', icon: Award },
+      { id: 'rewards', label: 'Reward', icon: Award },
+      { id: 'schedule', label: 'Setoran', icon: MapPin },
+      { id: 'profile', label: 'Profil', icon: User },
+    ];
+  };
+
+  const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && !modalOpen && (
+    <div className={`fixed bottom-0 left-0 right-0 border-t flex justify-around items-center shrink-0 z-50 min-h-[58px] shadow-nav ${
+      isWireframe ? 'bg-white border-gray-400' : 'glass bg-white/95 border-gray-100/80'
+    }`}>
+      {getBottomNavTabs().map((tab) => {
         const Icon = tab.icon;
         const isTabActive = currentScreen === tab.id || (tab.id === 'report' && currentScreen === 'history');
         const activeColor = isWireframe
