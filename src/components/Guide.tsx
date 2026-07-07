@@ -64,8 +64,8 @@ export default function Guide({ isWireframe, city }: GuideProps) {
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className={`p-4 shrink-0 bg-white border-b ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-soft'}`}>
-        <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
+        <div className={`p-4 shrink-0 bg-white border-b anim-fade-in-up ${isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-soft'}`}>
+          <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
           <BookOpen className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Panduan Pemilahan Sampah
         </h2>
@@ -73,7 +73,7 @@ export default function Guide({ isWireframe, city }: GuideProps) {
       </div>
 
       {/* Smart Search Bar */}
-      <div className="p-3 bg-white border-b border-gray-100 space-y-1.5 shrink-0">
+      <div className="p-3 bg-white border-b border-gray-100 space-y-1.5 shrink-0 anim-fade-in-up">
         <div className="relative">
           <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
           <input
@@ -84,13 +84,13 @@ export default function Guide({ isWireframe, city }: GuideProps) {
             className={`w-full py-2 pl-9 pr-8 text-xs rounded-xl border focus:outline-none focus:ring-2 ${
               isWireframe
                 ? 'border-gray-400 focus:ring-gray-800 bg-white'
-                : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/50'
+                : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/50 shadow-sm'
             }`}
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-2 text-gray-400 hover:text-gray-600 font-bold text-xs"
+              className="absolute right-3 top-2 text-gray-400 hover:text-gray-600 font-bold text-xs btn-press"
             >
               <X className="w-3 h-3" />
             </button>
@@ -115,17 +115,17 @@ export default function Guide({ isWireframe, city }: GuideProps) {
                     setActiveCategory(res.category);
                     setSearchQuery('');
                   }}
-                  className="w-full text-left p-1.5 hover:bg-gray-50 rounded-lg text-[10px] flex justify-between items-center cursor-pointer font-medium"
+                  className="w-full text-left p-1.5 hover:bg-gray-50 rounded-lg text-[10px] flex justify-between items-center cursor-pointer font-medium btn-press"
                 >
                   <span className="text-gray-700 font-semibold">{res.name}</span>
-                  <span className={`px-2 py-0.5 text-[8px] font-bold rounded-full uppercase ${
+                  <span className={`badge-${
                     res.category === 'organik'
-                      ? 'bg-emerald-50 text-emerald-700'
+                      ? 'emerald'
                       : res.category === 'anorganik'
-                      ? 'bg-blue-50 text-blue-700'
+                      ? 'blue'
                       : res.category === 'b3'
-                      ? 'bg-red-50 text-red-700'
-                      : 'bg-yellow-50 text-yellow-700'
+                      ? 'red'
+                      : 'yellow'
                   }`}>
                     {res.category}
                   </span>
@@ -137,7 +137,7 @@ export default function Guide({ isWireframe, city }: GuideProps) {
       </div>
 
       {/* Category Selection Tabs Grid */}
-      <div className="p-3 shrink-0">
+      <div className="p-3 shrink-0 anim-fade-in-up">
         <div className="grid grid-cols-4 gap-1.5">
           {WASTE_CATEGORIES.map((cat) => {
             const Icon = getIcon(cat.icon);
@@ -162,8 +162,8 @@ export default function Guide({ isWireframe, city }: GuideProps) {
                   color: isSelected && !isWireframe ? cat.color : undefined,
                 }}
               >
-                <Icon className="w-4 h-4 mb-1" />
-                <span className="text-[9px] font-bold block leading-none">{cat.indonesianName.split(' ')[0]}</span>
+                <Icon className="w-4 h-4 mb-1 drop-shadow-sm" />
+                <span className="text-[9px] font-bold block leading-none opacity-90">{cat.indonesianName.split(' ')[0]}</span>
               </button>
             );
           })}
@@ -172,7 +172,7 @@ export default function Guide({ isWireframe, city }: GuideProps) {
 
       {/* Category Content Details */}
       <div className="px-3 pb-4 flex-1">
-        <div className={`p-4 rounded-2xl border bg-white ${
+        <div className={`p-4 rounded-2xl border bg-white anim-fade-in-up ${
           isWireframe ? 'border-gray-300' : 'border-gray-100/60 shadow-card'
         }`}>
           {/* Header section */}
@@ -205,10 +205,10 @@ export default function Guide({ isWireframe, city }: GuideProps) {
             <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Contoh Barang:</h4>
             <div className="grid grid-cols-2 gap-1.5">
               {selectedCategoryData.examples.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-1.5 text-[10px] text-gray-600 font-medium"
-                >
+                  <div
+                    key={item}
+                    className="flex items-center gap-1.5 text-[10px] text-gray-600 font-medium card-hover p-1.5 rounded-lg"
+                  >
                   <span className={`w-1.5 h-1.5 rounded-full ${isWireframe ? 'bg-gray-400' : ''}`} style={{ backgroundColor: !isWireframe ? selectedCategoryData.color : undefined }} />
                   <span className="truncate">{item}</span>
                 </div>
@@ -217,7 +217,7 @@ export default function Guide({ isWireframe, city }: GuideProps) {
           </div>
 
           {/* Golden Recycling Tips */}
-          <div className={`p-3 rounded-xl ${isWireframe ? 'border border-gray-300 bg-gray-50' : 'bg-gray-50/50'}`}>
+          <div className={`p-3 rounded-xl ${isWireframe ? 'border border-gray-300 bg-gray-50' : 'bg-gray-50/50 shadow-sm'}`}>
             <h4 className="text-[9px] font-bold text-gray-800 uppercase tracking-wider mb-2 flex items-center gap-1">
               <Star className="w-3 h-3 text-amber-500 fill-amber-500" /> Tips Pengelolaan Cerdas
             </h4>

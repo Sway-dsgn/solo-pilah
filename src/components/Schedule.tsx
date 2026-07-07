@@ -24,8 +24,8 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
   return (
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50'}`}>
       {/* Header */}
-        <div className={`p-4 ${isWireframe ? 'bg-white border-b border-gray-300' : 'bg-white border-b border-gray-100 shadow-soft'}`}>
-        <h2 className="text-sm font-extrabold font-display text-gray-800 flex items-center gap-2">
+        <div className={`p-4 ${isWireframe ? 'bg-white border-b border-gray-300' : 'bg-gradient-to-r from-white via-emerald-50/30 to-white border-b border-emerald-100/60 shadow-soft'}`}>
+        <h2 className="text-sm font-extrabold font-display text-gray-900 flex items-center gap-2">
           <Calendar className={`w-4 h-4 ${isWireframe ? 'text-gray-800' : 'text-emerald-500'}`} />
           Jadwal Pengangkutan Sampah
         </h2>
@@ -38,10 +38,10 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
           <select
             value={selectedKecamatan}
             onChange={(e) => setSelectedKecamatan(e.target.value)}
-            className={`w-full p-3 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer ${
+            className={`w-full p-3.5 text-xs font-bold rounded-xl border focus:outline-none focus:ring-2 appearance-none cursor-pointer transition-shadow ${
               isWireframe
                 ? 'border-gray-400 focus:ring-gray-800 bg-white'
-                : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white text-gray-700'
+                : 'border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500 bg-gray-50/80 text-gray-700 shadow-soft hover:shadow-card'
             }`}
           >
             {kecamatanList.map((k) => (
@@ -94,26 +94,27 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
         </h4>
 
         {filteredSchedules.length === 0 ? (
-          <div className="text-center py-8 text-gray-400 space-y-1 anim-fade-in-up">
+          <div className="text-center py-8 text-gray-400 space-y-1 anim-fade-in-up shadow-soft rounded-2xl">
             <AlertCircle className="w-8 h-8 mx-auto stroke-1" />
             <p className="text-xs font-semibold">Tidak ada jadwal pengangkutan</p>
             <p className="text-[10px]">Silakan pilih wilayah kecamatan lain</p>
           </div>
         ) : (
           <div className="space-y-3">
-            {filteredSchedules.map((schedule) => {
+            {filteredSchedules.map((schedule, index) => {
               const hasReminder = reminders[schedule.id];
               const isFinished = schedule.status === 'Selesai';
 
               return (
                 <div
                   key={schedule.id}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                   className={`p-3.5 rounded-xl border flex justify-between items-center transition-all anim-fade-in-up ${
                     isWireframe
                       ? 'border-gray-300 bg-white'
                       : isFinished
                       ? 'border-gray-100 bg-gray-50/50 opacity-70 shadow-soft'
-                      : 'border-gray-100 bg-white shadow-soft card-hover'
+                      : 'border-gray-100 bg-white shadow-card card-hover'
                   }`}
                 >
                   <div className="space-y-1.5 max-w-[75%]">
@@ -122,10 +123,10 @@ export default function Schedule({ isWireframe, city }: ScheduleProps) {
                         isWireframe
                           ? 'bg-gray-200 text-gray-800'
                           : schedule.wasteType.includes('Organik')
-                          ? 'bg-emerald-50 text-emerald-700'
+                          ? 'badge-emerald'
                           : schedule.wasteType.includes('Anorganik')
-                          ? 'bg-blue-50 text-blue-700'
-                          : 'bg-red-50 text-red-700'
+                          ? 'badge-blue'
+                          : 'badge-red'
                       }`}>
                         {schedule.day} - {schedule.wasteType}
                       </span>
