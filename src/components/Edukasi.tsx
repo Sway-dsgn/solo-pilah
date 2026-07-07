@@ -5,9 +5,13 @@ interface EdukasiProps {
   isWireframe: boolean;
   city: any;
   onClose: () => void;
+  onModalChange?: (open: boolean) => void;
 }
 
-export default function Edukasi({ isWireframe, city, onClose }: EdukasiProps) {
+export default function Edukasi({ isWireframe, city, onClose, onModalChange }: EdukasiProps) {
+  React.useEffect(() => {
+    onModalChange?.(viewerOpen || !!selectedFact);
+  }, [viewerOpen, selectedFact]);
   const [slideIndex, setSlideIndex] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerSlide, setViewerSlide] = useState<any>(null);

@@ -36,6 +36,7 @@ export default function App() {
   const [profile, setProfile] = useState<UserProfile>(profiles['Masyarakat']);
   const [reports, setReports] = useState<WasteReport[]>(city.initialReports);
   const [showNotifications, setShowNotifications] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const p = generateProfiles(getCity(selectedCityId));
@@ -240,6 +241,7 @@ export default function App() {
           isWireframe={isWireframe}
           city={city}
           onClose={() => setCurrentScreen('dashboard')}
+          onModalChange={setModalOpen}
         />
       )}
 
@@ -253,7 +255,7 @@ export default function App() {
     </>
   );
 
-  const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && (
+  const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && !modalOpen && (
     <div className={`fixed bottom-0 left-0 right-0 border-t flex justify-around items-center shrink-0 z-50 min-h-[58px] shadow-nav ${
       isWireframe ? 'bg-white border-gray-400' : 'glass bg-white/95 border-gray-100/80'
     }`}>
