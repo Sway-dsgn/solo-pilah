@@ -28,7 +28,8 @@ import {
   AlertCircle,
   Warehouse,
   ShoppingCart,
-  Droplets
+  Droplets,
+  X
 } from 'lucide-react';
 import { UserProfile, ScreenType } from '../types';
 import { CityData } from '../cities';
