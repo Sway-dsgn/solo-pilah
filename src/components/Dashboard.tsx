@@ -258,7 +258,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
               className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all btn-press group ${
                 isWireframe
                   ? 'border-2 border-gray-800 bg-white text-gray-800'
-                  : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-transparent shadow-[0_4px_14px_rgba(5,150,105,0.25)]'
+                  : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-transparent shadow-card'
               }`}>
               <div className={`p-2.5 rounded-xl transition-all group-hover:scale-110 group-hover:-rotate-6 ${
                 isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-white/20'
@@ -269,7 +269,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             </button>
             <button onClick={() => onNavigate('edukasi')}
               className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all btn-press group ${
-                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-gray-100/60 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-gray-700'
+                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-gray-100/60 shadow-card text-gray-700'
               }`}>
               <div className={`p-2.5 rounded-xl transition-all group-hover:scale-110 ${
                 isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50'
@@ -362,7 +362,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         {/* 4. Streak Harian - Only for Masyarakat */}
         {isMasyarakat && (
           <div className={`p-4 rounded-2xl border ${
-            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)]'
+            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-card'
           }`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
@@ -425,7 +425,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           <div className="grid grid-cols-2 gap-3">
             <button onClick={() => onNavigate('schedule')}
               className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all btn-press group ${
-                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-blue-100/60 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-gray-700'
+                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-blue-100/60 shadow-card text-gray-700'
               }`}>
               <div className={`p-2.5 rounded-xl transition-all group-hover:scale-110 ${
                 isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-blue-50'
@@ -436,7 +436,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             </button>
             <button onClick={() => onNavigate('report')}
               className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all btn-press group ${
-                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-blue-100/60 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-gray-700'
+                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-blue-100/60 shadow-card text-gray-700'
               }`}>
               <div className={`p-2.5 rounded-xl transition-all group-hover:scale-110 ${
                 isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-blue-50'
@@ -487,7 +487,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             className={`flex items-center gap-3 w-full p-4 rounded-2xl border text-left transition-all btn-press group ${
               isWireframe
                 ? 'border-2 border-gray-800 bg-white text-gray-800'
-                : 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white border-transparent shadow-[0_4px_14px_rgba(99,102,241,0.25)]'
+                : 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white border-transparent shadow-card'
             }`}>
             <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-6 ${
               isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-white/20'
@@ -626,7 +626,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           </div>
           
           <div className={`p-4 sm:p-5 rounded-2xl border space-y-4 ${
-            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)]'
+            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-card'
           }`}>
             {/* Impact stats grid */}
             <div className="grid grid-cols-3 gap-2">
@@ -640,7 +640,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                     const Icon = item.icon;
                     return (
                       <div key={i} className={`text-center p-2.5 sm:p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${
-                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]`
+                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-card`
                       }`}>
                         <div className={`w-8 h-8 mx-auto rounded-lg flex items-center justify-center mb-1.5 shadow-sm ${
                           isWireframe ? 'bg-gray-100' : item.iconBg
@@ -666,7 +666,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                     const Icon = item.icon;
                     return (
                       <div key={i} className={`text-center p-2.5 sm:p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${
-                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]`
+                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-card`
                       }`}>
                         <div className={`w-8 h-8 mx-auto rounded-lg flex items-center justify-center mb-1.5 shadow-sm ${
                           isWireframe ? 'bg-gray-100' : item.iconBg
@@ -692,7 +692,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                     const Icon = item.icon;
                     return (
                       <div key={i} className={`text-center p-2.5 sm:p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${
-                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]`
+                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-card`
                       }`}>
                         <div className={`w-8 h-8 mx-auto rounded-lg flex items-center justify-center mb-1.5 shadow-sm ${
                           isWireframe ? 'bg-gray-100' : item.iconBg
@@ -712,7 +712,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             </div>
 
             <div className={`p-4 rounded-2xl border ${
-              isWireframe ? 'border-gray-300 bg-white' : 'border-amber-200/40 bg-gradient-to-br from-amber-50/60 to-white shadow-[0_1px_4px_rgba(0,0,0,0.02)]'
+              isWireframe ? 'border-gray-300 bg-white' : 'border-amber-200/40 bg-gradient-to-br from-amber-50/60 to-white shadow-card'
             }`}>
               <div className="flex items-center justify-between mb-2.5">
                 <div className="flex items-center gap-2">

@@ -283,8 +283,8 @@ export default function App() {
 
   const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && !modalOpen && (
     <div className="fixed bottom-0 left-0 right-0 z-50 px-3 pb-3">
-      <div className={`flex justify-around items-center rounded-2xl px-1.5 py-1.5 border shadow-lg ${
-        isWireframe ? 'bg-white border-gray-300' : 'bg-white/85 backdrop-blur-2xl border-gray-100/50 shadow-[0_-4px_24px_rgba(0,0,0,0.06)]'
+      <div className={`flex justify-around items-center rounded-2xl px-1.5 py-1.5 border ${
+        isWireframe ? 'bg-white border-gray-300' : 'bg-white/85 backdrop-blur-2xl border-gray-100/60 shadow-nav'
       }`}>
         {getBottomNavTabs().map((tab) => {
           const Icon = tab.icon;

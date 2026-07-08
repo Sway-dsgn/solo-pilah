@@ -68,9 +68,10 @@ export default function Edukasi({ isWireframe, city, onClose, onModalChange }: E
       <div className="p-4 space-y-5 flex-1">
         {/* Featured Slide - Large Card */}
         <div className="space-y-2">
-          <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1 px-1">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Sedang Disorot
-          </h4>
+          <div className="flex items-center gap-1.5 px-1">
+            <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-emerald-400'}`} />
+            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Sedang Disorot</h4>
+          </div>
 
           <div onClick={() => openViewer(slides[slideIndex])}
             className={`p-5 rounded-2xl relative overflow-hidden border cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] shadow-card card-hover ${
@@ -131,9 +132,10 @@ export default function Edukasi({ isWireframe, city, onClose, onModalChange }: E
 
         {/* All Slides List */}
         <div className="space-y-2">
-          <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1 px-1">
-            <Info className="w-3.5 h-3.5" /> Semua Materi Edukasi
-          </h4>
+          <div className="flex items-center gap-1.5 px-1">
+            <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-emerald-400'}`} />
+            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Semua Materi Edukasi</h4>
+          </div>
 
           <div className="space-y-2.5">
             {slides.map((slide: any, i: number) => {
@@ -191,9 +193,10 @@ export default function Edukasi({ isWireframe, city, onClose, onModalChange }: E
         {/* Environmental Facts Section */}
         {facts.length > 0 && (
           <div className="space-y-2 pb-2">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1 px-1">
-              <Globe className="w-3.5 h-3.5" /> Fakta & Dampak Lingkungan
-            </h4>
+            <div className="flex items-center gap-1.5 px-1">
+              <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-emerald-400'}`} />
+              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Fakta & Dampak Lingkungan</h4>
+            </div>
 
             <div className="space-y-2.5">
               {facts.map((fact: any) => (
