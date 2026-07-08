@@ -204,6 +204,70 @@ body {
   animation: fade-in-up 0.35s ease-out;
 }
 
+/* Flame glow */
+@keyframes flame-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(234,88,12,0.3), 0 0 40px rgba(234,88,12,0.1); transform: scale(1); }
+  50% { box-shadow: 0 0 30px rgba(234,88,12,0.5), 0 0 60px rgba(234,88,12,0.2); transform: scale(1.05); }
+}
+.anim-flame-glow {
+  animation: flame-glow 2s ease-in-out infinite;
+}
+
+@keyframes flame-flicker {
+  0%, 100% { transform: scaleY(1) rotate(0deg); }
+  25% { transform: scaleY(1.04) rotate(-1deg); }
+  75% { transform: scaleY(0.96) rotate(1deg); }
+}
+.anim-flame-flicker {
+  animation: flame-flicker 0.5s ease-in-out infinite;
+}
+
+/* Particle float up */
+@keyframes particle-up {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.4; }
+  100% { opacity: 0; transform: translateY(-60px) scale(1.2); }
+}
+.anim-particle {
+  animation: particle-up 2.5s ease-out infinite;
+}
+.anim-particle:nth-child(2n) { animation-delay: 0.8s; }
+.anim-particle:nth-child(3n) { animation-delay: 1.6s; }
+.anim-particle:nth-child(4n) { animation-delay: 0.4s; }
+.anim-particle:nth-child(5n) { animation-delay: 1.2s; }
+
+/* Bounce-in for streak number */
+@keyframes bounce-in {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { transform: scale(1.15); }
+  70% { transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.anim-bounce-in {
+  animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+/* Staggered fade-in for content */
+@keyframes fade-in-stagger {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.anim-stagger-1 { animation: fade-in-stagger 0.4s ease-out 0.15s both; }
+.anim-stagger-2 { animation: fade-in-stagger 0.4s ease-out 0.3s both; }
+.anim-stagger-3 { animation: fade-in-stagger 0.4s ease-out 0.45s both; }
+.anim-stagger-4 { animation: fade-in-stagger 0.4s ease-out 0.6s both; }
+.anim-stagger-5 { animation: fade-in-stagger 0.4s ease-out 0.75s both; }
+
+/* Spin for sparkle */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.anim-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
 /* Gradient card base */
 .gradient-card {
   position: relative;
