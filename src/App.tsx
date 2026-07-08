@@ -282,55 +282,70 @@ export default function App() {
   };
 
   const bottomNav = currentScreen !== 'onboarding' && currentScreen !== 'login' && !modalOpen && (
-    <div className={`fixed bottom-0 left-0 right-0 border-t flex justify-around items-center shrink-0 z-50 min-h-[58px] shadow-nav ${
-      isWireframe ? 'bg-white border-gray-400' : 'glass bg-white/95 border-gray-100/80'
-    }`}>
-      {getBottomNavTabs().map((tab) => {
-        const Icon = tab.icon;
-        const isTabActive = currentScreen === tab.id || (tab.id === 'report' && currentScreen === 'history');
-        const activeColor = isWireframe
-          ? 'text-black'
-          : tab.id === 'report'
-          ? 'text-red-500'
-          : tab.id === 'scan'
-          ? 'text-amber-500'
-          : tab.id === 'rewards'
-          ? 'text-teal-600'
-          : selectedRole === 'Masyarakat'
-          ? 'text-emerald-600'
-          : selectedRole === 'Petugas'
-          ? 'text-blue-600'
-          : 'text-indigo-600';
+    <div className="fixed bottom-0 left-0 right-0 z-50 px-3 pb-3">
+      <div className={`flex justify-around items-center rounded-2xl px-1.5 py-1.5 border shadow-lg ${
+        isWireframe ? 'bg-white border-gray-300' : 'bg-white/85 backdrop-blur-2xl border-gray-100/50 shadow-[0_-4px_24px_rgba(0,0,0,0.06)]'
+      }`}>
+        {getBottomNavTabs().map((tab) => {
+          const Icon = tab.icon;
+          const isTabActive = currentScreen === tab.id || (tab.id === 'report' && currentScreen === 'history');
 
-        return (
-          <button
-            key={tab.id}
-            onClick={() => {
-              setCurrentScreen(tab.id as ScreenType);
-              setShowNotifications(false);
-            }}
-            className={`flex flex-col items-center justify-center py-1.5 px-3 rounded-lg cursor-pointer transition-all relative ${
-              isTabActive ? '' : 'text-gray-400 hover:text-gray-600'
-            }`}
-          >
-            {isTabActive && (
-              <span className={`absolute -top-0.5 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full ${isWireframe ? 'bg-gray-800' : activeColor}`} />
-            )}
-            <Icon className={`w-[18px] h-[18px] transition-all ${isTabActive ? activeColor : 'text-gray-400'}`} />
-            <span className={`text-[8px] mt-0.5 leading-none block font-bold transition-all ${
-              isTabActive ? isWireframe ? 'text-black' : 'text-gray-800' : 'text-gray-400'
-            }`}>
-              {tab.label}
-            </span>
-          </button>
-        );
-      })}
+          let bgActive = '';
+          let iconColor = '';
+          if (isWireframe) {
+            bgActive = isTabActive ? 'bg-gray-200' : '';
+            iconColor = isTabActive ? 'text-gray-900' : 'text-gray-400';
+          } else {
+            if (tab.id === 'report') {
+              bgActive = isTabActive ? 'bg-red-50' : '';
+              iconColor = isTabActive ? 'text-red-500' : 'text-gray-400';
+            } else if (tab.id === 'scan') {
+              bgActive = isTabActive ? 'bg-amber-50' : '';
+              iconColor = isTabActive ? 'text-amber-500' : 'text-gray-400';
+            } else if (tab.id === 'rewards') {
+              bgActive = isTabActive ? 'bg-teal-50' : '';
+              iconColor = isTabActive ? 'text-teal-600' : 'text-gray-400';
+            } else {
+              bgActive = isTabActive
+                ? (selectedRole === 'Masyarakat' ? 'bg-emerald-50' : selectedRole === 'Petugas' ? 'bg-blue-50' : 'bg-indigo-50')
+                : '';
+              iconColor = isTabActive
+                ? (selectedRole === 'Masyarakat' ? 'text-emerald-600' : selectedRole === 'Petugas' ? 'text-blue-600' : 'text-indigo-600')
+                : 'text-gray-400';
+            }
+          }
+
+          return (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setCurrentScreen(tab.id as ScreenType);
+                setShowNotifications(false);
+              }}
+              className="relative flex flex-col items-center justify-center py-1 px-4 min-w-0 transition-all cursor-pointer"
+            >
+              <div className={`p-2 rounded-2xl transition-all duration-300 ease-out ${isTabActive ? bgActive + ' scale-110' : ''}`}>
+                <Icon className={`w-[22px] h-[22px] transition-all duration-300 ease-out ${isTabActive ? iconColor : 'text-gray-400'}`} />
+              </div>
+              <span className={`text-[7px] font-bold mt-0.5 leading-none transition-all duration-300 ${
+                isTabActive
+                  ? isWireframe
+                    ? 'text-gray-800'
+                    : (selectedRole === 'Masyarakat' ? 'text-emerald-700' : selectedRole === 'Petugas' ? 'text-blue-700' : 'text-indigo-700')
+                  : 'text-gray-400'
+              }`}>
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 
   return (
     <div className="flex flex-col h-screen bg-white font-sans">
-      <div className={`flex-1 flex flex-col min-h-0 relative ${currentScreen !== 'onboarding' && currentScreen !== 'login' ? 'pb-[52px]' : ''}`}>
+      <div className={`flex-1 flex flex-col min-h-0 relative ${currentScreen !== 'onboarding' && currentScreen !== 'login' ? 'pb-[68px]' : ''}`}>
         {screenRoutes}
       </div>
       {bottomNav}

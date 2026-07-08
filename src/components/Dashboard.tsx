@@ -86,36 +86,40 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
     <div className={`flex-1 flex flex-col phone-scroll overflow-y-auto ${isWireframe ? 'bg-white text-gray-800' : 'bg-gray-50/80'}`}>
       
       {/* 1. Mini App Bar / Header */}
-      <div className={`p-4 flex items-center justify-between border-b shadow-soft ${
-        isWireframe ? 'bg-white border-gray-300' : 'glass bg-white/90 border-gray-100/50'
+      <div className={`px-4 pt-4 pb-3 flex items-center justify-between ${
+        isWireframe ? 'bg-white' : 'bg-transparent'
       }`}>
         <div className="flex items-center gap-2.5">
           <div className="relative">
             <img
               src={profile.avatar}
               alt="Avatar"
-              className={`w-9 h-9 rounded-full object-cover border-2 ${isWireframe ? 'border-gray-500' : isMasyarakat ? 'border-emerald-500' : isPetugas ? 'border-blue-500' : 'border-indigo-500'}`}
+              className={`w-10 h-10 rounded-full object-cover ring-2 ring-offset-2 ${isWireframe ? 'ring-gray-500 ring-offset-white' : isMasyarakat ? 'ring-emerald-500 ring-offset-gray-50' : isPetugas ? 'ring-blue-500 ring-offset-gray-50' : 'ring-indigo-500 ring-offset-gray-50'}`}
             />
-            <span className={`absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-white flex items-center justify-center text-[7px] text-white font-bold ${
+            <span className={`absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-white flex items-center justify-center text-[7px] text-white font-bold shadow-sm ${
               isWireframe ? 'bg-gray-800' : isMasyarakat ? 'bg-emerald-500' : isPetugas ? 'bg-blue-500' : 'bg-indigo-500'
             }`}>
               {profile.role[0]}
             </span>
           </div>
           <div>
-            <h3 className="text-xs font-bold text-gray-800 leading-none font-display">{profile.name}</h3>
-            <span className="text-[9px] text-gray-400 mt-0.5 inline-block">{profile.ecoRank}</span>
+            <h3 className={`text-sm font-black font-display leading-none ${isWireframe ? 'text-gray-800' : 'text-gray-900'}`}>{profile.name}</h3>
+            <div className="flex items-center gap-1.5 mt-1">
+              <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                isWireframe ? 'bg-gray-100 text-gray-600' : isMasyarakat ? 'bg-emerald-50 text-emerald-700' : isPetugas ? 'bg-blue-50 text-blue-700' : 'bg-indigo-50 text-indigo-700'
+              }`}>{profile.ecoRank}</span>
+            </div>
           </div>
         </div>
 
         <button
           onClick={onOpenNotifications}
-          className={`p-2 rounded-xl relative transition-all cursor-pointer btn-press ${
-            isWireframe ? 'border border-gray-300' : 'hover:bg-gray-100 bg-gray-50 border border-gray-100/50'
+          className={`p-2.5 rounded-xl relative transition-all cursor-pointer btn-press ${
+            isWireframe ? 'border border-gray-300 bg-white' : 'bg-white border border-gray-100 shadow-soft hover:shadow-md'
           }`}
         >
           <Bell className="w-4 h-4 text-gray-600" />
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full map-pulse"></span>
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full map-pulse ring-2 ring-white"></span>
         </button>
       </div>
 
@@ -689,115 +693,130 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         )}
 
         {/* 7. Dashboard Dampak / Statistik Lingkungan */}
-        <div className="space-y-1.5">
-          <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-            <BarChart3 className="w-3.5 h-3.5" /> {isMasyarakat ? 'Dashboard Dampak Lingkungan' : isPetugas ? 'Dampak Pengangkutan' : 'Statistik Bank Sampah'}
-          </h4>
+        <div className="space-y-2">
+          <div className="flex items-center gap-1.5 px-1">
+            <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : isMasyarakat ? 'bg-emerald-400' : isPetugas ? 'bg-blue-400' : 'bg-indigo-400'}`} />
+            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">
+              <BarChart3 className="w-3 h-3 inline -mt-0.5 mr-1" /> 
+              {isMasyarakat ? 'Dampak Lingkungan' : isPetugas ? 'Dampak Pengangkutan' : 'Statistik Bank Sampah'}
+            </h4>
+          </div>
           
-          <div className={`p-5 rounded-2xl border space-y-4 shadow-card ${
-            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
+          <div className={`p-4 sm:p-5 rounded-2xl border space-y-4 ${
+            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)]'
           }`}>
             {/* Impact stats grid */}
-            <div className="grid grid-cols-3 gap-2.5">
+            <div className="grid grid-cols-3 gap-2">
               {isMasyarakat ? (
                 <>
-                  <div className="text-center p-3 bg-gradient-to-b from-emerald-50/60 to-transparent rounded-xl border border-emerald-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-emerald-100 flex items-center justify-center mb-1.5">
-                      <Leaf className="w-4 h-4 text-emerald-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Daur Ulang</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">
-                      {profile.totalWasteSubmitted} Kg
-                    </span>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-b from-blue-50/60 to-transparent rounded-xl border border-blue-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-blue-100 flex items-center justify-center mb-1.5">
-                      <TrendingDown className="w-4 h-4 text-blue-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Gas CO2</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">
-                      {Number((profile.totalWasteSubmitted * 0.72).toFixed(1))} Kg
-                    </span>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-b from-amber-50/60 to-transparent rounded-xl border border-amber-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-amber-100 flex items-center justify-center mb-1.5">
-                      <TreePine className="w-4 h-4 text-amber-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Pohon Selamat</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">
-                      {Number((profile.totalWasteSubmitted * 0.03).toFixed(2))} Pohon
-                    </span>
-                  </div>
+                  {[
+                    { icon: Leaf, val: `${profile.totalWasteSubmitted} Kg`, label: 'Daur Ulang', borderCls: 'border-emerald-100/40 bg-gradient-to-b from-emerald-50/40', iconBg: 'bg-emerald-100', iconCls: 'text-emerald-600' },
+                    { icon: TrendingDown, val: `${Number((profile.totalWasteSubmitted * 0.72).toFixed(1))} Kg`, label: 'Gas CO2', borderCls: 'border-blue-100/40 bg-gradient-to-b from-blue-50/40', iconBg: 'bg-blue-100', iconCls: 'text-blue-600' },
+                    { icon: TreePine, val: `${Number((profile.totalWasteSubmitted * 0.03).toFixed(2))} Pohon`, label: 'Pohon Selamat', borderCls: 'border-amber-100/40 bg-gradient-to-b from-amber-50/40', iconBg: 'bg-amber-100', iconCls: 'text-amber-600' },
+                  ].map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={i} className={`text-center p-2.5 sm:p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${
+                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]`
+                      }`}>
+                        <div className={`w-8 h-8 mx-auto rounded-lg flex items-center justify-center mb-1.5 shadow-sm ${
+                          isWireframe ? 'bg-gray-100' : item.iconBg
+                        }`}>
+                          <Icon className={`w-4 h-4 ${isWireframe ? 'text-gray-700' : item.iconCls}`} />
+                        </div>
+                        <span className="text-[7.5px] text-gray-400 font-semibold block leading-tight">{item.label}</span>
+                        <span className="text-[11px] font-black block mt-0.5 leading-tight text-gray-800">
+                          {item.val.split(' ')[0]}
+                        </span>
+                        <span className="text-[7px] text-gray-400 font-medium">{item.val.split(' ').slice(1).join(' ')}</span>
+                      </div>
+                    );
+                  })}
                 </>
               ) : isPetugas ? (
                 <>
-                  <div className="text-center p-3 bg-gradient-to-b from-blue-50/60 to-transparent rounded-xl border border-blue-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-blue-100 flex items-center justify-center mb-1.5">
-                      <Truck className="w-4 h-4 text-blue-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Rute Selesai</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">87 Rute</span>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-b from-emerald-50/60 to-transparent rounded-xl border border-emerald-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-emerald-100 flex items-center justify-center mb-1.5">
-                      <Weight className="w-4 h-4 text-emerald-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Total Angkut</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">1.450 Kg</span>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-b from-amber-50/60 to-transparent rounded-xl border border-amber-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-amber-100 flex items-center justify-center mb-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-amber-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Laporan Ditangani</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">{city.initialReports.length} Laporan</span>
-                  </div>
+                  {[
+                    { icon: Truck, val: '87 Rute', label: 'Rute Selesai', borderCls: 'border-blue-100/40 bg-gradient-to-b from-blue-50/40', iconBg: 'bg-blue-100', iconCls: 'text-blue-600' },
+                    { icon: Weight, val: '1.450 Kg', label: 'Total Angkut', borderCls: 'border-emerald-100/40 bg-gradient-to-b from-emerald-50/40', iconBg: 'bg-emerald-100', iconCls: 'text-emerald-600' },
+                    { icon: CheckCircle2, val: `${city.initialReports.length} Laporan`, label: 'Laporan Ditangani', borderCls: 'border-amber-100/40 bg-gradient-to-b from-amber-50/40', iconBg: 'bg-amber-100', iconCls: 'text-amber-600' },
+                  ].map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={i} className={`text-center p-2.5 sm:p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${
+                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]`
+                      }`}>
+                        <div className={`w-8 h-8 mx-auto rounded-lg flex items-center justify-center mb-1.5 shadow-sm ${
+                          isWireframe ? 'bg-gray-100' : item.iconBg
+                        }`}>
+                          <Icon className={`w-4 h-4 ${isWireframe ? 'text-gray-700' : item.iconCls}`} />
+                        </div>
+                        <span className="text-[7.5px] text-gray-400 font-semibold block leading-tight">{item.label}</span>
+                        <span className="text-[11px] font-black block mt-0.5 leading-tight text-gray-800">
+                          {item.val.split(' ')[0]}
+                        </span>
+                        <span className="text-[7px] text-gray-400 font-medium">{item.val.split(' ').slice(1).join(' ')}</span>
+                      </div>
+                    );
+                  })}
                 </>
               ) : (
                 <>
-                  <div className="text-center p-3 bg-gradient-to-b from-indigo-50/60 to-transparent rounded-xl border border-indigo-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-indigo-100 flex items-center justify-center mb-1.5">
-                      <Warehouse className="w-4 h-4 text-indigo-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Volume Gudang</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">3.240 Kg</span>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-b from-emerald-50/60 to-transparent rounded-xl border border-emerald-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-emerald-100 flex items-center justify-center mb-1.5">
-                      <Users className="w-4 h-4 text-emerald-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Nasabah Aktif</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">45 Orang</span>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-b from-amber-50/60 to-transparent rounded-xl border border-amber-100/30">
-                    <div className="w-8 h-8 mx-auto rounded-lg bg-amber-100 flex items-center justify-center mb-1.5">
-                      <Award className="w-4 h-4 text-amber-600" />
-                    </div>
-                    <span className="text-[7.5px] text-gray-400 font-semibold block">Poin Diterbitkan</span>
-                    <span className="text-xs font-black text-gray-800 block mt-0.5">12.450 Pts</span>
-                  </div>
+                  {[
+                    { icon: Warehouse, val: '3.240 Kg', label: 'Volume Gudang', borderCls: 'border-indigo-100/40 bg-gradient-to-b from-indigo-50/40', iconBg: 'bg-indigo-100', iconCls: 'text-indigo-600' },
+                    { icon: Users, val: '45 Orang', label: 'Nasabah Aktif', borderCls: 'border-emerald-100/40 bg-gradient-to-b from-emerald-50/40', iconBg: 'bg-emerald-100', iconCls: 'text-emerald-600' },
+                    { icon: Award, val: '12.450 Pts', label: 'Poin Diterbitkan', borderCls: 'border-amber-100/40 bg-gradient-to-b from-amber-50/40', iconBg: 'bg-amber-100', iconCls: 'text-amber-600' },
+                  ].map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={i} className={`text-center p-2.5 sm:p-3 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${
+                        isWireframe ? 'border-gray-300 bg-white' : `${item.borderCls} to-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]`
+                      }`}>
+                        <div className={`w-8 h-8 mx-auto rounded-lg flex items-center justify-center mb-1.5 shadow-sm ${
+                          isWireframe ? 'bg-gray-100' : item.iconBg
+                        }`}>
+                          <Icon className={`w-4 h-4 ${isWireframe ? 'text-gray-700' : item.iconCls}`} />
+                        </div>
+                        <span className="text-[7.5px] text-gray-400 font-semibold block leading-tight">{item.label}</span>
+                        <span className="text-[11px] font-black block mt-0.5 leading-tight text-gray-800">
+                          {item.val.split(' ')[0]}
+                        </span>
+                        <span className="text-[7px] text-gray-400 font-medium">{item.val.split(' ').slice(1).join(' ')}</span>
+                      </div>
+                    );
+                  })}
                 </>
               )}
             </div>
 
             <div className={`p-4 rounded-2xl border ${
-              isWireframe ? 'border-gray-300' : 'border-amber-200/50 bg-gradient-to-br from-amber-50/60 to-amber-50/20'
+              isWireframe ? 'border-gray-300 bg-white' : 'border-amber-200/40 bg-gradient-to-br from-amber-50/60 to-white shadow-[0_1px_4px_rgba(0,0,0,0.02)]'
             }`}>
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-[9px] font-bold text-gray-700 flex items-center gap-1">
-                  <Flame className="w-3.5 h-3.5 text-amber-500 map-pulse" />
-                  Kapasitas {city.tpaName}
-                </span>
-                <span className="text-[10px] font-extrabold text-red-700 bg-red-50 border border-red-200 px-3 py-1 rounded-[24px]">78% Beban</span>
+              <div className="flex items-center justify-between mb-2.5">
+                <div className="flex items-center gap-2">
+                  <div className={`p-1.5 rounded-lg ${isWireframe ? 'bg-gray-100' : 'bg-amber-100'}`}>
+                    <Flame className={`w-3.5 h-3.5 ${isWireframe ? 'text-gray-700' : 'text-amber-500 map-pulse'}`} />
+                  </div>
+                  <div>
+                    <span className={`text-[9px] font-bold leading-none block ${isWireframe ? 'text-gray-700' : 'text-gray-700'}`}>
+                      Kapasitas {city.tpaName}
+                    </span>
+                    <span className="text-[7px] text-gray-400 mt-0.5 inline-block">Ambang batas siaga</span>
+                  </div>
+                </div>
+                <span className={`text-[9px] font-extrabold px-3 py-1 rounded-full border ${
+                  isWireframe ? 'text-gray-700 bg-gray-100 border-gray-300' : 'text-red-700 bg-red-50 border-red-200/60'
+                }`}>78%</span>
               </div>
               
-              <div className="h-2.5 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div className={`h-2.5 w-full rounded-full overflow-hidden ${isWireframe ? 'bg-gray-200' : 'bg-gray-100'}`}>
                 <div 
-                  className="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500 rounded-full transition-all duration-1000"
+                  className={`h-full rounded-full transition-all duration-1000 ease-out ${
+                    isWireframe ? 'bg-gray-800' : 'bg-gradient-to-r from-emerald-400 via-amber-400 to-red-500'
+                  }`}
                   style={{ width: '78%' }}
                 />
               </div>
-              <p className="text-[8px] text-gray-500 mt-2 leading-snug">
+              <p className="text-[8px] text-gray-500 mt-2.5 leading-relaxed">
                 {isMasyarakat
                   ? `Kontribusi pemilahan Anda mencegah overload & bahaya kebakaran gas metana di ${city.shortName}.`
                   : isPetugas
