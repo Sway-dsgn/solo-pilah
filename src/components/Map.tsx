@@ -82,79 +82,16 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
             </div>
           </div>
         ) : (
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-              <pattern id="cityBlocks" width="7" height="7" patternUnits="userSpaceOnUse">
-                <rect x="1.2" y="1.2" width="4" height="4" rx="0.5" fill="#e2e7ec" />
-              </pattern>
-            </defs>
-
-            {/* Land base */}
-            <rect x="0" y="0" width="100" height="100" fill="#eef1f4" />
-            <rect x="0" y="0" width="100" height="100" fill="url(#cityBlocks)" opacity="0.7" />
-
-            {/* Parks / green areas */}
-            <rect x="4" y="5" width="15" height="12" rx="2.5" fill="#d6ecd2" />
-            <rect x="73" y="60" width="22" height="18" rx="2.5" fill="#d6ecd2" />
-            <rect x="60" y="4" width="11" height="9" rx="2" fill="#d6ecd2" />
-
-            {/* River (winding) */}
-            <path d="M -6,22 C 26,28 30,46 24,63 C 19,78 35,88 52,110"
-                  fill="none" stroke="#bcdcf5" strokeWidth="9" strokeLinecap="round" />
-            <path d="M -6,22 C 26,28 30,46 24,63 C 19,78 35,88 52,110"
-                  fill="none" stroke="#a9d2f0" strokeWidth="6" strokeLinecap="round" opacity="0.7" />
-
-            {/* Road casings */}
-            <g stroke="#d7dce1" strokeWidth="3.4" fill="none" strokeLinecap="round">
-              <line x1="0" y1="20" x2="100" y2="20" />
-              <line x1="0" y1="40" x2="100" y2="40" />
-              <line x1="0" y1="60" x2="100" y2="60" />
-              <line x1="0" y1="80" x2="100" y2="80" />
-              <line x1="20" y1="0" x2="20" y2="100" />
-              <line x1="40" y1="0" x2="40" y2="100" />
-              <line x1="60" y1="0" x2="60" y2="100" />
-              <line x1="80" y1="0" x2="80" y2="100" />
-              <path d="M 0,30 L 100,70" strokeWidth="4.5" />
-              <path d="M 0,75 L 100,40" strokeWidth="3" />
-            </g>
-
-            {/* Road fills */}
-            <g stroke="#ffffff" strokeWidth="2" fill="none" strokeLinecap="round">
-              <line x1="0" y1="20" x2="100" y2="20" />
-              <line x1="0" y1="40" x2="100" y2="40" />
-              <line x1="0" y1="60" x2="100" y2="60" />
-              <line x1="0" y1="80" x2="100" y2="80" />
-              <line x1="20" y1="0" x2="20" y2="100" />
-              <line x1="40" y1="0" x2="40" y2="100" />
-              <line x1="60" y1="0" x2="60" y2="100" />
-              <line x1="80" y1="0" x2="80" y2="100" />
-              <path d="M 0,30 L 100,70" strokeWidth="3" />
-              <path d="M 0,75 L 100,40" strokeWidth="1.6" />
-            </g>
-
-            {/* Main arterial highlight */}
-            <path d="M -6,52 C 30,49 56,58 106,54"
-                  fill="none" stroke="#f6c87a" strokeWidth="3.5" strokeLinecap="round" opacity="0.85" />
-            <path d="M -6,52 C 30,49 56,58 106,54"
-                  fill="none" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" strokeDasharray="5,4" />
-          </svg>
+          <img
+            src="/map-surakarta.png"
+            alt={`Peta ${city.shortName}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            draggable={false}
+          />
         )}
 
         {!isWireframe && (
           <>
-            {city.mapLandmarks.map((lm: any) => (
-              <div
-                key={lm.name}
-                className="absolute text-[8px] font-bold text-slate-600 select-none bg-white/90 px-1.5 py-0.5 rounded-md border border-slate-200 shadow-sm"
-                style={{ left: `${lm.x}%`, top: `${lm.y}%`, transform: 'translate(-50%, -50%)' }}
-              >
-                {lm.label}
-              </div>
-            ))}
-            <div className="absolute right-3 bottom-[12%] text-[8px] font-semibold text-sky-600 select-none tracking-widest uppercase rotate-90 bg-white/70 px-1 rounded">
-              {city.riverName}
-            </div>
-
             {/* Compass */}
             <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/85 border border-slate-200 flex items-center justify-center shadow-sm">
               <Compass className="w-4 h-4 text-emerald-600" />
