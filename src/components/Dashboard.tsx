@@ -56,6 +56,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
   const roleLightBg = roleColor === 'emerald' ? 'bg-emerald-50' : roleColor === 'blue' ? 'bg-blue-50' : 'bg-indigo-50';
   const roleLightBorder = roleColor === 'emerald' ? 'border-emerald-100' : roleColor === 'blue' ? 'border-blue-100' : 'border-indigo-100';
   const roleText = roleColor === 'emerald' ? 'text-emerald-600' : roleColor === 'blue' ? 'text-blue-600' : 'text-indigo-600';
+  const roleAccent400 = roleColor === 'emerald' ? 'bg-emerald-400' : roleColor === 'blue' ? 'bg-blue-400' : 'bg-indigo-400';
 
   const handleCheckin = () => {
     const today = new Date().toISOString().split('T')[0];
@@ -131,9 +132,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
           }`}>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1">
-                <ClipboardList className="w-3.5 h-3.5 text-blue-500" /> Tugas Hari Ini
-              </h4>
+              <div className="flex items-center gap-1.5">
+                <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-blue-400'}`} />
+                <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Tugas Hari Ini</h4>
+              </div>
               <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${
                 isWireframe ? 'bg-gray-200 text-gray-700' : 'bg-blue-100 text-blue-700'
               }`}>3 Tersisa</span>
@@ -174,9 +176,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           <div className={`p-4 rounded-2xl border shadow-card ${
             isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
           }`}>
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1 mb-3">
-              <Warehouse className="w-3.5 h-3.5 text-indigo-500" /> Aktivitas Hari Ini
-            </h4>
+            <div className="flex items-center gap-1.5 mb-3">
+              <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-indigo-400'}`} />
+              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Aktivitas Hari Ini</h4>
+            </div>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { label: 'Setoran Masuk', value: '12', unit: 'kg', icon: Package, color: 'text-indigo-600', bg: 'bg-indigo-100' },
@@ -201,9 +204,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         {/* 3. Poin Section - Always show for Masyarakat, different for Petugas/BankSampah */}
         {isMasyarakat && (
           <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <CircleDollarSign className="w-3.5 h-3.5" /> Saldo & Poin
-            </h4>
+            <div className="flex items-center gap-1.5 px-1 mb-2">
+              <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-emerald-400'}`} />
+              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Saldo & Poin</h4>
+            </div>
             <div className={`p-5 rounded-2xl relative overflow-hidden shadow-card ${
               isWireframe
                 ? 'border-2 border-gray-800 bg-white text-gray-800'
@@ -280,9 +284,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         {/* 3b. Petugas: Statistik Kinerja */}
         {isPetugas && (
           <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <BarChart3 className="w-3.5 h-3.5 text-blue-500" /> Kinerja Bulan Ini
-            </h4>
+            <div className="flex items-center gap-1.5 px-1 mb-2">
+              <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-blue-400'}`} />
+              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Kinerja Bulan Ini</h4>
+            </div>
             <div className={`p-5 rounded-2xl shadow-card ${
               isWireframe ? 'border-2 border-gray-800 bg-white' : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white'
             }`}>
@@ -318,9 +323,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         {/* 3c. BankSampah: Volume Gudang */}
         {isBankSampah && (
           <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <Warehouse className="w-3.5 h-3.5 text-indigo-500" /> Volume Gudang
-            </h4>
+            <div className="flex items-center gap-1.5 px-1 mb-2">
+              <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-indigo-400'}`} />
+              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Volume Gudang</h4>
+            </div>
             <div className={`p-5 rounded-2xl shadow-card ${
               isWireframe ? 'border-2 border-gray-800 bg-white' : 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white'
             }`}>
@@ -414,44 +420,41 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           </div>
         )}
 
-        {/* 4b. Petugas: Rute Aktif & Status */}
+        {/* 4b/5b. Petugas: Aksi Cepat (Rute + Laporan) */}
         {isPetugas && (
-          <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <Route className="w-3.5 h-3.5 text-blue-500" /> Rute & Jadwal
-            </h4>
-            <div onClick={() => onNavigate('schedule')}
-              className={`p-4 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all btn-press group ${
-                isWireframe
-                  ? 'border-gray-800 bg-white'
-                  : 'bg-white border-blue-100/60 shadow-card hover:shadow-card-hover'
+          <div className="grid grid-cols-2 gap-3">
+            <button onClick={() => onNavigate('schedule')}
+              className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all btn-press group ${
+                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-blue-100/60 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-gray-700'
               }`}>
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 ${
-                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-sm'
-                }`}>
-                  <Truck className="w-5 h-5" />
-                </div>
-                <div className="min-w-0">
-                  <h5 className="text-[11px] font-extrabold text-gray-800 font-display">Jadwal Rute Hari Ini</h5>
-                  <p className="text-[9px] text-gray-400 mt-0.5 leading-snug">
-                    {city.districts.length} kecamatan · {city.schedules.length} jadwal aktif
-                  </p>
-                </div>
+              <div className={`p-2.5 rounded-xl transition-all group-hover:scale-110 ${
+                isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-blue-50'
+              }`}>
+                <Truck className={`w-5 h-5 ${isWireframe ? 'text-gray-700' : 'text-blue-600'}`} />
               </div>
-              <div className="p-1 rounded-lg bg-blue-50 text-blue-500 group-hover:bg-blue-100 transition-all">
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <span className="text-[10px] font-extrabold font-display text-center leading-tight px-1">Rute & Jadwal</span>
+            </button>
+            <button onClick={() => onNavigate('report')}
+              className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all btn-press group ${
+                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-blue-100/60 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-gray-700'
+              }`}>
+              <div className={`p-2.5 rounded-xl transition-all group-hover:scale-110 ${
+                isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-blue-50'
+              }`}>
+                <ClipboardList className={`w-5 h-5 ${isWireframe ? 'text-gray-700' : 'text-blue-600'}`} />
               </div>
-            </div>
+              <span className="text-[10px] font-extrabold font-display text-center leading-tight px-1">Tinjau Laporan</span>
+            </button>
           </div>
         )}
 
         {/* 4c. BankSampah: Setoran Terbaru */}
         {isBankSampah && (
-          <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <ShoppingCart className="w-3.5 h-3.5 text-indigo-500" /> Setoran Terbaru
-            </h4>
+          <div className="space-y-2">
+            <div className="flex items-center gap-1.5 px-1">
+              <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-indigo-400'}`} />
+              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Setoran Terbaru</h4>
+            </div>
             <div className="space-y-2">
               {[
                 { name: 'Budi Santoso', waste: 'Kardus & Plastik', weight: '3.2 kg', points: '+160', time: '10 menit lalu' },
@@ -478,70 +481,29 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           </div>
         )}
 
-        {/* 5b. Petugas: Laporan Perlu Ditindak */}
-        {isPetugas && (
-          <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <AlertCircle className="w-3.5 h-3.5 text-blue-500" /> Laporan Perlu Ditindak
-            </h4>
-            <div onClick={() => onNavigate('report')}
-              className={`p-4 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all btn-press group ${
-                isWireframe
-                  ? 'border-gray-800 bg-white'
-                  : 'bg-white border-blue-100/60 shadow-card hover:shadow-card-hover'
-              }`}>
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 ${
-                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-sm'
-                }`}>
-                  <ClipboardList className="w-5 h-5" />
-                </div>
-                <div className="min-w-0">
-                  <h5 className="text-[11px] font-extrabold text-gray-800 font-display flex items-center gap-1">
-                    Tinjau Laporan Masuk
-                  </h5>
-                  <p className="text-[9px] text-gray-400 mt-0.5 leading-snug">
-                    {city.initialReports.length} laporan menunggu verifikasi
-                  </p>
-                </div>
-              </div>
-              <div className="p-1 rounded-lg bg-blue-50 text-blue-500 group-hover:bg-blue-100 transition-all">
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* 5c. BankSampah: Timbang Manual */}
+        {/* 5c. BankSampah: Timbang Manual (primary action) */}
         {isBankSampah && (
-          <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <Weight className="w-3.5 h-3.5 text-indigo-500" /> Timbang Setoran
-            </h4>
-            <div onClick={() => onNavigate('report')}
-              className={`p-4 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all btn-press group ${
-                isWireframe
-                  ? 'border-gray-800 bg-white'
-                  : 'bg-white border-indigo-100/60 shadow-card hover:shadow-card-hover'
-              }`}>
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-6 ${
-                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-sm'
-                }`}>
-                  <Weight className="w-5 h-5" />
-                </div>
-                <div className="min-w-0">
-                  <h5 className="text-[11px] font-extrabold text-gray-800 font-display">Input Setoran Nasabah</h5>
-                  <p className="text-[9px] text-gray-400 mt-0.5 leading-snug">
-                    Catat berat & jenis sampah dari nasabah
-                  </p>
-                </div>
-              </div>
-              <div className="p-1 rounded-lg bg-indigo-50 text-indigo-500 group-hover:bg-indigo-100 transition-all">
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </div>
+          <button onClick={() => onNavigate('report')}
+            className={`flex items-center gap-3 w-full p-4 rounded-2xl border text-left transition-all btn-press group ${
+              isWireframe
+                ? 'border-2 border-gray-800 bg-white text-gray-800'
+                : 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white border-transparent shadow-[0_4px_14px_rgba(99,102,241,0.25)]'
+            }`}>
+            <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-6 ${
+              isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-white/20'
+            }`}>
+              <Weight className="w-5 h-5" />
             </div>
-          </div>
+            <div className="flex-1 min-w-0">
+              <h5 className="text-[11px] font-extrabold font-display">Input Setoran Nasabah</h5>
+              <p className={`text-[9px] mt-0.5 leading-snug ${isWireframe ? 'text-gray-500' : 'text-white/80'}`}>
+                Catat berat & jenis sampah dari nasabah
+              </p>
+            </div>
+            <div className={`p-1 rounded-lg transition-all group-hover:translate-x-1 ${isWireframe ? '' : 'bg-white/10'}`}>
+              <ChevronRight className="w-4 h-4" />
+            </div>
+          </button>
         )}
 
         {/* 6. Bank Sampah Terdekat - Only for Masyarakat */}
@@ -623,9 +585,10 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         {/* 6c. BankSampah: Daftar Harga */}
         {isBankSampah && (
           <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <CircleDollarSign className="w-3.5 h-3.5 text-indigo-500" /> Harga Satuan
-            </h4>
+            <div className="flex items-center gap-1.5 px-1 mb-2">
+              <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-indigo-400'}`} />
+              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">Harga Satuan</h4>
+            </div>
             <div className={`p-3 rounded-2xl border ${
               isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-soft'
             }`}>
