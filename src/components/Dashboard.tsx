@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomAlert from './CustomAlert';
 import {
   Bell,
@@ -47,14 +47,16 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
   const [checkedIn, setCheckedIn] = useState(false);
   const [alertState, setAlertState] = useState<{ open: boolean; title: string; message: string; type?: 'info' | 'warning' | 'success' }>({ open: false, title: '', message: '' });
   const [streakPopup, setStreakPopup] = useState(false);
-  const streakPopupShown = useRef(false);
 
   useEffect(() => {
-    if (profile.role === 'Masyarakat' && !streakPopupShown.current) {
-      streakPopupShown.current = true;
-      setStreakPopup(true);
+    if (profile.role === 'Masyarakat') {
+      const key = `streak_popup_shown_${profile.name}`;
+      if (!localStorage.getItem(key)) {
+        localStorage.setItem(key, '1');
+        setStreakPopup(true);
+      }
     }
-  }, [profile.role]);
+  }, [profile.role, profile.name]);
 
   const roleColor = profile.role === 'Masyarakat' ? 'emerald' : profile.role === 'Petugas' ? 'blue' : 'indigo';
   const roleColorHex = roleColor === 'emerald' ? '#059669' : roleColor === 'blue' ? '#3b82f6' : '#6366f1';
