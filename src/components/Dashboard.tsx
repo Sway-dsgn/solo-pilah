@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CustomAlert from './CustomAlert';
 import {
   Bell,
@@ -45,6 +45,15 @@ interface DashboardProps {
 export default function Dashboard({ profile, setProfile, isWireframe, onNavigate, onOpenNotifications, city }: DashboardProps) {
   const [checkedIn, setCheckedIn] = useState(false);
   const [alertState, setAlertState] = useState<{ open: boolean; title: string; message: string; type?: 'info' | 'warning' | 'success' }>({ open: false, title: '', message: '' });
+  const [streakPopup, setStreakPopup] = useState(false);
+  const streakPopupShown = useRef(false);
+
+  useEffect(() => {
+    if (profile.role === 'Masyarakat' && !streakPopupShown.current) {
+      streakPopupShown.current = true;
+      setStreakPopup(true);
+    }
+  }, [profile.role]);
 
   const roleColor = profile.role === 'Masyarakat' ? 'emerald' : profile.role === 'Petugas' ? 'blue' : 'indigo';
   const roleColorHex = roleColor === 'emerald' ? '#059669' : roleColor === 'blue' ? '#3b82f6' : '#6366f1';
@@ -752,6 +761,47 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         </div>
 
       </div>
+
+      {/* Streak Popup */}
+      {streakPopup && (
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-end z-[65]" onClick={() => setStreakPopup(false)}>
+          <div className="w-full bg-white rounded-t-3xl p-6 pt-4 anim-scale-in" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-center mb-3">
+              <div className="w-8 h-1 rounded-full bg-gray-300" />
+            </div>
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center shadow-lg mb-4 ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-orange-400 to-orange-600'}`}>
+                <Flame className={`w-8 h-8 ${isWireframe ? 'text-gray-800' : 'text-white'}`} />
+              </div>
+              <h2 className="text-xl font-black font-display text-gray-900">Streak {profile.streak} Hari!</h2>
+              <p className="text-[10px] text-gray-500 mt-1.5 leading-relaxed max-w-xs mx-auto">
+                Anda konsisten memilah sampah selama {profile.streak} hari berturut-turut. 
+                {profile.streak >= 7 ? ' Luar biasa! Pertahankan! 🔥' : ' Terus jaga semangat!'}
+              </p>
+              <div className="flex items-center justify-center gap-4 mt-5">
+                <div className={`px-4 py-2 rounded-xl ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50 border border-emerald-100'} text-center`}>
+                  <span className={`text-xs font-black block ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`}>{profile.points.toLocaleString()}</span>
+                  <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">Poin</span>
+                </div>
+                <div className={`px-4 py-2 rounded-xl ${isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-orange-50 border border-orange-100'} text-center`}>
+                  <span className={`text-xs font-black block ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>{profile.streak}</span>
+                  <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">Streak</span>
+                </div>
+              </div>
+              <button onClick={() => { setStreakPopup(false); onNavigate('scan'); }}
+                className={`mt-5 w-full py-3 rounded-xl text-[10px] font-extrabold transition-all cursor-pointer btn-press ${
+                  isWireframe ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-sm hover:shadow-md'
+                }`}>
+                Scan Sampah Sekarang
+              </button>
+              <button onClick={() => setStreakPopup(false)}
+                className="mt-2 w-full py-2.5 text-[9px] font-bold text-gray-400 hover:text-gray-600 transition-all cursor-pointer">
+                Nanti Saja
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <CustomAlert
         open={alertState.open}
