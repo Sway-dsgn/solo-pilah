@@ -123,35 +123,8 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
         </button>
       </div>
 
-      <div className="p-4 space-y-4 flex-1">
-        
-        {/* 2. Edukasi Link Card - Only for Masyarakat */}
-        {isMasyarakat && (
-          <div onClick={() => onNavigate('edukasi')}
-            className={`p-4 rounded-2xl border flex items-center gap-3 cursor-pointer transition-all btn-press group gradient-card ${
-              isWireframe
-                ? 'border-2 border-gray-800 bg-white text-gray-800'
-                : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-transparent shadow-card'
-            }`}>
-            <div className={`p-2.5 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-6 ${
-              isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-white/20'
-            }`}>
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h5 className="text-[11px] font-extrabold font-display">Edukasi Lingkungan</h5>
-              <p className={`text-[9px] leading-snug mt-0.5 line-clamp-1 ${
-                isWireframe ? 'text-gray-500' : 'text-white/80'
-              }`}>
-                Pelajari cara pilah sampah, daur ulang, dan dampak lingkungan
-              </p>
-            </div>
-            <div className={`p-1 rounded-lg transition-all group-hover:translate-x-1 ${isWireframe ? '' : 'bg-white/10'}`}>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-        )}
-
+      <div className="px-4 pb-6 space-y-5 flex-1">
+         
         {/* 2b. Petugas: Ringkasan Tugas Hari Ini */}
         {isPetugas && (
           <div className={`p-4 rounded-2xl border shadow-card ${
@@ -274,6 +247,36 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
           </div>
         )}
 
+        {/* 3a. Masyarakat: Aksi Cepat (Scan + Edukasi) */}
+        {isMasyarakat && (
+          <div className="grid grid-cols-2 gap-3">
+            <button onClick={() => onNavigate('scan')}
+              className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all btn-press group ${
+                isWireframe
+                  ? 'border-2 border-gray-800 bg-white text-gray-800'
+                  : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-transparent shadow-[0_4px_14px_rgba(5,150,105,0.25)]'
+              }`}>
+              <div className={`p-2.5 rounded-xl transition-all group-hover:scale-110 group-hover:-rotate-6 ${
+                isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-white/20'
+              }`}>
+                <QrCode className="w-5 h-5" />
+              </div>
+              <span className="text-[10px] font-extrabold font-display">Pindai Sampah</span>
+            </button>
+            <button onClick={() => onNavigate('edukasi')}
+              className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all btn-press group ${
+                isWireframe ? 'border border-gray-300 bg-white text-gray-800' : 'bg-white border-gray-100/60 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-gray-700'
+              }`}>
+              <div className={`p-2.5 rounded-xl transition-all group-hover:scale-110 ${
+                isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50'
+              }`}>
+                <BookOpen className={`w-5 h-5 ${isWireframe ? 'text-gray-700' : 'text-emerald-600'}`} />
+              </div>
+              <span className="text-[10px] font-extrabold font-display">Edukasi</span>
+            </button>
+          </div>
+        )}
+
         {/* 3b. Petugas: Statistik Kinerja */}
         {isPetugas && (
           <div className="space-y-1.5">
@@ -352,70 +355,61 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
         {/* 4. Streak Harian - Only for Masyarakat */}
         {isMasyarakat && (
-          <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-orange-500" /> Streak Aktif
-            </h4>
-            <div className={`p-4 rounded-2xl border shadow-card ${
-              isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60'
-            }`}>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                    isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-orange-400 to-orange-600 shadow-sm'
-                  }`}>
-                    <Flame className={`w-5 h-5 ${isWireframe ? 'text-gray-800' : 'text-white'}`} />
-                  </div>
-                  <div>
-                    <span className={`text-xl font-black font-display tracking-tight ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>
+          <div className={`p-4 rounded-2xl border ${
+            isWireframe ? 'border-gray-300 bg-white' : 'bg-white border-gray-100/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)]'
+          }`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${
+                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-orange-400 to-orange-600 shadow-sm'
+                }`}>
+                  <Flame className={`w-5 h-5 ${isWireframe ? 'text-gray-800' : 'text-white'}`} />
+                </div>
+                <div>
+                  <div className="flex items-baseline gap-1">
+                    <span className={`text-lg font-black font-display tracking-tight ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>
                       {profile.streak}
                     </span>
-                    <span className="text-[9px] text-gray-500 font-bold ml-0.5">hari</span>
-                    <p className="text-[8px] text-gray-400 leading-none mt-0.5">berturut-turut aktif</p>
+                    <span className="text-[9px] text-gray-400 font-bold">hari streak</span>
                   </div>
                 </div>
-                <button onClick={handleCheckin}
-                  className={`px-3.5 py-2 rounded-xl text-[9px] font-bold cursor-pointer transition-all btn-press ${
-                    checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0]
-                      ? isWireframe ? 'bg-gray-300 text-gray-500 cursor-default' : 'bg-gray-100 text-gray-400 cursor-default border border-gray-200'
-                      : isWireframe ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm hover:shadow-md'
-                  }`}>
-                  {checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0] ? '✔ Check-in' : '+25 Check-in'}
-                </button>
               </div>
+              <button onClick={handleCheckin}
+                className={`px-3.5 py-1.5 rounded-xl text-[9px] font-bold cursor-pointer transition-all btn-press ${
+                  checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0]
+                    ? isWireframe ? 'bg-gray-300 text-gray-500 cursor-default' : 'bg-gray-100 text-gray-400 cursor-default'
+                    : isWireframe ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm hover:shadow-md'
+                }`}>
+                {checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0] ? '✔ Check-in' : '+25 Check-in'}
+              </button>
+            </div>
 
-              <div className="flex gap-1.5 justify-center mb-3">
-                {['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map((day, i) => {
-                  const isActive = i < profile.streak % 7 || (profile.streak > 0 && i === 0 && profile.streak >= 7);
-                  const isToday = i === new Date().getDay() - 1 || (new Date().getDay() === 0 && i === 6);
-                  const progress = profile.streak % 7 || 7;
-                  return (
-                    <div key={day} className="flex flex-col items-center gap-1 flex-1">
-                      <span className="text-[6px] font-bold text-gray-400 uppercase tracking-wider">{day}</span>
-                      <div className={`w-full h-1 rounded-full ${isWireframe ? 'bg-gray-200' : 'bg-gray-100'}`}>
-                        <div className={`h-full rounded-full transition-all duration-500 ${
-                          i < progress
-                            ? isWireframe ? 'bg-gray-800' : 'bg-gradient-to-r from-orange-400 to-orange-500'
-                            : ''
-                        }`} style={{ width: i < progress ? '100%' : '0%' }} />
-                      </div>
-                      <span className={`text-[8px] font-bold transition-all ${
-                        isActive
-                          ? isWireframe ? 'text-gray-800' : 'text-orange-600'
-                          : isToday
-                          ? isWireframe ? 'text-gray-500' : 'text-orange-400'
-                          : 'text-gray-300'
-                      }`}>
-                        {i + 1}
-                      </span>
+            <div className="flex gap-1.5 justify-between mt-3.5">
+              {['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map((day, i) => {
+                const isActive = i < profile.streak % 7 || (profile.streak > 0 && i === 0 && profile.streak >= 7);
+                const isToday = i === new Date().getDay() - 1 || (new Date().getDay() === 0 && i === 6);
+                const progress = profile.streak % 7 || 7;
+                return (
+                  <div key={day} className="flex flex-col items-center gap-1 flex-1">
+                    <div className={`w-full h-1.5 rounded-full ${isWireframe ? 'bg-gray-200' : 'bg-gray-100'}`}>
+                      <div className={`h-full rounded-full transition-all duration-500 ${
+                        i < progress
+                          ? isWireframe ? 'bg-gray-800' : 'bg-gradient-to-r from-orange-400 to-orange-500'
+                          : ''
+                      }`} style={{ width: i < progress ? '100%' : '0%' }} />
                     </div>
-                  );
-                })}
-              </div>
-
-              <p className="text-[8px] text-gray-400 text-center leading-snug">
-                Scan atau lapor setiap hari untuk menjaga streak dan dapatkan bonus poin!
-              </p>
+                    <span className={`text-[6px] font-bold uppercase tracking-wider transition-all ${
+                      isActive
+                        ? isWireframe ? 'text-gray-800' : 'text-orange-600'
+                        : isToday
+                        ? isWireframe ? 'text-gray-500' : 'text-orange-400'
+                        : 'text-gray-300'
+                    }`}>
+                      {day}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -480,43 +474,6 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        )}
-
-        {/* 5. Scan Cepat - Only for Masyarakat */}
-        {isMasyarakat && (
-          <div className="space-y-1.5">
-            <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-1">
-              <Zap className="w-3.5 h-3.5" /> Scan Cepat
-            </h4>
-            <div 
-              onClick={() => onNavigate('scan')}
-              className={`p-4 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all btn-press group ${
-                isWireframe
-                  ? 'border-gray-800 bg-white text-gray-800'
-                  : 'bg-white border-emerald-100/60 shadow-card hover:shadow-card-hover'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-xl shrink-0 transition-all group-hover:scale-110 group-hover:-rotate-6 ${
-                    isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-sm'
-                }`}>
-                  <QrCode className="w-5 h-5" />
-                </div>
-                <div className="min-w-0">
-                  <h5 className="text-[11px] font-extrabold text-gray-800 font-display flex items-center gap-1">
-                    Mulai Pindai Sampah
-                    <Sparkles className="w-3 h-3 text-amber-500 anim-float" />
-                  </h5>
-                  <p className="text-[9px] text-gray-400 mt-0.5 leading-snug">
-                    Ambil foto sampah kering Anda untuk klaim poin instant!
-                  </p>
-                </div>
-              </div>
-              <div className="p-1 rounded-lg bg-emerald-50 text-emerald-500 group-hover:bg-emerald-100 transition-all">
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </div>
             </div>
           </div>
         )}
@@ -589,11 +546,14 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
         {/* 6. Bank Sampah Terdekat - Only for Masyarakat */}
         {isMasyarakat && (
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <div className="flex justify-between items-center px-1">
-              <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5" /> Bank Sampah Terdekat ({city.shortName})
-              </h4>
+              <div className="flex items-center gap-1.5">
+                <div className={`w-4 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-emerald-400'}`} />
+                <h4 className="text-[9.5px] font-black text-gray-400 uppercase tracking-[0.15em]">
+                  Bank Sampah Terdekat
+                </h4>
+              </div>
               <button 
                 onClick={() => onNavigate('map')}
                 className="text-[9px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-0.5 transition-all"
