@@ -762,115 +762,149 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
       </div>
 
-      {/* Streak Popup — menarik */}
+      {/* Streak Popup — centered + misi harian */}
       {streakPopup && (
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-end z-[65]" onClick={() => setStreakPopup(false)}>
-          <div className="relative w-full bg-white rounded-t-3xl overflow-hidden anim-scale-in" onClick={e => e.stopPropagation()}>
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[65] p-5" onClick={() => setStreakPopup(false)}>
+          <div className="relative w-full max-w-sm bg-white rounded-3xl overflow-hidden anim-scale-in shadow-2xl" onClick={e => e.stopPropagation()}>
             {/* decorative bg orbs */}
             <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" />
             <div className="absolute -bottom-10 -left-20 w-40 h-40 rounded-full bg-emerald-100/30 blur-3xl pointer-events-none" />
 
-            <div className="p-6 pt-4 relative">
-              <div className="flex justify-center mb-1">
-                <div className="w-8 h-1 rounded-full bg-gray-300" />
-              </div>
-
-              <div className="text-center relative">
-                {/* flame icon */}
-                <div className={`relative w-20 h-20 mx-auto mb-3 ${isWireframe ? '' : 'anim-flame-glow'} rounded-2xl flex items-center justify-center ${
+            <div className="p-5 relative">
+              {/* flame icon + streak */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className={`relative w-14 h-14 shrink-0 ${isWireframe ? '' : 'anim-flame-glow'} rounded-xl flex items-center justify-center ${
                   isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-orange-400 via-orange-500 to-red-500'
                 }`}>
                   <div className={`${isWireframe ? '' : 'anim-flame-flicker'}`}>
-                    <Flame className={`w-10 h-10 ${isWireframe ? 'text-gray-800' : 'text-white drop-shadow-lg'}`} />
+                    <Flame className={`w-7 h-7 ${isWireframe ? 'text-gray-800' : 'text-white drop-shadow-lg'}`} />
                   </div>
                   {/* sparkle particles */}
                   <div className={`absolute inset-0 ${isWireframe ? 'hidden' : ''}`}>
-                    <div className="absolute top-1 left-2 w-1.5 h-1.5 rounded-full bg-yellow-200 anim-particle" />
-                    <div className="absolute top-0 right-3 w-1 h-1 rounded-full bg-yellow-100 anim-particle" />
-                    <div className="absolute bottom-2 left-1 w-1 h-1 rounded-full bg-orange-200 anim-particle" />
-                    <div className="absolute bottom-1 right-2 w-1.5 h-1.5 rounded-full bg-yellow-300 anim-particle" />
-                    <div className="absolute top-3 right-0 w-1 h-1 rounded-full bg-orange-100 anim-particle" />
+                    <div className="absolute top-0 left-1 w-1 h-1 rounded-full bg-yellow-200 anim-particle" />
+                    <div className="absolute top-0 right-1 w-1 h-1 rounded-full bg-yellow-100 anim-particle" />
+                    <div className="absolute bottom-1 left-0 w-1 h-1 rounded-full bg-orange-200 anim-particle" />
+                    <div className="absolute bottom-0 right-1 w-1 h-1 rounded-full bg-yellow-300 anim-particle" />
                   </div>
                 </div>
-
-                {/* streak number with bounce */}
-                <div className="anim-bounce-in inline-flex items-baseline gap-1">
-                  <span className={`text-4xl font-black font-display tracking-tight ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>
-                    {profile.streak}
-                  </span>
-                  <span className="text-xs font-bold text-gray-400">hari</span>
-                </div>
-
-                {/* message */}
-                <p className={`text-[10px] mt-2 leading-relaxed max-w-xs mx-auto font-medium anim-stagger-1 ${
-                  profile.streak >= 30 ? 'text-orange-600' : profile.streak >= 7 ? 'text-amber-600' : 'text-gray-500'
-                }`}>
-                  {profile.streak >= 30
-                    ? 'Legenda! 30 hari konsisten memilah. Kamu inspirasi lingkungan! 🏆'
-                    : profile.streak >= 14
-                    ? 'Keren! Dua minggu berturut-turut. Pertahankan! 🔥'
-                    : profile.streak >= 7
-                    ? 'Mantap! Seminggu penuh konsisten. Terus berlanjut! ⭐'
-                    : profile.streak >= 3
-                    ? 'Bagus! 3 hari berturut-turut. Jangan putus ya! 💪'
-                    : 'Awal yang baik! Teruskan kebiasaan memilah sampah! 🌱'
-                  }
-                </p>
-
-                {/* milestone progress bar */}
-                <div className={`mt-5 px-3 anim-stagger-2 ${isWireframe ? '' : ''}`}>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[8px] font-bold text-gray-400 uppercase tracking-wider">
-                      {profile.streak < 7 ? `Target: 7 Hari` : profile.streak < 14 ? `Target: 14 Hari` : profile.streak < 30 ? `Target: 30 Hari` : `Target: 60 Hari`}
+                <div>
+                  <div className="anim-bounce-in inline-flex items-baseline gap-1">
+                    <span className={`text-2xl font-black font-display tracking-tight ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>
+                      {profile.streak}
                     </span>
-                    <span className="text-[8px] font-bold text-orange-500">
-                      {profile.streak < 7 ? `${Math.round((profile.streak/7)*100)}%` : profile.streak < 14 ? `${Math.round(((profile.streak-7)/7)*100)}%` : profile.streak < 30 ? `${Math.round(((profile.streak-14)/16)*100)}%` : `${Math.min(Math.round(((profile.streak-30)/30)*100), 100)}%`}
-                    </span>
+                    <span className="text-[9px] font-bold text-gray-400">hari streak</span>
                   </div>
-                  <div className={`h-2 w-full rounded-full overflow-hidden ${isWireframe ? 'bg-gray-200' : 'bg-gray-100'}`}>
-                    <div
-                      className={`h-full rounded-full transition-all duration-1000 ease-out ${
-                        isWireframe ? 'bg-gray-800' : profile.streak >= 30 ? 'bg-gradient-to-r from-orange-400 to-red-500' : profile.streak >= 7 ? 'bg-gradient-to-r from-amber-400 to-orange-500' : 'bg-gradient-to-r from-orange-300 to-orange-500'
-                      }`}
-                      style={{
-                        width: profile.streak < 7 ? `${Math.round((profile.streak/7)*100)}%`
-                          : profile.streak < 14 ? `${Math.round(((profile.streak-7)/7)*100)}%`
-                          : profile.streak < 30 ? `${Math.round(((profile.streak-14)/16)*100)}%`
-                          : `${Math.min(Math.round(((profile.streak-30)/30)*100), 100)}%`
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* stats row */}
-                <div className="flex items-center justify-center gap-4 mt-5 anim-stagger-3">
-                  <div className={`px-5 py-2.5 rounded-xl ${
-                    isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50 border border-emerald-200/60'
-                  } text-center`}>
-                    <span className={`text-sm font-black block ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`}>{profile.points.toLocaleString()}</span>
-                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-widest">Poin</span>
-                  </div>
-                  <div className={`px-5 py-2.5 rounded-xl ${
-                    isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-orange-50 border border-orange-200/60'
-                  } text-center`}>
-                    <span className={`text-sm font-black block ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>{profile.streak}</span>
-                    <span className="text-[7px] font-bold text-gray-400 uppercase tracking-widest">Streak</span>
-                  </div>
-                </div>
-
-                {/* CTA */}
-                <button onClick={() => { setStreakPopup(false); onNavigate('scan'); }}
-                  className={`mt-5 w-full py-3.5 rounded-xl text-[11px] font-extrabold tracking-wide transition-all cursor-pointer btn-press anim-stagger-4 flex items-center justify-center gap-2 ${
-                    isWireframe ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-md hover:shadow-lg'
+                  <p className={`text-[9px] mt-0.5 font-medium ${
+                    profile.streak >= 30 ? 'text-orange-600' : profile.streak >= 7 ? 'text-amber-600' : 'text-gray-500'
                   }`}>
-                  <QrCode className="w-4 h-4" />
-                  Scan Sampah Sekarang
-                </button>
-                <button onClick={() => setStreakPopup(false)}
-                  className="mt-2 w-full py-3 text-[9px] font-bold text-gray-400 hover:text-gray-600 transition-all cursor-pointer anim-stagger-5">
-                  Nanti Saja
-                </button>
+                    {profile.streak >= 30
+                      ? 'Legenda! 30 hari berturut-turut! 🏆'
+                      : profile.streak >= 14
+                      ? 'Keren! 2 minggu penuh! 🔥'
+                      : profile.streak >= 7
+                      ? 'Mantap! Seminggu konsisten! ⭐'
+                      : profile.streak >= 3
+                      ? 'Bagus! 3 hari berturut-turut! 💪'
+                      : 'Awal yang hebat! Lanjutkan! 🌱'
+                    }
+                  </p>
+                </div>
               </div>
+
+              {/* milestone bar compact */}
+              <div className={`mb-4 anim-stagger-1 ${isWireframe ? '' : ''}`}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">
+                    {profile.streak < 7 ? 'Target: 7 Hari' : profile.streak < 14 ? 'Target: 14 Hari' : profile.streak < 30 ? 'Target: 30 Hari' : 'Target: 60 Hari'}
+                  </span>
+                  <span className="text-[7px] font-bold text-orange-500">
+                    {profile.streak < 7 ? `${Math.round((profile.streak/7)*100)}%` : profile.streak < 14 ? `${Math.round(((profile.streak-7)/7)*100)}%` : profile.streak < 30 ? `${Math.round(((profile.streak-14)/16)*100)}%` : `${Math.min(Math.round(((profile.streak-30)/30)*100), 100)}%`}
+                  </span>
+                </div>
+                <div className={`h-1.5 w-full rounded-full overflow-hidden ${isWireframe ? 'bg-gray-200' : 'bg-gray-100'}`}>
+                  <div
+                    className={`h-full rounded-full transition-all duration-1000 ease-out ${
+                      isWireframe ? 'bg-gray-800' : profile.streak >= 30 ? 'bg-gradient-to-r from-orange-400 to-red-500' : profile.streak >= 7 ? 'bg-gradient-to-r from-amber-400 to-orange-500' : 'bg-gradient-to-r from-orange-300 to-orange-500'
+                    }`}
+                    style={{
+                      width: profile.streak < 7 ? `${Math.round((profile.streak/7)*100)}%`
+                        : profile.streak < 14 ? `${Math.round(((profile.streak-7)/7)*100)}%`
+                        : profile.streak < 30 ? `${Math.round(((profile.streak-14)/16)*100)}%`
+                        : `${Math.min(Math.round(((profile.streak-30)/30)*100), 100)}%`
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Misi Harian */}
+              <div className={`p-3 rounded-2xl border ${isWireframe ? 'border-gray-300 bg-white' : 'bg-gray-50/60 border-gray-100/60'} anim-stagger-2`}>
+                <div className="flex items-center gap-1.5 mb-2.5">
+                  <div className={`w-3 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-emerald-400'}`} />
+                  <h4 className="text-[8px] font-black text-gray-400 uppercase tracking-[0.15em]">Misi Harian</h4>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { icon: Flame, label: 'Check-in hari ini', done: checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0], pts: 25 },
+                    { icon: QrCode, label: 'Scan 1 sampah', done: false, pts: 50 },
+                    { icon: BookOpen, label: 'Baca artikel edukasi', done: false, pts: 15 },
+                  ].map((mission, i) => {
+                    const Icon = mission.icon;
+                    return (
+                      <div key={i} className={`flex items-center gap-2 p-2 rounded-xl border ${
+                        mission.done
+                          ? isWireframe ? 'bg-gray-100 border-gray-300' : 'bg-emerald-50/60 border-emerald-200/60'
+                          : isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100/60'
+                      }`}>
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                          mission.done
+                            ? isWireframe ? 'bg-gray-200' : 'bg-emerald-100'
+                            : isWireframe ? 'bg-gray-100' : 'bg-gray-100'
+                        }`}>
+                          {mission.done ? (
+                            <CheckCircle2 className={`w-3.5 h-3.5 ${isWireframe ? 'text-gray-700' : 'text-emerald-500'}`} />
+                          ) : (
+                            <Icon className={`w-3.5 h-3.5 ${isWireframe ? 'text-gray-500' : 'text-gray-400'}`} />
+                          )}
+                        </div>
+                        <span className={`flex-1 text-[9px] font-bold ${mission.done ? 'text-gray-400 line-through' : 'text-gray-700'}`}>
+                          {mission.label}
+                        </span>
+                        <span className={`text-[7px] font-extrabold px-1.5 py-0.5 rounded-full ${
+                          mission.done
+                            ? isWireframe ? 'bg-gray-200 text-gray-500' : 'bg-emerald-100 text-emerald-600'
+                            : isWireframe ? 'bg-gray-100 text-gray-500' : 'bg-orange-50 text-orange-500'
+                        }`}>
+                          +{mission.pts}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* stats row mini */}
+              <div className="flex items-center justify-center gap-3 mt-4 anim-stagger-3">
+                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg ${
+                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50 border border-emerald-200/60'
+                }`}>
+                  <Award className={`w-3 h-3 ${isWireframe ? 'text-gray-700' : 'text-emerald-500'}`} />
+                  <span className={`text-[10px] font-black ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`}>{profile.points.toLocaleString()}</span>
+                  <span className="text-[6px] font-bold text-gray-400 uppercase">pts</span>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <button onClick={() => { setStreakPopup(false); onNavigate('scan'); }}
+                className={`mt-4 w-full py-3 rounded-xl text-[10px] font-extrabold tracking-wide transition-all cursor-pointer btn-press anim-stagger-4 flex items-center justify-center gap-2 ${
+                  isWireframe ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-md hover:shadow-lg'
+                }`}>
+                <QrCode className="w-4 h-4" />
+                Mulai Misi
+              </button>
+              <button onClick={() => setStreakPopup(false)}
+                className="mt-1.5 w-full py-2 text-[8px] font-bold text-gray-400 hover:text-gray-600 transition-all cursor-pointer anim-stagger-5">
+                Nanti Saja
+              </button>
             </div>
           </div>
         </div>
