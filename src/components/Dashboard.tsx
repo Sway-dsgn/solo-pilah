@@ -762,117 +762,113 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
       </div>
 
-      {/* Streak Popup — centered + misi harian */}
+      {/* Streak Popup — style iklan heboh */}
       {streakPopup && (
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[65] p-5" onClick={() => setStreakPopup(false)}>
-          <div className="relative w-full max-w-sm bg-white rounded-3xl overflow-hidden anim-scale-in shadow-2xl" onClick={e => e.stopPropagation()}>
-            {/* decorative bg orbs */}
-            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-10 -left-20 w-40 h-40 rounded-full bg-emerald-100/30 blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 z-[65] flex items-center justify-center p-5" onClick={() => setStreakPopup(false)}>
+          {/* background overlay */}
+          <div className={`absolute inset-0 ${isWireframe ? 'bg-black/60' : 'bg-gradient-to-b from-orange-900/70 via-black/60 to-emerald-900/70 backdrop-blur-md'}`} />
 
-            <div className="p-5 relative">
-              {/* flame icon + streak */}
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`relative w-14 h-14 shrink-0 ${isWireframe ? '' : 'anim-flame-glow'} rounded-xl flex items-center justify-center ${
-                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-gradient-to-br from-orange-400 via-orange-500 to-red-500'
-                }`}>
-                  <div className={`${isWireframe ? '' : 'anim-flame-flicker'}`}>
-                    <Flame className={`w-7 h-7 ${isWireframe ? 'text-gray-800' : 'text-white drop-shadow-lg'}`} />
-                  </div>
-                  {/* sparkle particles */}
-                  <div className={`absolute inset-0 ${isWireframe ? 'hidden' : ''}`}>
-                    <div className="absolute top-0 left-1 w-1 h-1 rounded-full bg-yellow-200 anim-particle" />
-                    <div className="absolute top-0 right-1 w-1 h-1 rounded-full bg-yellow-100 anim-particle" />
-                    <div className="absolute bottom-1 left-0 w-1 h-1 rounded-full bg-orange-200 anim-particle" />
-                    <div className="absolute bottom-0 right-1 w-1 h-1 rounded-full bg-yellow-300 anim-particle" />
-                  </div>
-                </div>
-                <div>
-                  <div className="anim-bounce-in inline-flex items-baseline gap-1">
-                    <span className={`text-2xl font-black font-display tracking-tight ${isWireframe ? 'text-gray-800' : 'text-orange-600'}`}>
-                      {profile.streak}
-                    </span>
-                    <span className="text-[9px] font-bold text-gray-400">hari streak</span>
-                  </div>
-                  <p className={`text-[9px] mt-0.5 font-medium ${
-                    profile.streak >= 30 ? 'text-orange-600' : profile.streak >= 7 ? 'text-amber-600' : 'text-gray-500'
-                  }`}>
-                    {profile.streak >= 30
-                      ? 'Legenda! 30 hari berturut-turut! 🏆'
-                      : profile.streak >= 14
-                      ? 'Keren! 2 minggu penuh! 🔥'
-                      : profile.streak >= 7
-                      ? 'Mantap! Seminggu konsisten! ⭐'
-                      : profile.streak >= 3
-                      ? 'Bagus! 3 hari berturut-turut! 💪'
-                      : 'Awal yang hebat! Lanjutkan! 🌱'
-                    }
-                  </p>
-                </div>
+          {/* confetti dots */}
+          <div className={`absolute inset-0 overflow-hidden pointer-events-none ${isWireframe ? 'hidden' : ''}`}>
+            {[...Array(20)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1.5 h-1.5 rounded-full anim-particle"
+                style={{
+                  left: `${10 + Math.random() * 80}%`,
+                  top: `${5 + Math.random() * 40}%`,
+                  background: ['#f97316','#22c55e','#eab308','#ef4444','#a855f7','#06b6d4'][i % 6],
+                  animationDelay: `${Math.random() * 3}s`,
+                  animationDuration: `${2 + Math.random() * 2}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* main card */}
+          <div className={`relative w-full max-w-xs ${isWireframe ? 'bg-white' : 'bg-gradient-to-b from-orange-500 to-orange-600'} rounded-3xl overflow-hidden anim-scale-in shadow-2xl`} onClick={e => e.stopPropagation()}>
+            {/* decorative shine */}
+            <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10 blur-3xl pointer-events-none ${isWireframe ? 'hidden' : ''}`} />
+            <div className={`absolute -bottom-10 -left-10 w-32 h-32 rounded-full bg-yellow-300/10 blur-3xl pointer-events-none ${isWireframe ? 'hidden' : ''}`} />
+
+            {/* close button */}
+            <button onClick={() => setStreakPopup(false)}
+              className={`absolute top-3 right-3 z-10 w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer btn-press ${
+                isWireframe ? 'bg-gray-200 text-gray-600 hover:bg-gray-300' : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
+              }`}>
+              <X className="w-3.5 h-3.5" />
+            </button>
+
+            <div className={`p-6 pb-5 relative text-center ${isWireframe ? 'text-gray-800' : 'text-white'}`}>
+              {/* badge */}
+              <div className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[8px] font-extrabold uppercase tracking-wider mb-4 anim-stagger-1 ${
+                isWireframe ? 'bg-gray-100 text-gray-600 border border-gray-300' : 'bg-white/20 text-orange-100 border border-white/20'
+              }`}>
+                <Sparkles className="w-3 h-3" />
+                streak harian
               </div>
 
-              {/* milestone bar compact */}
-              <div className={`mb-4 anim-stagger-1 ${isWireframe ? '' : ''}`}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider">
-                    {profile.streak < 7 ? 'Target: 7 Hari' : profile.streak < 14 ? 'Target: 14 Hari' : profile.streak < 30 ? 'Target: 30 Hari' : 'Target: 60 Hari'}
-                  </span>
-                  <span className="text-[7px] font-bold text-orange-500">
-                    {profile.streak < 7 ? `${Math.round((profile.streak/7)*100)}%` : profile.streak < 14 ? `${Math.round(((profile.streak-7)/7)*100)}%` : profile.streak < 30 ? `${Math.round(((profile.streak-14)/16)*100)}%` : `${Math.min(Math.round(((profile.streak-30)/30)*100), 100)}%`}
-                  </span>
-                </div>
-                <div className={`h-1.5 w-full rounded-full overflow-hidden ${isWireframe ? 'bg-gray-200' : 'bg-gray-100'}`}>
-                  <div
-                    className={`h-full rounded-full transition-all duration-1000 ease-out ${
-                      isWireframe ? 'bg-gray-800' : profile.streak >= 30 ? 'bg-gradient-to-r from-orange-400 to-red-500' : profile.streak >= 7 ? 'bg-gradient-to-r from-amber-400 to-orange-500' : 'bg-gradient-to-r from-orange-300 to-orange-500'
-                    }`}
-                    style={{
-                      width: profile.streak < 7 ? `${Math.round((profile.streak/7)*100)}%`
-                        : profile.streak < 14 ? `${Math.round(((profile.streak-7)/7)*100)}%`
-                        : profile.streak < 30 ? `${Math.round(((profile.streak-14)/16)*100)}%`
-                        : `${Math.min(Math.round(((profile.streak-30)/30)*100), 100)}%`
-                    }}
-                  />
-                </div>
+              {/* huge streak number */}
+              <div className="anim-bounce-in">
+                <span className={`text-6xl font-black font-display tracking-tight drop-shadow-lg ${isWireframe ? 'text-gray-800' : 'text-white'}`}>
+                  {profile.streak}
+                </span>
+                <div className={`text-[10px] font-bold uppercase tracking-[0.2em] mt-1 ${isWireframe ? 'text-gray-500' : 'text-orange-100'}`}>Hari Berturut-turut!</div>
               </div>
 
-              {/* Misi Harian */}
-              <div className={`p-3 rounded-2xl border ${isWireframe ? 'border-gray-300 bg-white' : 'bg-gray-50/60 border-gray-100/60'} anim-stagger-2`}>
-                <div className="flex items-center gap-1.5 mb-2.5">
-                  <div className={`w-3 h-0.5 rounded-full ${isWireframe ? 'bg-gray-400' : 'bg-emerald-400'}`} />
-                  <h4 className="text-[8px] font-black text-gray-400 uppercase tracking-[0.15em]">Misi Harian</h4>
-                </div>
-                <div className="space-y-2">
+              {/* tagline */}
+              <p className={`text-[11px] font-bold mt-3 leading-relaxed anim-stagger-2 ${isWireframe ? 'text-gray-600' : 'text-orange-50'}`}>
+                {profile.streak >= 30
+                  ? '🔥 LEGENDA! Kamu adalah pelindung lingkungan sejati!'
+                  : profile.streak >= 14
+                  ? '⭐ LUAR BIASA! 2 minggu penuh konsisten memilah!'
+                  : profile.streak >= 7
+                  ? '🎯 MANTAP! Seminggu penuh streak, teruskan!'
+                  : profile.streak >= 3
+                  ? '💪 HEBAT! 3 hari berturut-turut, jangan berhenti!'
+                  : '🌱 KEREN! Awal yang sempurna untuk jadi pahlawan lingkungan!'
+                }
+              </p>
+
+              {/* divider */}
+              <div className={`h-px my-4 ${isWireframe ? 'bg-gray-200' : 'bg-white/20'} anim-stagger-3`} />
+
+              {/* misi harian */}
+              <div className="text-left anim-stagger-3">
+                <h4 className={`text-[8px] font-black uppercase tracking-[0.15em] mb-2 ${isWireframe ? 'text-gray-500' : 'text-orange-100'}`}>
+                  🎯 Misi Hari Ini
+                </h4>
+                <div className="space-y-1.5">
                   {[
-                    { icon: Flame, label: 'Check-in hari ini', done: checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0], pts: 25 },
-                    { icon: QrCode, label: 'Scan 1 sampah', done: false, pts: 50 },
-                    { icon: BookOpen, label: 'Baca artikel edukasi', done: false, pts: 15 },
+                    { icon: Flame, label: 'Check-in harian', done: checkedIn || profile.lastActiveDate === new Date().toISOString().split('T')[0], pts: 25 },
+                    { icon: QrCode, label: 'Scan sampah', done: false, pts: 50 },
+                    { icon: BookOpen, label: 'Baca edukasi', done: false, pts: 15 },
                   ].map((mission, i) => {
                     const Icon = mission.icon;
                     return (
-                      <div key={i} className={`flex items-center gap-2 p-2 rounded-xl border ${
+                      <div key={i} className={`flex items-center gap-2 p-1.5 rounded-xl ${
                         mission.done
-                          ? isWireframe ? 'bg-gray-100 border-gray-300' : 'bg-emerald-50/60 border-emerald-200/60'
-                          : isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100/60'
+                          ? isWireframe ? 'bg-gray-100' : 'bg-white/15'
+                          : isWireframe ? 'bg-white' : 'bg-white/10'
                       }`}>
-                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 ${
                           mission.done
-                            ? isWireframe ? 'bg-gray-200' : 'bg-emerald-100'
-                            : isWireframe ? 'bg-gray-100' : 'bg-gray-100'
+                            ? isWireframe ? 'bg-gray-200' : 'bg-white/20'
+                            : isWireframe ? 'bg-gray-100' : 'bg-white/10'
                         }`}>
                           {mission.done ? (
-                            <CheckCircle2 className={`w-3.5 h-3.5 ${isWireframe ? 'text-gray-700' : 'text-emerald-500'}`} />
+                            <CheckCircle2 className={`w-3 h-3 ${isWireframe ? 'text-gray-600' : 'text-green-300'}`} />
                           ) : (
-                            <Icon className={`w-3.5 h-3.5 ${isWireframe ? 'text-gray-500' : 'text-gray-400'}`} />
+                            <Icon className={`w-3 h-3 ${isWireframe ? 'text-gray-500' : 'text-white/70'}`} />
                           )}
                         </div>
-                        <span className={`flex-1 text-[9px] font-bold ${mission.done ? 'text-gray-400 line-through' : 'text-gray-700'}`}>
+                        <span className={`flex-1 text-[8px] font-bold ${mission.done ? 'text-gray-400 line-through' : isWireframe ? 'text-gray-700' : 'text-white/80'}`}>
                           {mission.label}
                         </span>
                         <span className={`text-[7px] font-extrabold px-1.5 py-0.5 rounded-full ${
                           mission.done
-                            ? isWireframe ? 'bg-gray-200 text-gray-500' : 'bg-emerald-100 text-emerald-600'
-                            : isWireframe ? 'bg-gray-100 text-gray-500' : 'bg-orange-50 text-orange-500'
+                            ? isWireframe ? 'bg-gray-200 text-gray-500' : 'bg-white/15 text-green-200'
+                            : isWireframe ? 'bg-amber-50 text-amber-600' : 'bg-white/20 text-yellow-200'
                         }`}>
                           +{mission.pts}
                         </span>
@@ -882,28 +878,28 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                 </div>
               </div>
 
-              {/* stats row mini */}
-              <div className="flex items-center justify-center gap-3 mt-4 anim-stagger-3">
-                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg ${
-                  isWireframe ? 'bg-gray-100 border border-gray-300' : 'bg-emerald-50 border border-emerald-200/60'
-                }`}>
-                  <Award className={`w-3 h-3 ${isWireframe ? 'text-gray-700' : 'text-emerald-500'}`} />
-                  <span className={`text-[10px] font-black ${isWireframe ? 'text-gray-800' : 'text-emerald-600'}`}>{profile.points.toLocaleString()}</span>
-                  <span className="text-[6px] font-bold text-gray-400 uppercase">pts</span>
-                </div>
+              {/* poin */}
+              <div className={`flex items-center justify-center gap-1.5 mt-4 anim-stagger-4 ${isWireframe ? 'text-gray-600' : 'text-orange-100'}`}>
+                <Award className="w-3.5 h-3.5" />
+                <span className={`text-[10px] font-black ${isWireframe ? 'text-gray-800' : 'text-white'}`}>{profile.points.toLocaleString()}</span>
+                <span className="text-[7px] font-bold uppercase tracking-wider">Poin Terkumpul</span>
               </div>
 
               {/* CTA */}
               <button onClick={() => { setStreakPopup(false); onNavigate('scan'); }}
-                className={`mt-4 w-full py-3 rounded-xl text-[10px] font-extrabold tracking-wide transition-all cursor-pointer btn-press anim-stagger-4 flex items-center justify-center gap-2 ${
-                  isWireframe ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-md hover:shadow-lg'
+                className={`mt-4 w-full py-3 rounded-2xl text-[10px] font-extrabold tracking-wide transition-all cursor-pointer btn-press anim-stagger-5 flex items-center justify-center gap-2 ${
+                  isWireframe
+                    ? 'bg-gray-800 text-white'
+                    : 'bg-white text-orange-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5'
                 }`}>
                 <QrCode className="w-4 h-4" />
-                Mulai Misi
+                Scan & Kumpulkan Poin
               </button>
               <button onClick={() => setStreakPopup(false)}
-                className="mt-1.5 w-full py-2 text-[8px] font-bold text-gray-400 hover:text-gray-600 transition-all cursor-pointer anim-stagger-5">
-                Nanti Saja
+                className={`mt-1.5 w-full py-2 text-[8px] font-bold transition-all cursor-pointer anim-stagger-5 ${
+                  isWireframe ? 'text-gray-400 hover:text-gray-600' : 'text-white/50 hover:text-white/80'
+                }`}>
+                Tutup
               </button>
             </div>
           </div>
