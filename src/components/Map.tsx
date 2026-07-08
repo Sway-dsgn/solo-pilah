@@ -83,25 +83,60 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
           </div>
         ) : (
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path
-              d="M 85,0 Q 88,25 78,50 T 92,100"
-              fill="none"
-              stroke="#93c5fd"
-              strokeWidth="6"
-              strokeLinecap="round"
-              opacity="0.6"
-            />
-            <path
-              d="M 0,35 Q 35,45 55,48 T 80,48"
-              fill="none"
-              stroke="#93c5fd"
-              strokeWidth="3"
-              strokeLinecap="round"
-              opacity="0.5"
-            />
-            <line x1="0" y1="60" x2="100" y2="60" stroke="#e2e8f0" strokeWidth="2.5" />
-            <line x1="0" y1="60" x2="100" y2="60" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3,3" />
-            <line x1="58" y1="60" x2="58" y2="10" stroke="#e2e8f0" strokeWidth="2" />
+            <defs>
+              <pattern id="cityBlocks" width="7" height="7" patternUnits="userSpaceOnUse">
+                <rect x="1.2" y="1.2" width="4" height="4" rx="0.5" fill="#e2e7ec" />
+              </pattern>
+            </defs>
+
+            {/* Land base */}
+            <rect x="0" y="0" width="100" height="100" fill="#eef1f4" />
+            <rect x="0" y="0" width="100" height="100" fill="url(#cityBlocks)" opacity="0.7" />
+
+            {/* Parks / green areas */}
+            <rect x="4" y="5" width="15" height="12" rx="2.5" fill="#d6ecd2" />
+            <rect x="73" y="60" width="22" height="18" rx="2.5" fill="#d6ecd2" />
+            <rect x="60" y="4" width="11" height="9" rx="2" fill="#d6ecd2" />
+
+            {/* River (winding) */}
+            <path d="M -6,22 C 26,28 30,46 24,63 C 19,78 35,88 52,110"
+                  fill="none" stroke="#bcdcf5" strokeWidth="9" strokeLinecap="round" />
+            <path d="M -6,22 C 26,28 30,46 24,63 C 19,78 35,88 52,110"
+                  fill="none" stroke="#a9d2f0" strokeWidth="6" strokeLinecap="round" opacity="0.7" />
+
+            {/* Road casings */}
+            <g stroke="#d7dce1" strokeWidth="3.4" fill="none" strokeLinecap="round">
+              <line x1="0" y1="20" x2="100" y2="20" />
+              <line x1="0" y1="40" x2="100" y2="40" />
+              <line x1="0" y1="60" x2="100" y2="60" />
+              <line x1="0" y1="80" x2="100" y2="80" />
+              <line x1="20" y1="0" x2="20" y2="100" />
+              <line x1="40" y1="0" x2="40" y2="100" />
+              <line x1="60" y1="0" x2="60" y2="100" />
+              <line x1="80" y1="0" x2="80" y2="100" />
+              <path d="M 0,30 L 100,70" strokeWidth="4.5" />
+              <path d="M 0,75 L 100,40" strokeWidth="3" />
+            </g>
+
+            {/* Road fills */}
+            <g stroke="#ffffff" strokeWidth="2" fill="none" strokeLinecap="round">
+              <line x1="0" y1="20" x2="100" y2="20" />
+              <line x1="0" y1="40" x2="100" y2="40" />
+              <line x1="0" y1="60" x2="100" y2="60" />
+              <line x1="0" y1="80" x2="100" y2="80" />
+              <line x1="20" y1="0" x2="20" y2="100" />
+              <line x1="40" y1="0" x2="40" y2="100" />
+              <line x1="60" y1="0" x2="60" y2="100" />
+              <line x1="80" y1="0" x2="80" y2="100" />
+              <path d="M 0,30 L 100,70" strokeWidth="3" />
+              <path d="M 0,75 L 100,40" strokeWidth="1.6" />
+            </g>
+
+            {/* Main arterial highlight */}
+            <path d="M -6,52 C 30,49 56,58 106,54"
+                  fill="none" stroke="#f6c87a" strokeWidth="3.5" strokeLinecap="round" opacity="0.85" />
+            <path d="M -6,52 C 30,49 56,58 106,54"
+                  fill="none" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" strokeDasharray="5,4" />
           </svg>
         )}
 
@@ -110,14 +145,32 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
             {city.mapLandmarks.map((lm: any) => (
               <div
                 key={lm.name}
-                className="absolute text-[8px] font-bold text-blue-500 select-none bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100"
+                className="absolute text-[8px] font-bold text-slate-600 select-none bg-white/90 px-1.5 py-0.5 rounded-md border border-slate-200 shadow-sm"
                 style={{ left: `${lm.x}%`, top: `${lm.y}%`, transform: 'translate(-50%, -50%)' }}
               >
                 {lm.label}
               </div>
             ))}
-            <div className="absolute right-3 bottom-[10%] text-[8px] font-semibold text-sky-500 select-none tracking-widest uppercase rotate-90">
+            <div className="absolute right-3 bottom-[12%] text-[8px] font-semibold text-sky-600 select-none tracking-widest uppercase rotate-90 bg-white/70 px-1 rounded">
               {city.riverName}
+            </div>
+
+            {/* Compass */}
+            <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/85 border border-slate-200 flex items-center justify-center shadow-sm">
+              <Compass className="w-4 h-4 text-emerald-600" />
+              <span className="absolute -top-0.5 text-[6px] font-bold text-gray-500">N</span>
+            </div>
+
+            {/* Scale bar */}
+            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-white/85 border border-slate-200 rounded px-1.5 py-1 shadow-sm">
+              <div className="flex flex-col gap-0.5">
+                <div className="h-0.5 w-7 bg-slate-700" />
+                <div className="flex justify-between -mt-0.5">
+                  <div className="w-px h-1 bg-slate-700" />
+                  <div className="w-px h-1 bg-slate-700" />
+                </div>
+              </div>
+              <span className="text-[7px] font-bold text-slate-500">200 m</span>
             </div>
           </>
         )}
@@ -127,32 +180,33 @@ export default function MapScreen({ isWireframe, city }: MapProps) {
           const pinColor = isWireframe
             ? isSelected ? 'text-black' : 'text-gray-400'
             : loc.type === 'Bank Sampah'
-            ? isSelected ? 'text-indigo-600 scale-125' : 'text-indigo-400'
+            ? isSelected ? 'text-indigo-600' : 'text-indigo-400'
             : loc.type === 'TPA'
-            ? isSelected ? 'text-red-600 scale-125' : 'text-red-500'
-            : isSelected ? 'text-emerald-600 scale-125' : 'text-emerald-400';
+            ? isSelected ? 'text-red-600' : 'text-red-500'
+            : isSelected ? 'text-emerald-600' : 'text-emerald-400';
 
           return (
             <button
               key={loc.id}
               onClick={() => setSelectedLoc(loc)}
               style={{ left: `${loc.coordinates.x}%`, top: `${loc.coordinates.y}%` }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 p-1.5 cursor-pointer transition-all duration-300 hover:scale-125 group z-20 card-hover"
+              className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-300 hover:scale-125 group z-20 ${isSelected ? 'scale-110' : ''}`}
             >
-              <div className="relative">
-                <MapPin className={`w-7 h-7 filter ${pinColor}`} />
-                {/* Visual ripple effect for TPA or active selection */}
-                {isSelected && !isWireframe && (
-                  <span className="absolute -inset-0.5 bg-current opacity-20 rounded-full animate-ping pointer-events-none"></span>
-                )}
-                {/* Mini icon on pin */}
-                <span className="absolute left-1/2 top-1.5 -translate-x-1/2 text-[7px] font-extrabold text-white font-mono uppercase">
+              <div className="relative flex items-center justify-center">
+                <span className={`absolute w-7 h-7 rounded-full bg-white shadow-md ${isSelected ? 'ring-2 ring-offset-1' : ''} transition-all ${
+                  isSelected
+                    ? loc.type === 'Bank Sampah' ? 'ring-indigo-400' : loc.type === 'TPA' ? 'ring-red-400' : 'ring-emerald-400'
+                    : ''
+                }`} />
+                <MapPin className={`w-7 h-7 relative z-10 drop-shadow-sm ${pinColor}`} />
+                {/* Mini type letter on pin head */}
+                <span className="absolute left-1/2 top-[34%] -translate-x-1/2 -translate-y-1/2 text-[7px] font-extrabold text-white z-20 font-mono uppercase">
                   {loc.type[0]}
                 </span>
               </div>
 
               {/* Tooltip on hover */}
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-all bg-gray-900 text-white text-[9px] font-bold px-2 py-1 rounded whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute bottom-9 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-all bg-gray-900 text-white text-[9px] font-bold px-2 py-1 rounded whitespace-nowrap z-50 pointer-events-none">
                 {loc.name}
               </div>
             </button>
