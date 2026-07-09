@@ -52,11 +52,17 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
     if (profile.role === 'Masyarakat') {
       const key = `streak_popup_shown_${profile.name}`;
       if (!localStorage.getItem(key)) {
-        localStorage.setItem(key, '1');
         setStreakPopup(true);
       }
     }
   }, [profile.role, profile.name]);
+
+  const dismissStreakPopup = () => {
+    if (profile.role === 'Masyarakat') {
+      localStorage.setItem(`streak_popup_shown_${profile.name}`, '1');
+    }
+    setStreakPopup(false);
+  };
 
   const roleColor = profile.role === 'Masyarakat' ? 'emerald' : profile.role === 'Petugas' ? 'blue' : 'indigo';
   const roleColorHex = roleColor === 'emerald' ? '#059669' : roleColor === 'blue' ? '#3b82f6' : '#6366f1';
@@ -767,7 +773,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
 
       {/* Streak Popup — style iklan heboh */}
       {streakPopup && (
-        <div className="absolute inset-0 z-[65] flex items-center justify-center p-5" onClick={() => setStreakPopup(false)}>
+        <div className="absolute inset-0 z-[65] flex items-center justify-center p-5" onClick={() => dismissStreakPopup()}>
           {/* background overlay */}
           <div className={`absolute inset-0 ${isWireframe ? 'bg-black/60' : 'bg-gradient-to-b from-orange-900/70 via-black/60 to-emerald-900/70 backdrop-blur-md'}`} />
 
@@ -795,7 +801,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
             <div className={`absolute -bottom-10 -left-10 w-32 h-32 rounded-full bg-yellow-300/10 blur-3xl pointer-events-none ${isWireframe ? 'hidden' : ''}`} />
 
             {/* close button */}
-            <button onClick={() => setStreakPopup(false)}
+            <button onClick={() => dismissStreakPopup()}
               className={`absolute top-3 right-3 z-10 w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer btn-press ${
                 isWireframe ? 'bg-gray-200 text-gray-600 hover:bg-gray-300' : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
               }`}>
@@ -889,7 +895,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
               </div>
 
               {/* CTA */}
-              <button onClick={() => { setStreakPopup(false); onNavigate('scan'); }}
+              <button onClick={() => { dismissStreakPopup(); onNavigate('scan'); }}
                 className={`mt-4 w-full py-3 rounded-2xl text-[10px] font-extrabold tracking-wide transition-all cursor-pointer btn-press anim-stagger-5 flex items-center justify-center gap-2 ${
                   isWireframe
                     ? 'bg-gray-800 text-white'
@@ -898,7 +904,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
                 <QrCode className="w-4 h-4" />
                 Scan & Kumpulkan Poin
               </button>
-              <button onClick={() => setStreakPopup(false)}
+              <button onClick={() => dismissStreakPopup()}
                 className={`mt-1.5 w-full py-2 text-[8px] font-bold transition-all cursor-pointer anim-stagger-5 ${
                   isWireframe ? 'text-gray-400 hover:text-gray-600' : 'text-white/50 hover:text-white/80'
                 }`}>
