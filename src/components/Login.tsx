@@ -221,10 +221,10 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
 
       {/* Role Selector */}
       <div className={`mb-6 rounded-xl p-3 anim-fade-in-up ${isWireframe ? 'shadow-soft bg-white' : 'shadow-card bg-white'}`}>
-        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
+        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-3">
           Masuk Sebagai:
         </label>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="space-y-2">
           {rolesList.map((r) => {
             const Icon = r.icon;
             const isSelected = selectedRole === r.id;
@@ -233,18 +233,42 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
                 key={r.id}
                 type="button"
                 onClick={() => setSelectedRole(r.id)}
-                className={`card-hover btn-press p-2.5 rounded-xl border flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
+                className={`card-hover btn-press w-full p-3 rounded-xl border flex items-center gap-3 text-left cursor-pointer transition-all ${
                   isSelected
                     ? isWireframe
-                      ? 'border-2 border-black bg-gray-100 font-bold'
-                      : 'border-emerald-500 bg-emerald-50 text-emerald-700 ring-2 ring-emerald-500/20 shadow-sm'
+                      ? 'border-2 border-black bg-gray-100'
+                      : 'border-emerald-500 bg-emerald-50 shadow-sm'
                     : isWireframe
-                      ? 'border-gray-400 bg-white text-gray-600'
-                      : 'border-gray-200/70 bg-white text-gray-500 hover:border-emerald-200 hover:bg-emerald-50/30 hover:shadow-sm'
+                      ? 'border-gray-400 bg-white hover:bg-gray-50'
+                      : 'border-gray-200/70 bg-white hover:border-emerald-200 hover:bg-emerald-50/30'
                 }`}
               >
-                <Icon className={`w-4 h-4 mb-1.5 ${isSelected && !isWireframe ? 'text-emerald-600' : isWireframe ? 'text-gray-500' : 'text-gray-400 group-hover:text-emerald-500'}`} />
-                <span className="text-[10px] font-bold block truncate w-full">{r.label}</span>
+                <div className={`p-2 rounded-lg shrink-0 ${
+                  isSelected
+                    ? isWireframe ? 'bg-gray-200' : 'bg-emerald-100'
+                    : isWireframe ? 'bg-gray-100' : 'bg-gray-100'
+                }`}>
+                  <Icon className={`w-5 h-5 ${
+                    isSelected
+                      ? isWireframe ? 'text-gray-800' : 'text-emerald-600'
+                      : isWireframe ? 'text-gray-500' : 'text-gray-400'
+                  }`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className={`text-[11px] font-bold block ${
+                    isSelected
+                      ? isWireframe ? 'text-gray-900' : 'text-emerald-700'
+                      : isWireframe ? 'text-gray-700' : 'text-gray-700'
+                  }`}>{r.label}</span>
+                  <span className="text-[9px] text-gray-400 block mt-0.5">{r.desc}</span>
+                </div>
+                <div className={`w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center ${
+                  isSelected
+                    ? isWireframe ? 'border-gray-800 bg-gray-800' : 'border-emerald-500 bg-emerald-500'
+                    : 'border-gray-300'
+                }`}>
+                  {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                </div>
               </button>
             );
           })}
