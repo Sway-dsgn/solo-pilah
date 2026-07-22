@@ -44,16 +44,27 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
       }`}>
         {/* Avatar with Ring */}
         <div className="relative mb-3">
-          <img
-            src={profile.avatar}
-            alt="User Avatar"
-            className={`w-18 h-18 rounded-full object-cover border-4 ${
-              isWireframe ? 'border-gray-500'
-              : profile.role === 'Masyarakat' ? 'border-emerald-500'
-              : profile.role === 'Petugas' ? 'border-blue-500'
-              : 'border-indigo-500'
-            }`}
-          />
+          {profile.avatar ? (
+            <img
+              src={profile.avatar}
+              alt="User Avatar"
+              className={`w-18 h-18 rounded-full object-cover border-4 ${
+                isWireframe ? 'border-gray-500'
+                : profile.role === 'Masyarakat' ? 'border-emerald-500'
+                : profile.role === 'Petugas' ? 'border-blue-500'
+                : 'border-indigo-500'
+              }`}
+            />
+          ) : (
+            <div className={`w-18 h-18 rounded-full flex items-center justify-center text-xl font-bold text-white border-4 ${
+              isWireframe ? 'border-gray-500 bg-gray-800'
+              : profile.role === 'Masyarakat' ? 'border-emerald-500 bg-emerald-500'
+              : profile.role === 'Petugas' ? 'border-blue-500 bg-blue-500'
+              : 'border-indigo-500 bg-indigo-500'
+            }`}>
+              {profile.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+            </div>
+          )}
           <span className={`absolute bottom-0 right-0 p-1.5 rounded-full border-2 border-white text-white ${
             isWireframe ? 'bg-gray-800'
             : profile.role === 'Masyarakat' ? 'bg-emerald-500'

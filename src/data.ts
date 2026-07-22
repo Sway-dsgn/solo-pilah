@@ -15,7 +15,7 @@ export const DEFAULT_PROFILES: { [key: string]: UserProfile } = {
     email: "ahmad.fauzi@solo.id",
     role: "Masyarakat",
     points: 2450,
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150",
+    avatar: "",
     phone: "0812-3456-7890",
     address: "Jl. Slamet Riyadi No. 120, Keprabon, Surakarta",
     ecoRank: "Laskar Cempo Hijau",
@@ -28,7 +28,7 @@ export const DEFAULT_PROFILES: { [key: string]: UserProfile } = {
     email: "budi.petugas@surakarta.go.id",
     role: "Petugas",
     points: 1200,
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
+    avatar: "",
     phone: "0823-4567-8912",
     address: "Kantor Dinas Lingkungan Hidup Surakarta, Jebres",
     ecoRank: "Pahlawan Kebersihan Solo",
@@ -41,7 +41,7 @@ export const DEFAULT_PROFILES: { [key: string]: UserProfile } = {
     email: "siti.rahma@banksampahsolo.id",
     role: "BankSampah",
     points: 850,
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
+    avatar: "",
     phone: "0856-7890-1234",
     address: "Bank Sampah Sido Mukti, Mojosongo, Jebres, Surakarta",
     ecoRank: "Srikandi Eco Cempo",
@@ -348,20 +348,20 @@ export const ENVIRONMENTAL_FACTS: EnvironmentalFact[] = [
     title: "Krisis Sampah TPA Putri Cempo Solo",
     snippet: "TPA Putri Cempo di Mojosongo menerima 250 - 300 ton sampah per hari. Lahan yang terbatas memicu gunungan sampah setinggi 15 meter lebih.",
     fullText: "TPA Putri Cempo yang terletak di Blok Mojosongo, Kecamatan Jebres, Surakarta merupakan tempat pembuangan akhir utama bagi seluruh warga Solo. Dengan luas hanya sekitar 17 hektar, TPA ini telah mengalami kelebihan muatan (overcapacity) selama bertahun-tahun. Penumpukan ini memicu gas metana di lapisan dalam sampah yang rentan terbakar saat musim kemarau, seperti kebakaran hebat pada tahun 2023. Edukasi pemilahan sampah dari tingkat rumah tangga melalui aplikasi Solo Pilah adalah kunci utama menekan volume sampah harian hingga 40%!",
-    imageUrl: "https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&q=80&w=400"
+    imageUrl: "/images/fact1.jpg"
   },
   {
     id: "fact-2",
     title: "PLTSa Putri Cempo: Solusi Energi Terbarukan",
     snippet: "Solo kini memiliki Pembangkit Listrik Tenaga Sampah (PLTSa) Putri Cempo untuk mengolah tumpukan sampah menjadi energi listrik.",
     fullText: "Pembangkit Listrik Tenaga Sampah (PLTSa) Putri Cempo memanfaatkan teknologi gasifikasi untuk mengolah sampah padat kota (MSW) menjadi gas sintetis (syngas) yang kemudian menggerakkan mesin generator listrik. PLTSa ini diproyeksikan mampu mengolah hingga 450 ton sampah per hari (baik sampah segar maupun tumpukan sampah lama) dan menghasilkan daya sekitar 8 Megawatt. Namun, efektivitas PLTSa ini sangat dipengaruhi oleh tingkat pemisahan sampah kering (anorganik) dan basah (organik). Pemilahan sampah di rumah membantu mesin bekerja maksimal!",
-    imageUrl: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=400"
+    imageUrl: "/images/fact2.jpg"
   },
   {
     id: "fact-3",
     title: "Mengapa Memilah Sampah dari Rumah Sangat Penting?",
     snippet: "Memilah sampah organik, anorganik, dan B3 dari rumah mengurangi beban penyortiran manual oleh para pemulung dan petugas kebersihan.",
     fullText: "Saat kita mencampur sampah makanan dengan plastik dan kertas, seluruh material tersebut menjadi kotor, berbau, dan kehilangan nilai daur ulangnya. Kertas yang basah terkena minyak kuah makanan tidak bisa didaur ulang lagi. Sampah organik yang terperangkap di dalam plastik juga membusuk secara anaerobik dan melepaskan gas metana, penyebab utama efek rumah kaca. Dengan memilah sampah Anda menjadi 4 wadah (Organik, Anorganik, B3, Elektronik), Anda telah berkontribusi langsung menyelamatkan bumi dan membantu kelangsungan hidup para petugas kebersihan Solo.",
-    imageUrl: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=400"
+    imageUrl: "/images/fact3.jpg"
   }
 ];
