@@ -88,7 +88,7 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
           body: JSON.stringify({
             system_instruction: { parts: [{ text: SYSTEM_PROMPT(city) }] },
             contents: [{ parts: [{ text: userMessage }] }],
-            generationConfig: { temperature: 0.7, maxOutputTokens: 256 }
+            generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
           })
         });
         const data = await res.json();
