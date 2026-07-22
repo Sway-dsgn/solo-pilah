@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { WasteReport } from '../types';
 import CustomAlert from './CustomAlert';
 import { CityData } from '../cities';
+import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 import {
   Camera,
@@ -55,12 +56,6 @@ const WASTE_TYPES = [
   { id: 'elektronik', label: 'Elektronik', icon: Package, pts: '10.000/kg' },
 ];
 
-const MOCK_PHOTOS = [
-  { url: "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&q=80&w=300", label: "Tumpukan Plastik" },
-  { url: "https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&q=80&w=300", label: "Sampah Organik" },
-  { url: "https://images.unsplash.com/photo-1504438612444-b2d1ec5b9bb4?auto=format&fit=crop&q=80&w=300", label: "Sampah Besar" },
-];
-
 export default function Report({ isWireframe, reports, setReports, userRole, city }: ReportProps) {
   const [activeTab, setActiveTab] = useState<'create' | 'history'>('create');
   const [selectedReport, setSelectedReport] = useState<WasteReport | null>(null);
@@ -92,9 +87,42 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
     ? 'from-blue-500 to-blue-600'
     : 'from-indigo-500 to-indigo-600';
 
-  const handleCapturePhoto = (p: { url: string; label: string }) => {
-    setPhoto(p);
-    setIsCapturing(false);
+  const handleCapturePhoto = async () => {
+    try {
+      const result = await CapCamera.getPhoto({
+        quality: 80,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Camera,
+      });
+      if (result.dataUrl) {
+        setPhoto({ url: result.dataUrl, label: 'Foto Laporan' });
+        setIsCapturing(false);
+      }
+    } catch (err: any) {
+      if (err?.message?.includes('cancelled') || err?.message?.includes('User cancelled')) {
+        setIsCapturing(false);
+      }
+    }
+  };
+
+  const handlePickGallery = async () => {
+    try {
+      const result = await CapCamera.getPhoto({
+        quality: 80,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Photos,
+      });
+      if (result.dataUrl) {
+        setPhoto({ url: result.dataUrl, label: 'Foto Laporan' });
+        setIsCapturing(false);
+      }
+    } catch (err: any) {
+      if (err?.message?.includes('cancelled') || err?.message?.includes('User cancelled')) {
+        setIsCapturing(false);
+      }
+    }
   };
 
   const handleFetchGps = () => {
@@ -278,16 +306,21 @@ export default function Report({ isWireframe, reports, setReports, userRole, cit
             <div className="space-y-1.5">
               <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">Upload Foto</label>
               {isCapturing ? (
-                <div className="grid grid-cols-3 gap-2">
-                  {MOCK_PHOTOS.map((p) => (
-                    <button key={p.label} type="button" onClick={() => handleCapturePhoto(p)}
-                      className="rounded-xl overflow-hidden border border-gray-200 h-24 relative group cursor-pointer shadow-soft">
-                      <img src={p.url} alt={p.label} className="w-full h-full object-cover" />
-                      <span className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                        <Camera className="w-5 h-5 text-white opacity-0 group-hover:opacity-100" />
-                      </span>
-                    </button>
-                  ))}
+                <div className="flex gap-2">
+                  <button type="button" onClick={handleCapturePhoto}
+                    className="flex-1 p-4 rounded-xl border border-gray-200 bg-white flex flex-col items-center gap-2 cursor-pointer shadow-soft hover:shadow-card transition-all">
+                    <div className="p-3 rounded-xl bg-emerald-500 text-white">
+                      <Camera className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-700">Kamera</span>
+                  </button>
+                  <button type="button" onClick={handlePickGallery}
+                    className="flex-1 p-4 rounded-xl border border-gray-200 bg-white flex flex-col items-center gap-2 cursor-pointer shadow-soft hover:shadow-card transition-all">
+                    <div className="p-3 rounded-xl bg-blue-500 text-white">
+                      <ImageIcon className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-700">Galeri</span>
+                  </button>
                 </div>
               ) : photo ? (
                 <div className="relative rounded-2xl overflow-hidden border border-gray-200 h-40 shadow-soft">

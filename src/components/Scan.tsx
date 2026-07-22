@@ -9,6 +9,7 @@ import {
   X,
   RefreshCw,
 } from 'lucide-react';
+import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { UserProfile, ScreenType } from '../types';
 import { CityData } from '../cities';
 
@@ -20,45 +21,40 @@ interface ScanProps {
   city: CityData;
 }
 
-const MOCK_PHOTOS = [
-  {
-    url: "https://images.unsplash.com/photo-1618477388954-7852f32655ec?auto=format&fit=crop&q=80&w=300",
-    label: "Botol Plastik"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&q=80&w=300",
-    label: "Kardus Bekas"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&q=80&w=300",
-    label: "Sisa Makanan"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=300",
-    label: "Baterai Bekas"
-  },
-];
-
 export default function Scan({ profile, setProfile, isWireframe, onNavigate, city }: ScanProps) {
-  const [step, setStep] = useState<'choose' | 'capture' | 'preview' | 'saving' | 'done'>('choose');
+  const [step, setStep] = useState<'choose' | 'preview' | 'saving' | 'done'>('choose');
   const [photo, setPhoto] = useState<{ url: string; label: string } | null>(null);
   const [source, setSource] = useState<'camera' | 'gallery' | null>(null);
   const [points, setPoints] = useState(0);
 
-  const handlePickSource = (src: 'camera' | 'gallery') => {
+  const handlePickSource = async (src: 'camera' | 'gallery') => {
     setSource(src);
-    setStep('capture');
-  };
-
-  const handleTakePhoto = (p: { url: string; label: string }) => {
-    setPhoto(p);
-    setPoints(Math.floor(Math.random() * 100) + 50);
-    setStep('preview');
+    try {
+      const photo = await CapCamera.getPhoto({
+        quality: 80,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: src === 'camera' ? CameraSource.Camera : CameraSource.Photos,
+      });
+      if (photo.dataUrl) {
+        const wasteLabels = ['Botol Plastik', 'Kardus Bekas', 'Sampah Organik', 'Logam Bekas'];
+        const label = wasteLabels[Math.floor(Math.random() * wasteLabels.length)];
+        setPhoto({ url: photo.dataUrl, label });
+        setPoints(Math.floor(Math.random() * 100) + 50);
+        setStep('preview');
+      }
+    } catch (err: any) {
+      if (err?.message?.includes('cancelled') || err?.message?.includes('User cancelled')) {
+        setStep('choose');
+      } else {
+        setStep('capture');
+      }
+    }
   };
 
   const handleRetake = () => {
     setPhoto(null);
-    setStep('capture');
+    setStep('choose');
   };
 
   const handleSave = () => {
@@ -134,38 +130,6 @@ export default function Scan({ profile, setProfile, isWireframe, onNavigate, cit
               </div>
             </button>
           </div>
-        </div>
-      )}
-
-      {step === 'capture' && (
-        <div className="flex-1 p-4 flex flex-col">
-          <div className={`p-3 rounded-xl border mb-3 text-center shadow-soft ${isWireframe ? 'bg-white border-gray-300' : 'bg-white border-gray-100/60'}`}>
-            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">
-              {source === 'camera' ? 'Buka Kamera' : 'Pilih dari Galeri'}
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-3 flex-1">
-            {MOCK_PHOTOS.map((p) => (
-              <button key={p.label} onClick={() => handleTakePhoto(p)}
-                className={`rounded-2xl overflow-hidden border relative group cursor-pointer transition-all btn-press ${
-                  isWireframe ? 'border-gray-300' : 'border-gray-100 shadow-soft hover:shadow-card'
-                }`}>
-                <img src={p.url} alt={p.label} className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                  <span className="text-white text-[8px] font-bold bg-black/70 px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm">
-                    {source === 'camera' ? 'Ambil' : 'Pilih'}
-                  </span>
-                </div>
-                <span className="absolute bottom-1.5 left-1.5 text-[7px] font-bold text-white bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded">
-                  {p.label}
-                </span>
-              </button>
-            ))}
-          </div>
-          <button onClick={handleReset}
-            className="mt-3 py-2.5 text-xs font-bold text-gray-500 rounded-xl border border-gray-200 hover:bg-gray-100 cursor-pointer btn-press">
-            Batal
-          </button>
         </div>
       )}
 
