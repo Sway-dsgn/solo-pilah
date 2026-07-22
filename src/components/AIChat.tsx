@@ -71,7 +71,7 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
 
   const callGemini = async (userMessage: string): Promise<string> => {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    if (!apiKey) return 'Maaf, layanan AI belum aktif. Silakan hubungi admin.';
+    if (!apiKey) return 'API key belum diisi. Silakan hubungi admin.';
 
     try {
       const systemInstruction = SYSTEM_PROMPT(city);
@@ -87,12 +87,21 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
         })
       });
 
-      if (!res.ok) return 'Terjadi kesalahan. Coba lagi nanti.';
-
       const data = await res.json();
+
+      if (!res.ok) {
+        const errMsg = data?.error?.message || `HTTP ${res.status}`;
+        console.error('Gemini API Error:', errMsg, data);
+        if (errMsg.includes('API key not valid') || errMsg.includes('INVALID_ARGUMENT')) {
+          return 'API key tidak valid. Pastikan key benar dari Google AI Studio.';
+        }
+        return `Error: ${errMsg}`;
+      }
+
       return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, saya tidak mengerti. Bisa dijelaskan lagi?';
-    } catch {
-      return 'Gagal terhubung ke server AI. Cek koneksi internet kamu.';
+    } catch (err: any) {
+      console.error('Gemini Fetch Error:', err);
+      return `Gagal koneksi: ${err?.message || 'cek internet kamu'}`;
     }
   };
 
