@@ -73,36 +73,40 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (!apiKey) return 'API key belum diisi. Silakan hubungi admin.';
 
-    try {
-      const systemInstruction = SYSTEM_PROMPT(city);
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'];
 
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemInstruction }] },
-          contents: [{ parts: [{ text: userMessage }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 256 }
-        })
-      });
+    for (const model of models) {
+      try {
+        const systemInstruction = SYSTEM_PROMPT(city);
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-      const data = await res.json();
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: systemInstruction }] },
+            contents: [{ parts: [{ text: userMessage }] }],
+            generationConfig: { temperature: 0.7, maxOutputTokens: 256 }
+          })
+        });
 
-      if (!res.ok) {
-        const errMsg = data?.error?.message || `HTTP ${res.status}`;
-        console.error('Gemini API Error:', errMsg, data);
-        if (errMsg.includes('API key not valid') || errMsg.includes('INVALID_ARGUMENT')) {
-          return 'API key tidak valid. Pastikan key benar dari Google AI Studio.';
+        const data = await res.json();
+
+        if (!res.ok) {
+          const errMsg = data?.error?.message || `HTTP ${res.status}`;
+          console.warn(`Gemini ${model} error:`, errMsg);
+          if (errMsg.includes('quota') || errMsg.includes('Quota')) continue;
+          return `Error: ${errMsg}`;
         }
-        return `Error: ${errMsg}`;
-      }
 
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, saya tidak mengerti. Bisa dijelaskan lagi?';
-    } catch (err: any) {
-      console.error('Gemini Fetch Error:', err);
-      return `Gagal koneksi: ${err?.message || 'cek internet kamu'}`;
+        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, saya tidak mengerti.';
+      } catch (err: any) {
+        console.error(`Gemini ${model} fetch error:`, err);
+        continue;
+      }
     }
+
+    return 'Semua model AI sedang limit. Coba lagi dalam beberapa menit.';
   };
 
   const handleSend = async () => {
