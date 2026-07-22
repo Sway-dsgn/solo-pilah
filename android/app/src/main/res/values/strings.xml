@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Solo Pilah</string>
+    <string name="title_activity_main">Solo Pilah</string>
+    <string name="package_name">com.solopilah.app</string>
+    <string name="custom_url_scheme">com.solopilah.app</string>
+</resources>

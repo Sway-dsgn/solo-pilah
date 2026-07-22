@@ -39,20 +39,20 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
   const rolesList: { id: UserRole; label: string; desc: string; icon: any }[] = [
     {
       id: 'Masyarakat',
-      label: 'Masyarakat',
-      desc: `Warga ${city.shortName} pelapor & pemilah sampah`,
+      label: 'Warga',
+      desc: 'Lapor sampah & kumpulin poin',
       icon: UserCheck
     },
     {
       id: 'Petugas',
-      label: `Petugas ${city.wasteDeptAbbr.split(' ')[0]}`,
-      desc: 'Tim pengangkut & pembersih sampah',
+      label: 'Petugas Lapangan',
+      desc: 'Bersihin & angkut sampah',
       icon: Shield
     },
     {
       id: 'BankSampah',
-      label: 'Pengelola Bank',
-      desc: 'Admin depo penampung & juri poin',
+      label: 'Bank Sampah',
+      desc: 'Terima setoran & urus poin',
       icon: HelpCircle
     }
   ];
@@ -222,7 +222,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
       {/* Role Selector */}
       <div className={`mb-6 rounded-xl p-3 anim-fade-in-up ${isWireframe ? 'shadow-soft bg-white' : 'shadow-card bg-white'}`}>
         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
-          Pilih Peran Simulasi Anda:
+          Masuk Sebagai:
         </label>
         <div className="grid grid-cols-3 gap-3">
           {rolesList.map((r) => {
@@ -249,9 +249,7 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
             );
           })}
         </div>
-        <p className="text-[10px] text-gray-400 mt-2 text-center italic">
-          *Dashboard & menu akan otomatis menyesuaikan peran terpilih.
-        </p>
+
       </div>
 
       {/* Form */}
