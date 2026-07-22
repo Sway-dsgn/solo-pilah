@@ -13,6 +13,7 @@ import Rewards from './components/Rewards';
 import Profile from './components/Profile';
 import Edukasi from './components/Edukasi';
 import Settings from './components/Settings';
+import AIChat from './components/AIChat';
 
 import {
   Home,
@@ -349,6 +350,9 @@ export default function App() {
         {screenRoutes}
       </div>
       {bottomNav}
+      {currentScreen !== 'onboarding' && currentScreen !== 'login' && (
+        <AIChat isWireframe={isWireframe} city={city} userRole={selectedRole} />
+      )}
     </div>
   );
 }
