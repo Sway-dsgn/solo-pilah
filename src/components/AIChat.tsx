@@ -161,7 +161,7 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
                 ? 'bg-emerald-500 text-white rounded-br-md'
                 : 'bg-white text-gray-700 border border-gray-200 shadow-sm rounded-bl-md'
             }`}>
-              <p className="text-xs leading-relaxed whitespace-pre-wrap break-words">{m.text}</p>
+              <p className="text-xs leading-relaxed whitespace-pre-wrap break-words" dangerouslySetInnerHTML={{ __html: m.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
             </div>
           </div>
         ))}
