@@ -73,7 +73,7 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (!apiKey) return 'API key belum diisi. Silakan hubungi admin.';
 
-    const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+    const models = ['gemini-2.5-flash-lite', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemini-flash-latest', 'gemini-flash-lite-latest'];
 
     for (const model of models) {
       try {
