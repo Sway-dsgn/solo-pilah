@@ -229,7 +229,7 @@ export const CITIES: CityData[] = [
       {
         id: 'rew-3', title: '1 Karung Pupuk Kompos Organik (5kg)', pointsCost: 500,
         category: 'Kebutuhan', description: 'Pupuk kompos berkualitas hasil pengolahan sampah organik.',
-        imageUrl: 'https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&q=80&w=300',
+        imageUrl: '/images/reward3.png',
         partner: 'Pusat Kompos TPA Putri Cempo',
       },
       {
