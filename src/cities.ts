@@ -217,7 +217,7 @@ export const CITIES: CityData[] = [
       {
         id: 'rew-1', title: `Tiket Gratis ${'Batik Solo Trans (BST)'}`, pointsCost: 300,
         category: 'Transportasi', description: '1x perjalanan gratis keliling Solo menggunakan Bus Batik Solo Trans.',
-        imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=300',
+        imageUrl: '/images/reward1.jpg',
         partner: 'Dinas Perhubungan Surakarta',
       },
       {
@@ -250,19 +250,19 @@ export const CITIES: CityData[] = [
         id: 'fact-1', title: `Krisis Sampah ${'TPA Putri Cempo Solo'}`,
         snippet: `${'TPA Putri Cempo'} di Mojosongo menerima 250 - 300 ton sampah per hari.`,
         fullText: `${'TPA Putri Cempo'} yang terletak di Blok Mojosongo, Kecamatan Jebres, Surakarta merupakan tempat pembuangan akhir utama bagi seluruh warga Solo.`,
-        imageUrl: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&q=80&w=300',
+        imageUrl: '/images/fact1.jpg',
       },
       {
         id: 'fact-2', title: 'PLTSa Putri Cempo: Solusi Energi Terbarukan',
         snippet: 'Solo kini memiliki Pembangkit Listrik Tenaga Sampah (PLTSa) Putri Cempo.',
         fullText: 'Pembangkit Listrik Tenaga Sampah (PLTSa) Putri Cempo memanfaatkan teknologi gasifikasi untuk mengolah sampah padat kota menjadi energi listrik.',
-        imageUrl: 'https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&q=80&w=300',
+        imageUrl: '/images/fact2.jpg',
       },
       {
         id: 'fact-3', title: 'Mengapa Memilah Sampah dari Rumah Sangat Penting?',
         snippet: 'Memilah sampah dari rumah mengurangi beban penyortiran manual oleh para pemulung.',
         fullText: 'Dengan memilah sampah Anda menjadi 4 wadah, Anda berkontribusi menyelamatkan bumi.',
-        imageUrl: 'https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=300',
+        imageUrl: '/images/fact3.jpg',
       },
     ],
   },
