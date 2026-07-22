@@ -309,7 +309,7 @@ export const REWARD_ITEMS: RewardItem[] = [
     pointsCost: 300,
     category: "Transportasi",
     description: "1x perjalanan gratis keliling Solo menggunakan Bus Batik Solo Trans koridor mana saja.",
-    imageUrl: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80&w=300", // simulated Bus
+    imageUrl: "/images/reward1.jpg",
     partner: "Dinas Perhubungan Surakarta"
   },
   {
