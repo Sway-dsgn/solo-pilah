@@ -314,12 +314,12 @@ export const REWARD_ITEMS: RewardItem[] = [
   },
   {
     id: "rew-2",
-    title: "Saldo ShopeePay Rp 25.000",
+    title: "Saldo Digital Rp 25.000",
     pointsCost: 1000,
     category: "Voucher",
-    description: "Voucher digital saldo ShopeePay senilai Rp 25.000 untuk belanja kebutuhan Anda.",
+    description: "Voucher saldo digital (ShopeePay / GoPay) senilai Rp 25.000.",
     imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=300",
-    partner: "Shopee Indonesia"
+    partner: "Solo Pilah"
   },
   {
     id: "rew-3",
@@ -327,17 +327,8 @@ export const REWARD_ITEMS: RewardItem[] = [
     pointsCost: 500,
     category: "Kebutuhan",
     description: "Pupuk kompos berkualitas tinggi hasil pengolahan sampah organik di TPA Putri Cempo.",
-    imageUrl: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&q=80&w=300", // garden compost
+    imageUrl: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&q=80&w=300",
     partner: "Pusat Kompos TPA Putri Cempo"
-  },
-  {
-    id: "rew-4",
-    title: "Saldo GoPay Rp 50.000",
-    pointsCost: 1800,
-    category: "Voucher",
-    description: "Voucher digital GoPay senilai Rp 50.000 langsung cair ke nomor HP terdaftar.",
-    imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=300",
-    partner: "GoTo Financial"
   },
   {
     id: "rew-5",

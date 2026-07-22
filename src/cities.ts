@@ -221,22 +221,16 @@ export const CITIES: CityData[] = [
         partner: 'Dinas Perhubungan Surakarta',
       },
       {
-        id: 'rew-2', title: 'Saldo ShopeePay Rp 25.000', pointsCost: 1000,
-        category: 'Voucher', description: 'Voucher digital saldo ShopeePay senilai Rp 25.000.',
+        id: 'rew-2', title: 'Saldo Digital Rp 25.000', pointsCost: 1000,
+        category: 'Voucher', description: 'Voucher saldo digital (ShopeePay / GoPay) senilai Rp 25.000.',
         imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=300',
-        partner: 'Shopee Indonesia',
+        partner: 'Solo Pilah',
       },
       {
         id: 'rew-3', title: '1 Karung Pupuk Kompos Organik (5kg)', pointsCost: 500,
         category: 'Kebutuhan', description: 'Pupuk kompos berkualitas hasil pengolahan sampah organik.',
         imageUrl: 'https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&q=80&w=300',
         partner: 'Pusat Kompos TPA Putri Cempo',
-      },
-      {
-        id: 'rew-4', title: 'Saldo GoPay Rp 50.000', pointsCost: 1800,
-        category: 'Voucher', description: 'Voucher digital GoPay senilai Rp 50.000.',
-        imageUrl: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&q=80&w=300',
-        partner: 'GoTo Financial',
       },
       {
         id: 'rew-5', title: 'Eco-Friendly Totebag Canvas', pointsCost: 800,
@@ -425,9 +419,8 @@ export const CITIES: CityData[] = [
     ],
     rewardItems: [
       { id: 'rew-1', title: `Tiket Gratis ${'Trans Metro Bandung (TMB)'}`, pointsCost: 300, category: 'Transportasi', description: '1x perjalanan gratis menggunakan Trans Metro Bandung koridor mana saja.', imageUrl: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=300', partner: 'Dinas Perhubungan Bandung' },
-      { id: 'rew-2', title: 'Saldo ShopeePay Rp 25.000', pointsCost: 1000, category: 'Voucher', description: 'Voucher digital saldo ShopeePay senilai Rp 25.000.', imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=300', partner: 'Shopee Indonesia' },
+      { id: 'rew-2', title: 'Saldo Digital Rp 25.000', pointsCost: 1000, category: 'Voucher', description: 'Voucher saldo digital (ShopeePay / GoPay) senilai Rp 25.000.', imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=300', partner: 'Solo Pilah' },
       { id: 'rew-3', title: '1 Karung Pupuk Kompos Organik (5kg)', pointsCost: 500, category: 'Kebutuhan', description: 'Pupuk kompos hasil pengolahan sampah organik Kota Bandung.', imageUrl: 'https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=300', partner: 'Pusat Kompos TPA Sarimukti' },
-      { id: 'rew-4', title: 'Saldo GoPay Rp 50.000', pointsCost: 1800, category: 'Voucher', description: 'Voucher digital GoPay senilai Rp 50.000.', imageUrl: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&q=80&w=300', partner: 'GoTo Financial' },
       { id: 'rew-5', title: 'Eco-Friendly Totebag Canvas', pointsCost: 800, category: 'Merchandise', description: 'Tas belanja kanvas tebal dengan ilustrasi Bandung Pilah.', imageUrl: 'https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=300', partner: 'Kreasi Pemuda Bandung' },
       { id: 'rew-6', title: 'Voucher Martabak Rp 20.000', pointsCost: 700, category: 'Voucher UMKM', description: 'Voucher martabak spesial di UMKM binaan DLH Bandung.', imageUrl: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=300', partner: 'UMKM Binaan DLH Bandung' },
     ],
@@ -552,9 +545,8 @@ export const CITIES: CityData[] = [
     ],
     rewardItems: [
       { id: 'rew-1', title: `Tiket Gratis ${'Trans Semanggi Surabaya (TSS)'}`, pointsCost: 300, category: 'Transportasi', description: '1x perjalanan gratis naik Trans Semanggi Surabaya.', imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=300', partner: 'Dinas Perhubungan Surabaya' },
-      { id: 'rew-2', title: 'Saldo ShopeePay Rp 25.000', pointsCost: 1000, category: 'Voucher', description: 'Voucher digital ShopeePay senilai Rp 25.000.', imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=300', partner: 'Shopee Indonesia' },
+      { id: 'rew-2', title: 'Saldo Digital Rp 25.000', pointsCost: 1000, category: 'Voucher', description: 'Voucher saldo digital (ShopeePay / GoPay) senilai Rp 25.000.', imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=300', partner: 'Solo Pilah' },
       { id: 'rew-3', title: '1 Karung Pupuk Kompos (5kg)', pointsCost: 500, category: 'Kebutuhan', description: 'Pupuk kompos hasil pengolahan sampah organik TPA Benowo.', imageUrl: 'https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&q=80&w=300', partner: 'Pusat Kompos TPA Benowo' },
-      { id: 'rew-4', title: 'Saldo GoPay Rp 50.000', pointsCost: 1800, category: 'Voucher', description: 'Voucher digital GoPay senilai Rp 50.000.', imageUrl: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&q=80&w=300', partner: 'GoTo Financial' },
       { id: 'rew-5', title: 'Eco-Friendly Totebag Canvas', pointsCost: 800, category: 'Merchandise', description: 'Tas belanja kanvas tebal dengan ilustrasi Surabaya Pilah.', imageUrl: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&q=80&w=300', partner: 'Kreasi Pemuda Surabaya' },
       { id: 'rew-6', title: 'Voucher Rujak Cingur Rp 15.000', pointsCost: 600, category: 'Voucher UMKM', description: 'Voucher rujak cingur di UMKM binaan DLH Surabaya.', imageUrl: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=300', partner: 'UMKM Binaan DLH Surabaya' },
     ],
