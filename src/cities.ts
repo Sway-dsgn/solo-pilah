@@ -223,7 +223,7 @@ export const CITIES: CityData[] = [
       {
         id: 'rew-2', title: 'Saldo Digital Rp 25.000', pointsCost: 1000,
         category: 'Voucher', description: 'Voucher saldo digital (ShopeePay / GoPay) senilai Rp 25.000.',
-        imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=300',
+        imageUrl: '/images/reward2.jpg',
         partner: 'Solo Pilah',
       },
       {
