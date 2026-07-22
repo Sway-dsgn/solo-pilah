@@ -118,7 +118,7 @@ export default function Dashboard({ profile, setProfile, isWireframe, onNavigate
               />
             ) : (
               <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white ring-2 ring-offset-2 ${isWireframe ? 'ring-gray-500 ring-offset-white bg-gray-800' : isMasyarakat ? 'ring-emerald-500 ring-offset-gray-50 bg-emerald-500' : isPetugas ? 'ring-blue-500 ring-offset-gray-50 bg-blue-500' : 'ring-indigo-500 ring-offset-gray-50 bg-indigo-500'}`}>
-                {profile.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                {profile.name[0].toUpperCase()}
               </div>
             )}
             <span className={`absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-white flex items-center justify-center text-[7px] text-white font-bold shadow-sm ${

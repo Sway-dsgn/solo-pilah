@@ -62,7 +62,7 @@ export default function Profile({ profile, setProfile, isWireframe, onLogout, on
               : profile.role === 'Petugas' ? 'border-blue-500 bg-blue-500'
               : 'border-indigo-500 bg-indigo-500'
             }`}>
-              {profile.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+              {profile.name[0].toUpperCase()}
             </div>
           )}
           <span className={`absolute bottom-0 right-0 p-1.5 rounded-full border-2 border-white text-white ${
