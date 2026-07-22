@@ -23,9 +23,9 @@ export default function Edukasi({ isWireframe, city, onClose, onModalChange }: E
   const slides = city.eduSlides;
 
   const unsplashImages = [
-    'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=400',
-    'https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&q=80&w=400',
-    'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=400',
+    '/images/fact2.jpg',
+    '/images/fact3.jpg',
+    '/images/reward1.jpg',
   ];
 
   const facts = city.environmentalFacts || [];
