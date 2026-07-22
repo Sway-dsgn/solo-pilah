@@ -62,7 +62,8 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById('chat-messages');
+    if (el) el.scrollTop = el.scrollHeight;
   }, [messages]);
 
   useEffect(() => {
@@ -163,15 +164,15 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 phone-scroll bg-gray-50/50">
+            <div id="chat-messages" className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50">
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] rounded-2xl px-3.5 py-2.5 ${
+                  <div className={`max-w-[90%] rounded-2xl px-3.5 py-2.5 break-words ${
                     m.role === 'user'
                       ? 'bg-emerald-500 text-white rounded-br-sm'
                       : 'bg-white text-gray-700 border border-gray-100 shadow-soft rounded-bl-sm'
                   }`}>
-                    <p className="text-[11px] leading-relaxed whitespace-pre-line">{m.text}</p>
+                    <p className="text-[11px] leading-relaxed whitespace-pre-wrap">{m.text}</p>
                   </div>
                 </div>
               ))}
