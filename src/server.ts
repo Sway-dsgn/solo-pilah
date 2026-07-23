@@ -7,6 +7,27 @@ import { db } from "./db.js";
 dotenv.config();
 
 const app = express();
+
+const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:3000,http://127.0.0.1:3000")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+
+    // Request tanpa Origin (mis. aplikasi Capacitor atau curl) tetap diizinkan.
+    if (!origin || allowedOrigins.includes(origin)) {
+        if (origin) res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Vary", "Origin");
+        res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        if (req.method === "OPTIONS") return res.sendStatus(204);
+        return next();
+    }
+
+    return res.status(403).json({ success: false, message: "Origin tidak diizinkan" });
+});
 app.use(express.json());
 
 app.post("/api/register", async (req, res) => {
