@@ -74,33 +74,67 @@ export default function AIChat({ isWireframe, city, userRole }: AIChatProps) {
   }, [isOpen]);
 
   const callGemini = async (userMessage: string): Promise<string> => {
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    if (!apiKey) return 'API key belum diisi. Silakan hubungi admin.';
+    const OR_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
+    const GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+    const models = [
+      { provider: 'openrouter', model: 'google/gemini-2.0-flash-001' },
+      { provider: 'openrouter', model: 'google/gemini-flash-lite-1.5-8b' },
+      { provider: 'gemini', model: 'gemini-flash-latest' },
+      { provider: 'gemini', model: 'gemini-flash-lite-latest' },
+    ];
 
-    const models = ['gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
-
-    for (const model of models) {
+    for (const { provider, model } of models) {
       try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            system_instruction: { parts: [{ text: SYSTEM_PROMPT(city) }] },
-            contents: [{ parts: [{ text: userMessage }] }],
-            generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
-          })
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          const errMsg = data?.error?.message || `HTTP ${res.status}`;
-          console.warn(`Gemini ${model} error:`, errMsg);
-          if (errMsg.includes('quota') || errMsg.includes('Quota')) continue;
-          return `Error: ${errMsg}`;
+        if (provider === 'openrouter') {
+          const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${OR_KEY}`,
+              'HTTP-Referer': 'https://solo-pilah.vercel.app',
+              'X-Title': 'Solo Pilah',
+            },
+            body: JSON.stringify({
+              model,
+              messages: [
+                { role: 'system', content: SYSTEM_PROMPT(city) },
+                { role: 'user', content: userMessage },
+              ],
+              max_tokens: 1024,
+              temperature: 0.7,
+            }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            const errMsg = data?.error?.message || `HTTP ${res.status}`;
+            console.warn(`OpenRouter ${model} error:`, errMsg);
+            continue;
+          }
+          return data.choices?.[0]?.message?.content || 'Maaf, saya tidak mengerti.';
+        } else {
+          const apiKey = GEMINI_KEY;
+          if (!apiKey) continue;
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: SYSTEM_PROMPT(city) }] },
+              contents: [{ parts: [{ text: userMessage }] }],
+              generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
+            }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            const errMsg = data?.error?.message || `HTTP ${res.status}`;
+            console.warn(`Gemini ${model} error:`, errMsg);
+            if (errMsg.includes('quota') || errMsg.includes('Quota')) continue;
+            return `Error: ${errMsg}`;
+          }
+          return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, saya tidak mengerti.';
         }
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, saya tidak mengerti.';
       } catch (err: any) {
-        console.error(`Gemini ${model} fetch error:`, err);
+        console.error(`${provider} ${model} fetch error:`, err);
         continue;
       }
     }

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import logo from '../../logo.png';
-import { Lock, Mail, UserCheck, Shield, HelpCircle, ArrowRight, ChevronDown, MapPin, X, Search, Check, ChevronRight } from 'lucide-react';
+import { Lock, Mail, UserCheck, Shield, HelpCircle, ArrowRight, ChevronDown, MapPin, X, Search, Check, ChevronRight, AlertCircle, Loader2 } from 'lucide-react';
 import { UserRole } from '../types';
 import { CityData } from '../cities';
+import { apiRegister, apiLogin, saveAuth } from '../api';
 
 interface LoginProps {
   onLogin: (role: UserRole) => void;
@@ -26,31 +27,40 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
   const [searchKec, setSearchKec] = useState('');
   const [searchKel, setSearchKel] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (isSignUp) {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      if (users.find((u: any) => u.email === email)) {
-        setError('Email sudah terdaftar!');
+    setLoading(true);
+    try {
+      if (isSignUp) {
+        const data = await apiRegister({ username: fullName, email, password });
+        if (data.success) {
+          setRegistered(true);
+          setIsSignUp(false);
+          setEmail('');
+          setPassword('');
+          setFullName('');
+          setPhone('');
+        } else {
+          setError(data.message || 'Registrasi gagal');
+        }
         return;
       }
-      users.push({ email, password, name: fullName, phone, role: selectedRole, kecamatan: selectedKec, kelurahan: selectedKel });
-      localStorage.setItem('users', JSON.stringify(users));
-      setRegistered(true);
-      setIsSignUp(false);
-      setEmail('');
-      setPassword('');
-      return;
+      const data = await apiLogin({ email, password });
+      if (data.success) {
+        saveAuth(data.token, data.user);
+        onLogin(selectedRole);
+      } else {
+        setError(data.message || 'Login gagal');
+      }
+    } catch (err) {
+      setError('Terjadi kesalahan koneksi');
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find((u: any) => u.email === email && u.password === password);
-    if (!user) {
-      setError('Akun tidak ditemukan! Silakan daftar terlebih dahulu.');
-      return;
-    }
-    onLogin(selectedRole);
   };
 
   const rolesList: { id: UserRole; label: string; desc: string; icon: any }[] = [
@@ -363,13 +373,29 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
           </div>
         </div>
 
-        <button type="submit"
+        <button type="submit" disabled={loading}
           className={`w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer btn-press ${
-            isWireframe ? 'bg-gray-900 text-white hover:bg-gray-800 border-2 border-black shadow-sm' : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm'
+            loading
+              ? 'opacity-50 cursor-not-allowed'
+              : isWireframe ? 'bg-gray-900 text-white hover:bg-gray-800 border-2 border-black shadow-sm' : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm'
           }`}
         >
-          {isSignUp ? "Daftar" : "Masuk"}
-          <ArrowRight className="w-4 h-4" />
+          {loading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Memproses...
+            </>
+          ) : isSignUp ? (
+            <>
+              Daftar
+              <ArrowRight className="w-4 h-4" />
+            </>
+          ) : (
+            <>
+              Masuk
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
         </button>
 
         {error && (
