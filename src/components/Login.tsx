@@ -25,12 +25,29 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
   const [pickerStep, setPickerStep] = useState<'kec' | 'kel'>('kec');
   const [searchKec, setSearchKec] = useState('');
   const [searchKel, setSearchKel] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     if (isSignUp) {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (users.find((u: any) => u.email === email)) {
+        setError('Email sudah terdaftar!');
+        return;
+      }
+      users.push({ email, password, name: fullName, phone, role: selectedRole, kecamatan: selectedKec, kelurahan: selectedKel });
+      localStorage.setItem('users', JSON.stringify(users));
       setRegistered(true);
       setIsSignUp(false);
+      setEmail('');
+      setPassword('');
+      return;
+    }
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find((u: any) => u.email === email && u.password === password);
+    if (!user) {
+      setError('Akun tidak ditemukan! Silakan daftar terlebih dahulu.');
       return;
     }
     onLogin(selectedRole);
@@ -354,6 +371,12 @@ export default function Login({ onLogin, isWireframe, selectedRole, setSelectedR
           {isSignUp ? "Daftar" : "Masuk"}
           <ArrowRight className="w-4 h-4" />
         </button>
+
+        {error && (
+          <div className="text-center text-[10px] text-red-600 font-bold bg-red-50 p-2 rounded-xl border border-red-100 anim-fade-in-up">
+            {error}
+          </div>
+        )}
       </form>
 
       {registered && (
